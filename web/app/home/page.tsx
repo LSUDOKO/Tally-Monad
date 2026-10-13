@@ -12,7 +12,7 @@ import { CATEGORY_ICON, CATEGORY_LABEL, categoriesOf, setFrozen } from "@/lib/ta
 import { useAllowance } from "@/lib/useAllowance";
 
 function HomeInner() {
-  const { keys, welcomeUsd } = useSession();
+  const { keys, welcomeUsd, error, retryWelcome } = useSession();
   const a = useAllowance();
   const [busy, setBusy] = useState(false);
   const name = typeof window !== "undefined" ? localStorage.getItem("tally.name") : null;
@@ -33,8 +33,13 @@ function HomeInner() {
           <p className="text-muted">Welcome gift</p>
           <p className="tabular mt-1 text-4xl font-semibold">{usd(a.walletUsd)}</p>
           <p className="mt-2 text-sm text-faint">
-            {a.walletUsd > 0n || welcomeUsd ? "Ready to load into your first allowance." : "Adding your welcome credit…"}
+            {a.walletUsd > 0n || welcomeUsd ? "Ready to load into your first allowance." : error ? error : "Adding your welcome credit…"}
           </p>
+          {error && a.walletUsd === 0n && (
+            <button onClick={retryWelcome} className="mt-3 text-sm text-brand-bright">
+              Try again
+            </button>
+          )}
         </Card>
         <div className="mt-auto pt-8">
           <Link href="/allowance" className="block">
