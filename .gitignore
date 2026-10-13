@@ -13,3 +13,4 @@ indexer/generated/
 iassets/image*.png
 contracts/broadcast/**/run-[0-9]*.json
 .envio-token
+.playwright-mcp/
