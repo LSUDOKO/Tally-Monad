@@ -28,3 +28,18 @@ describe("counter", () => {
     await expect(signMenu(acct, cafe, [{ ...DEMO_ITEMS[1], floor: 1n }], 1000, 1n)).rejects.toThrow(/floor/);
   });
 });
+
+describe("merchant menu rows", () => {
+  it("computes each category's floor so the menu is honest by construction", async () => {
+    const { rowsToItems } = await import("../lib/counter");
+    const items = rowsToItems([
+      { name: "Filter coffee", price: 2, category: 3 },
+      { name: "Cappuccino", price: 3.5, category: 3 },
+      { name: "Veg sandwich", price: 4, category: 0 },
+    ]);
+    expect(items.map((i) => i.floor)).toEqual([2_000_000n, 2_000_000n, 4_000_000n]);
+    expect(verifyFloors(items)).toBe(true);
+    expect(items[0].itemId).toMatch(/^0x[0-9a-f]{32}$/);
+    expect(new Set(items.map((i) => i.itemId)).size).toBe(3);
+  });
+});
