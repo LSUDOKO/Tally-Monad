@@ -11,3 +11,4 @@ indexer/generated/
 .DS_Store
 .superpowers/
 iassets/image*.png
+contracts/broadcast/**/run-[0-9]*.json
