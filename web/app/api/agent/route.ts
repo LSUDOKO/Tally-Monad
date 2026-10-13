@@ -1,6 +1,7 @@
 import OpenAI from "openai";
 import { NextResponse } from "next/server";
-import { rulePick, validatePick, type AgentPayload } from "@/lib/firewall";
+import { rulePick, sanitizePayload, validatePick } from "@/lib/firewall";
+import { createLimiter } from "@/lib/ratelimit";
 
 export const runtime = "nodejs";
 
@@ -10,9 +11,13 @@ const SYSTEM =
   'Reply with JSON only: {"item_id":"<an item_id from menu>","reason":"<max 120 chars>"}.';
 
 /** Kimi when a key is configured, the deterministic rule otherwise. Either way only an item id comes back. */
+const perIp = createLimiter(60, 3_600_000);
+
 export async function POST(req: Request) {
-  const payload = (await req.json()) as AgentPayload;
-  if (process.env.KIMI_API_KEY) {
+  const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
+  const payload = sanitizePayload(await req.json().catch(() => ({})));
+  const useModel = !!process.env.KIMI_API_KEY && perIp(ip);
+  if (useModel) {
     try {
       const kimi = new OpenAI({ apiKey: process.env.KIMI_API_KEY, baseURL: process.env.KIMI_BASE_URL ?? "https://api.moonshot.ai/v1" });
       const r = await kimi.chat.completions.create({
