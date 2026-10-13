@@ -71,6 +71,36 @@ export function rulePick(p: AgentPayload): Pick | null {
 export function validatePick(pick: unknown, p: AgentPayload): Pick | null {
   if (!pick || typeof pick !== "object") return null;
   const { item_id, reason } = pick as Record<string, unknown>;
-  if (typeof item_id !== "string" || !p.menu.some((m) => m.item_id === item_id)) return null;
+  const item = typeof item_id === "string" ? p.menu.find((m) => m.item_id === item_id) : undefined;
+  if (!item || !p.rules.categories.includes(item.category_code)) return null;
   return { item_id: item_id as Hex, reason: typeof reason === "string" ? reason.slice(0, 120) : "" };
+}
+
+/**
+ * The agent route can't trust the browser that sent the payload, so it rebuilds it: dictionary words only,
+ * a short request and at most 64 items. Anything else a caller adds never reaches the model.
+ */
+export function sanitizePayload(raw: unknown): AgentPayload {
+  const r = (raw ?? {}) as Partial<AgentPayload>;
+  const money = (x: unknown) => (typeof x === "string" && /^\d{1,6}\.\d{2}$/.test(x) ? x : "0.00");
+  return {
+    request: String(r.request ?? "").slice(0, 200),
+    rules: {
+      categories: (Array.isArray(r.rules?.categories) ? r.rules.categories : []).filter((c) => Number.isInteger(c) && c >= 0 && c < 256).slice(0, 256),
+      per_tx_max_usdc: money(r.rules?.per_tx_max_usdc),
+    },
+    menu: (Array.isArray(r.menu) ? r.menu : []).slice(0, 64).flatMap((m) =>
+      typeof m?.item_id === "string" && /^0x[0-9a-fA-F]{32}$/.test(m.item_id) && Number.isInteger(m.category_code)
+        ? [
+            {
+              item_id: m.item_id as Hex,
+              category_code: m.category_code,
+              price_usdc: money(m.price_usdc),
+              category_floor_usdc: money(m.category_floor_usdc),
+              name_tokens: tokens((Array.isArray(m.name_tokens) ? m.name_tokens : []).join(" ")),
+            },
+          ]
+        : [],
+    ),
+  };
 }
