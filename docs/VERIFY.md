@@ -14,7 +14,7 @@ cd contracts && forge test
 # 5 suites, 32 tests: Tally (23: ten invariants, attacks, cosign, top-up note, slashing), MenuMerkle (3), Drip (4), MockAUSD (2)
 
 cd web && pnpm install && pnpm test
-# 55 tests + 1 skipped live test: menu tree ⇄ Solidity vectors, QR codec, Mera key derivation, firewall,
+# 65 tests + 1 skipped live test: menu tree ⇄ Solidity vectors, QR codec, Mera key derivation, firewall,
 # preflight, error sentences, welcome plan, reserve window, counter signing, red-team builder, fx hints
 
 E2E=1 pnpm vitest run test/e2e.live.test.ts

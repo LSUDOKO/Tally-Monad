@@ -113,14 +113,14 @@ Evidence (more in [docs/VERIFY.md](docs/VERIFY.md)):
 | Path | What |
 |---|---|
 | [`contracts`](contracts) | Foundry: `Tally.sol`, `MenuMerkle.sol`, `Drip.sol`, `MockAUSD.sol`, 32 tests including the attack suite |
-| [`web`](web) | Next.js PWA: Mera sign-in, allowance, scan, assistant, Second Look, receipts, family top-up, merchant mode, red team; 55 vitest tests + 1 live testnet run |
+| [`web`](web) | Next.js PWA: Mera sign-in, allowance, scan, assistant, Second Look, receipts, family top-up, merchant mode, red team; 65 vitest tests + 1 live testnet run |
 | [`indexer`](indexer) | Envio HyperIndex |
 | [`android`](android) | The Android app: a Trusted Web Activity over the live app (so Mera passkeys run in Chrome), verified with Digital Asset Links |
 | [`docs`](docs) | [Market gap](docs/MARKET-GAP.md), [Monad notes](docs/MONAD.md), [verify guide](docs/VERIFY.md), [plan](docs/superpowers/plans/2026-10-13-tally-monad.md), and the original Solana design docs this was ported from |
 
 ```bash
 cd contracts && forge test                 # 32 tests: invariants, attacks, slashing, drip
-cd web && pnpm install && pnpm test        # 55 tests: menu tree ⇄ Solidity vector, firewall, preflight, keys…
+cd web && pnpm install && pnpm test        # 65 tests: menu tree ⇄ Solidity vector, firewall, preflight, keys…
 E2E=1 pnpm vitest run test/e2e.live.test.ts  # real Monad Testnet: pay, second look, replay, top-up
 ```
 
