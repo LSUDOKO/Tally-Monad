@@ -1,4 +1,4 @@
-import { createWalletClient, http, parseEventLogs, type LocalAccount } from "viem";
+import { createWalletClient, encodeAbiParameters, http, keccak256, parseEventLogs, type LocalAccount } from "viem";
 import { RPC, TALLY, chain, publicClient, withMargin } from "./chain";
 import { TALLY_ABI } from "./abi";
 import { buildTree, cosignTypes, tallyDomain, type Hex, type Item, type SignedMenu } from "./menu";
@@ -6,7 +6,7 @@ import { CATEGORY_LABEL, todayUsage, type Capsule } from "./tally";
 
 export type Preflight =
   | { ok: true; needsOwner: boolean; reasons: string[] }
-  | { ok: false; code: "paused" | "expired" | "stale" | "category" | "per-tx" | "daily" | "balance"; message: string };
+  | { ok: false; code: "paused" | "expired" | "stale" | "category" | "per-tx" | "daily" | "balance" | "paid"; message: string };
 
 const money = (micro: bigint) => `$${(Number(micro) / 1e6).toFixed(2)}`;
 
@@ -70,4 +70,21 @@ export async function pay(
   if (r.status !== "success") throw new Error("Payment reverted");
   const ev = parseEventLogs({ abi: TALLY_ABI, logs: r.logs, eventName: "Paid" })[0] as unknown as { args: { receipt: Hex } };
   return { hash, receipt: ev.args.receipt, ms: Math.round(performance.now() - t0) };
+}
+
+/** The contract's duplicate-settlement nullifier: keccak(abi.encode(capsuleId, merchant, menuNonce, itemId)). */
+export function receiptKey(capsuleId: bigint, merchant: Hex, menuNonce: bigint, itemId: Hex): Hex {
+  return keccak256(
+    encodeAbiParameters([{ type: "uint256" }, { type: "address" }, { type: "uint64" }, { type: "bytes16" }], [capsuleId, merchant, menuNonce, itemId]),
+  );
+}
+
+/** Checked before Face ID, so a repeat tap hears "Already paid" without a prompt. */
+export async function alreadyPaid(capsuleId: bigint, m: SignedMenu, item: Item): Promise<boolean> {
+  return (await publicClient.readContract({
+    address: TALLY,
+    abi: TALLY_ABI,
+    functionName: "receiptUsed",
+    args: [receiptKey(capsuleId, m.header.merchant, m.header.menuNonce, item.itemId)],
+  })) as boolean;
 }
