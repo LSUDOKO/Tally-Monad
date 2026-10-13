@@ -41,12 +41,14 @@ export default function Welcome() {
 
       <h1 className="statement mt-8 text-[40px] leading-[44px]">Let your agent pay, only for what tallies.</h1>
 
-      <div className="relative mt-7 overflow-hidden rounded-[28px] bg-[linear-gradient(180deg,#2e78ff,#1f6bff_50%,#0f3fb4)] p-5 pt-44 shadow-[0_20px_60px_-20px_rgba(31,107,255,0.8)]">
-        <div className="absolute -top-2 right-2">
+      <div className="relative mt-7 h-60 overflow-hidden rounded-[28px] bg-[linear-gradient(180deg,#2e78ff,#1f6bff_50%,#0f3fb4)] shadow-[0_20px_60px_-20px_rgba(31,107,255,0.8)]">
+        <div className="absolute bottom-[-12px] right-1">
           <Mascot mood="hero" height={250} glow={false} />
         </div>
-        <p className="label relative !text-white/80">Tally · pocket money with proof</p>
-        <p className="statement relative mt-1 text-[32px] leading-[37px] text-white">Pay with proof.</p>
+        <div className="absolute bottom-5 left-5 max-w-[52%]">
+          <p className="label !text-white/80">Tally / protected payments</p>
+          <p className="statement mt-1 text-[30px] leading-[34px] text-white">Pay with proof.</p>
+        </div>
       </div>
 
       <p className="mt-5 text-[15px] leading-[22px] text-muted">
