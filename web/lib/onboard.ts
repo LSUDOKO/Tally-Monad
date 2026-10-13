@@ -15,3 +15,7 @@ export function welcomePlan(s: { owner: string; agent: string; ownerMon: bigint;
     usd: isNew ? WELCOME_USD : 0n,
   };
 }
+
+/** Monad reserve balance: below 10 MON, a sender gets one value-moving tx per 3-block window. */
+export const RESERVE_WINDOW_BLOCKS = 3n;
+export const windowClear = (nonceNow: number, nonceKBlocksAgo: number) => nonceNow === nonceKBlocksAgo;
