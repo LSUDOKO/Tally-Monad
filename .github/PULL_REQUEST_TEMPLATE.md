@@ -4,22 +4,21 @@
 
 ## Area
 
-- [ ] Program (`programs/tally`, `crates/tally-core`)
-- [ ] SDK or scripts
-- [ ] Android app
-- [ ] Tally cloud / MCP / Telegram
+- [ ] Contracts (`contracts/`)
+- [ ] Web app (`web/`)
+- [ ] Indexer (`indexer/`)
 - [ ] Docs or CI
 
 ## Checklist
 
-- [ ] CI checks pass locally (see [CONTRIBUTING.md](../CONTRIBUTING.md#run-the-checks-ci-runs))
-- [ ] Every new on-chain check has a LiteSVM test asserting its exact error code, and a row in `THREAT_SUITE.md`
-- [ ] Encoding changes update `fixtures/` and pass in Rust, TypeScript and Kotlin
-- [ ] IDL changes regenerate the SDK (`pnpm -C sdk codegen`)
-- [ ] New errors have a plain-language sentence in the SDK and the app
+- [ ] `forge test`, `pnpm test` (web and indexer) and `tsc --noEmit` pass
+- [ ] Every new on-chain check has a Foundry test asserting its exact custom error
+- [ ] Encoding changes keep the TypeScript ⇄ Solidity Merkle vector green
+- [ ] New contract errors have a plain-language sentence in `web/lib/errors.ts`
+- [ ] Writes use explicit gas (`estimateGas × 1.2`)
 - [ ] A line under `[Unreleased]` in `CHANGELOG.md`
-- [ ] No keys, `.env` values or recovery phrases in the diff, screenshots or logs
+- [ ] No keys or `.env` values in the diff, screenshots or logs
 
 ## Evidence
 
-<!-- Test output, a devnet transaction signature, or a screenshot / recording for UI changes. -->
+<!-- Test output, a Monad Testnet transaction hash, or a screenshot / recording for UI changes. -->
