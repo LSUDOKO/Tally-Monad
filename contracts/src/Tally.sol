@@ -116,6 +116,8 @@ contract Tally is EIP712, ReentrancyGuard {
     mapping(address => Merchant) public merchants;
     mapping(bytes32 => bool) public receiptUsed;
     mapping(bytes32 => bool) public fraudProven;
+    /// Every menu-signing key a merchant ever registered: rotating a key never escapes a fraud proof.
+    mapping(address => mapping(address => bool)) public everSigner;
 
     constructor(address token_) EIP712("Tally", "1") {
         token = IERC20(token_);
@@ -127,6 +129,7 @@ contract Tally is EIP712, ReentrancyGuard {
         if (merchants[msg.sender].payout != address(0)) revert AlreadyRegistered();
         if (payout == address(0) || payout == address(this) || signingKey == address(0)) revert InvalidRules();
         merchants[msg.sender] = Merchant(signingKey, payout, name, bond, 0, true);
+        everSigner[msg.sender][signingKey] = true;
         if (bond > 0) token.safeTransferFrom(msg.sender, address(this), bond);
         emit MerchantRegistered(msg.sender, name, signingKey, payout, bond);
     }
@@ -134,6 +137,7 @@ contract Tally is EIP712, ReentrancyGuard {
     function rotateSigningKey(address k) external {
         if (k == address(0)) revert InvalidRules();
         _m(msg.sender).signingKey = k;
+        everSigner[msg.sender][k] = true;
     }
 
     function setActive(bool a) external {
@@ -307,7 +311,7 @@ contract Tally is EIP712, ReentrancyGuard {
     ) external nonReentrant {
         Merchant storage m = _m(menu.merchant);
         if (msg.sender == menu.merchant) revert SelfReport();
-        if (ECDSA.recover(menuDigest(menu), sig) != m.signingKey) revert WrongSigner();
+        if (!everSigner[menu.merchant][ECDSA.recover(menuDigest(menu), sig)]) revert WrongSigner();
         if (!MenuMerkle.verify(MenuMerkle.leaf(a.itemId, a.category, a.price, a.floor), proofA, menu.menuRoot)) {
             revert NotOnMenu();
         }
