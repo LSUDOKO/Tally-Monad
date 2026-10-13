@@ -1,0 +1,262 @@
+{
+  "fps": 30,
+  "width": 1920,
+  "height": 1080,
+  "voice": "af_heart",
+  "scenes": [
+    {
+      "id": "hook",
+      "start": 0,
+      "duration": 8,
+      "eyebrow": "",
+      "title": "Your parents send the money.\nYour AI spends it.",
+      "sub": "Who checks what it buys?",
+      "visual": {
+        "kind": "story",
+        "image": "story/01-family-video-call.png"
+      },
+      "vo": "My parents send me money from home. These days, my AI assistant spends it. So who checks what it actually buys?"
+    },
+    {
+      "id": "problem-money",
+      "start": 8,
+      "duration": 11,
+      "eyebrow": "The real case",
+      "title": "Money from home\nis slow and leaky.",
+      "sub": "6.36% average cost to send $200 · days to arrive · spent on anything",
+      "visual": {
+        "kind": "story",
+        "image": "story/02-parents-bank-transfer.png",
+        "stats": [
+          [
+            "1.88M",
+            "Indian students abroad"
+          ],
+          [
+            "6.36%",
+            "average remittance cost"
+          ],
+          [
+            "days",
+            "before it arrives"
+          ]
+        ]
+      },
+      "vo": "Riya studies in Toronto. Her parents in Pune send her lunch money through a bank. It takes days, about six percent disappears in fees, and once it lands, nobody can say what it was spent on."
+    },
+    {
+      "id": "problem-agent",
+      "start": 19,
+      "duration": 11,
+      "eyebrow": "The new risk",
+      "title": "One line of menu text\nand the agent upsells.",
+      "sub": "“Regular is sold out” → it buys the large. Every spending cap says yes.",
+      "visual": {
+        "kind": "story",
+        "image": "story/03-student-ai-upsell.png",
+        "stats": [
+          [
+            "2–3×",
+            "pricier picks under injection (AgentLAB)"
+          ],
+          [
+            "0",
+            "caps that check the item"
+          ]
+        ]
+      },
+      "vo": "And now her assistant orders for her. One line of menu text says the regular is sold out, and it buys the large. Every spending cap says yes, because caps check the amount, not the item."
+    },
+    {
+      "id": "gap",
+      "start": 30,
+      "duration": 8,
+      "eyebrow": "The gap",
+      "title": "Greenlight controls the store.\nAP2 controls the cart.",
+      "sub": "Nobody controls the item.",
+      "visual": {
+        "kind": "gap"
+      },
+      "vo": "Teen cards control the store. Agent payment schemes control the cart. Nobody controls the item, or the agent's choice of it."
+    },
+    {
+      "id": "meet",
+      "start": 38,
+      "duration": 8,
+      "eyebrow": "Monad · Consumer Products & Payments",
+      "title": "Meet Tally.",
+      "sub": "Pocket money that can't be talked into the wrong purchase.",
+      "visual": {
+        "kind": "phone",
+        "video": "rec/01-welcome.mp4"
+      },
+      "vo": "Meet Tally. Pocket money that can't be talked into the wrong purchase. Built on Monad."
+    },
+    {
+      "id": "signin",
+      "start": 46,
+      "duration": 12,
+      "eyebrow": "01 · One passkey",
+      "title": "Face ID.\nNo seed phrase.",
+      "sub": "Mera turns one passkey into your account, your agent's capped key and your café's menu key.",
+      "visual": {
+        "kind": "phone",
+        "video": "rec/02-signup.mp4",
+        "chip": "Mera · createPasskeyWithPrfOutput"
+      },
+      "vo": "Riya signs up with Face ID. Mera turns one passkey into three keys: her account, her agent's capped key, and a menu key if she ever runs a café. No seed phrase, no extension, no gas."
+    },
+    {
+      "id": "rules",
+      "start": 58,
+      "duration": 10,
+      "eyebrow": "02 · Rules on Monad",
+      "title": "Set the rules\nonce.",
+      "sub": "Coffee and food · $10 a purchase · $25 a day. Only her key can change them.",
+      "visual": {
+        "kind": "phone",
+        "video": "rec/03-allowance.mp4"
+      },
+      "vo": "She sets the rules once: coffee and food, ten dollars a purchase, twenty-five a day. They live in a Monad contract, and only her key can change them."
+    },
+    {
+      "id": "pay",
+      "start": 68,
+      "duration": 16,
+      "eyebrow": "03 · Scan. Ask. Pay.",
+      "title": "The agent proposes.\nThe contract checks.",
+      "sub": "Signed menu · cheapest match · paid to the registered counter · settled in under a second",
+      "visual": {
+        "kind": "phone",
+        "video": "rec/04-pay.mp4",
+        "chip": "Kimi behind a context firewall"
+      },
+      "vo": "At the counter she scans a menu the café signed. She says oat latte. Her agent, behind a context firewall, sees only items and prices, picks the cheapest match, and Tally's contract checks every rule before a cent moves. Paid in under a second."
+    },
+    {
+      "id": "secondlook",
+      "start": 84,
+      "duration": 13,
+      "eyebrow": "04 · Second look",
+      "title": "Pricier?\nIt waits for you.",
+      "sub": "$1.40 more than the cheapest coffee → her Face ID, or nothing moves.",
+      "visual": {
+        "kind": "phone",
+        "video": "rec/05-secondlook.mp4"
+      },
+      "vo": "If the agent is talked into the large one, the contract won't let it pay alone. It's one dollar forty more than the cheapest coffee, so Tally waits for Riya's Face ID."
+    },
+    {
+      "id": "family",
+      "start": 97,
+      "duration": 13,
+      "eyebrow": "05 · Family, from anywhere",
+      "title": "Mom tops it up.\nIn a second.",
+      "sub": "One link · passkey · AUSD · fee $0.00 · “For lunches this week”",
+      "visual": {
+        "kind": "phone",
+        "video": "rec/06-family.mp4",
+        "story": "story/04-mom-sends-from-pune.png",
+        "chip": "Agora AUSD"
+      },
+      "vo": "Back in Pune, her mom opens a link, uses her fingerprint, and sends twenty dollars with a note: for lunches this week. It arrives in about a second, in dollars, and it can only be spent the way the rules allow."
+    },
+    {
+      "id": "redteam",
+      "start": 110,
+      "duration": 12,
+      "eyebrow": "06 · Red team",
+      "title": "Attack your\nown agent.",
+      "sub": "Fake counter · phantom fee · price ×2 · upsell. Four attacks, four reverts.",
+      "visual": {
+        "kind": "phone",
+        "video": "rec/07-redteam.mp4"
+      },
+      "vo": "Don't take our word for it. Attack your own agent: a fake counter, a phantom fee, a doubled price, an upsell. All four reach the contract, and all four are refused."
+    },
+    {
+      "id": "receipts",
+      "start": 122,
+      "duration": 10,
+      "eyebrow": "07 · On the record",
+      "title": "Every payment,\non the record.",
+      "sub": "Receipts, family top-ups, blocked attempts and points, indexed by Envio.",
+      "visual": {
+        "kind": "phone",
+        "video": "rec/08-receipts.mp4",
+        "chip": "Envio HyperIndex"
+      },
+      "vo": "Every payment, top-up and blocked attempt is on the record, indexed by Envio, with points for real purchases only."
+    },
+    {
+      "id": "merchant",
+      "start": 132,
+      "duration": 8,
+      "eyebrow": "08 · Any café",
+      "title": "Same passkey.\nOpen a counter.",
+      "sub": "Your Face ID signs the menu. A bond proves you're honest.",
+      "visual": {
+        "kind": "phone",
+        "video": "rec/09-merchant.mp4"
+      },
+      "vo": "Any café can join. The same passkey signs its menu, and a bond that anyone can slash keeps the menu honest."
+    },
+    {
+      "id": "proof",
+      "start": 140,
+      "duration": 26,
+      "eyebrow": "Proof",
+      "title": "Real, on Monad.",
+      "sub": "",
+      "visual": {
+        "kind": "proof",
+        "cards": [
+          {
+            "sponsor": "Monad",
+            "line": "Sourcify-verified contract · 32 contract tests · settled in 0.6 s",
+            "proof": "proof/forge-test.txt",
+            "shot": "shots/explorer-paid.png"
+          },
+          {
+            "sponsor": "Mera",
+            "line": "One passkey → owner, agent and counter keys",
+            "proof": "proof/code-mera.txt"
+          },
+          {
+            "sponsor": "Agora AUSD",
+            "line": "fund(id, amount, note) · family top-up arrives in a second",
+            "proof": "proof/code-fund.txt"
+          },
+          {
+            "sponsor": "Envio",
+            "line": "Hosted HyperIndex serving payments and top-ups",
+            "proof": "proof/envio-graphql.txt"
+          },
+          {
+            "sponsor": "Kimi",
+            "line": "kimi-k2.6 picks an item id; rules fallback",
+            "proof": "proof/kimi-models.txt"
+          },
+          {
+            "sponsor": "Android",
+            "line": "APK on a Moto G34 · Digital Asset Links verified",
+            "shot": "shots/android-welcome.png"
+          }
+        ]
+      },
+      "vo": "And it's real. A Sourcify-verified contract on Monad testnet, thirty-two contract tests and sixty-five app tests. Mera derives every key from one passkey. AUSD top-ups carry a purpose note. Envio indexes the history. Kimi picks behind a firewall. And it runs as an Android app on a real phone."
+    },
+    {
+      "id": "outro",
+      "start": 166,
+      "duration": 9,
+      "eyebrow": "",
+      "title": "Tally controls the item.",
+      "sub": "tally-monad.vercel.app · Android APK on GitHub",
+      "visual": {
+        "kind": "outro"
+      },
+      "vo": "Greenlight controls the store. AP2 controls the cart. Tally controls the item."
+    }
+  ]
+}
