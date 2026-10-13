@@ -3,11 +3,11 @@ name: tally-indexer
 disable_default_cross_chain: true
 chains:
 - id: 10143
-  start_block: 70733299
+  start_block: 70747699
   contracts:
   - name: Tally
     address:
-    - "0x5c7b28d93a424d87018fBf11cD86217a0d68AEE7"
+    - "0xe7d22F222a799218908997f837CF3e0Fd1c1e40a"
     events:
     - event: CapsuleCreated(uint256 indexed id, address indexed owner, address agent)
     - event: Funded(uint256 indexed id, address indexed from, uint128 amount, string note)
