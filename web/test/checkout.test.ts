@@ -72,3 +72,11 @@ describe("receipt key", () => {
     expect(receiptKey(1n, "0x000000000000000000000000000000000000cafe", 7n, "0x7a11e0000000000000000000000000a1")).toBe("0xe77e0ba8e8408fa324fd53de32c1e23c8e3e7910ba13d87aa6df367bf5eb84df");
   });
 });
+
+describe("token errors", () => {
+  it("explains an ERC20 shortfall from the stablecoin, not just Tally errors", () => {
+    const abi = [{ type: "error", name: "ERC20InsufficientBalance", inputs: [{ name: "sender", type: "address" }, { name: "balance", type: "uint256" }, { name: "needed", type: "uint256" }] }] as const;
+    const data = encodeErrorResult({ abi, errorName: "ERC20InsufficientBalance", args: ["0x0000000000000000000000000000000000000001", 1n, 2n] });
+    expect(humanError({ data })).toMatch(/not enough money/i);
+  });
+});
