@@ -10,7 +10,7 @@ import { Scene } from "./scenes/Scene";
 import { SCENES, STORYBOARD, TOTAL_FRAMES, sceneFrames } from "./storyboard";
 import { C, FADE } from "./theme";
 
-const MUSIC = 0.1;
+const MUSIC = 0.5;
 /** Music bed under the voice: 2 s fade-in, 3 s fade-out at the end of the film. */
 const musicVolume = (f: number) =>
   interpolate(f, [0, 2 * STORYBOARD.fps, TOTAL_FRAMES - 3 * STORYBOARD.fps, TOTAL_FRAMES], [0, MUSIC, MUSIC, 0], {
