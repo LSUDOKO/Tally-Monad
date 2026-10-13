@@ -112,7 +112,7 @@ function ScanInner() {
       <div className="flex flex-1 flex-col">
         <Header title="Pay" back="/home" />
         <p className="text-muted">Set up your allowance first.</p>
-        <Link href="/allowance" className="mt-6">
+        <Link href="/allowance" className="block mt-6">
           <Button>Set up my allowance</Button>
         </Link>
       </div>
@@ -253,7 +253,7 @@ function ScanInner() {
             Proof ›
           </a>
           <div className="mt-auto w-full space-y-3 pt-10">
-            <Link href="/home">
+            <Link href="/home" className="block">
               <Button>Done</Button>
             </Link>
             <Button variant="ghost" onClick={() => setSt({ s: "scan" })}>

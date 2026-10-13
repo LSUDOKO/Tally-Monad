@@ -37,7 +37,7 @@ function HomeInner() {
           </p>
         </Card>
         <div className="mt-auto pt-8">
-          <Link href="/allowance">
+          <Link href="/allowance" className="block">
             <Button disabled={a.walletUsd === 0n}>Set up my allowance</Button>
           </Link>
         </div>
@@ -86,7 +86,7 @@ function HomeInner() {
         </div>
       </Card>
 
-      <Link href="/scan">
+      <Link href="/scan" className="block">
         <Button disabled={c.frozen}>Scan to pay</Button>
       </Link>
 

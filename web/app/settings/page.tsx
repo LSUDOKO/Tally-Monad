@@ -51,10 +51,10 @@ function SettingsInner() {
         </ul>
         <p className="mt-3 text-xs text-faint">All three come from your passkey. Nothing to write down, nothing stored on a server.</p>
       </Card>
-      <Link href="/merchant">
+      <Link href="/merchant" className="block">
         <Button variant="ghost">Run a counter</Button>
       </Link>
-      <Link href="/redteam">
+      <Link href="/redteam" className="block">
         <Button variant="ghost">Try to trick my assistant</Button>
       </Link>
       <Button
