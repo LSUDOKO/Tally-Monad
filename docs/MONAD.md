@@ -3,17 +3,18 @@
 | What | Address / link |
 |---|---|
 | Network | Monad Testnet, chain id 10143, RPC `https://testnet-rpc.monad.xyz` |
-| Tally contract | [`0x5c7b28d93a424d87018fBf11cD86217a0d68AEE7`](https://testnet.monadvision.com/address/0x5c7b28d93a424d87018fBf11cD86217a0d68AEE7) (Sourcify exact match) |
-| AUSD (test) | [`0x935864aB732A31da51738C6dF9705F0dB415754F`](https://testnet.monadvision.com/address/0x935864aB732A31da51738C6dF9705F0dB415754F): 6-decimal stand-in. Agora AUSD exists only on mainnet (`0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a`) |
+| Tally contract | [`0xe7d22F222a799218908997f837CF3e0Fd1c1e40a`](https://testnet.monadvision.com/address/0xe7d22F222a799218908997f837CF3e0Fd1c1e40a) (Sourcify exact match) |
+| AUSD (test) | [`0xad4B854A7eF968FDC53D4C8CC6590Dc24Cb536F1`](https://testnet.monadvision.com/address/0xad4B854A7eF968FDC53D4C8CC6590Dc24Cb536F1): 6-decimal stand-in. Agora AUSD exists only on mainnet (`0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a`) |
 | Demo café (merchant authority) | `0xF19e5Ab096Eb0fD81181e2bCFC51F6DD5a2FF7f1`, with a $500 bond |
 | Demo café menu signer | `0x44465dbA8aF170EaB1d4aAD438643Db778Acdcb6` |
-| Deploy block | 70733299 |
+| Drip (one-transaction welcome) | [`0xafA3C3598E2051BDd615Fd7b7df8018fE22B625E`](https://testnet.monadvision.com/address/0xafA3C3598E2051BDd615Fd7b7df8018fE22B625E) |
+| Deploy block | 70747699 |
 
 ## Deploy transactions
 
-- [Deploy MockAUSD](https://testnet.monadvision.com/tx/0x888410e10d42820735edf1d7e16a454ca71f635bedefd2d6de936f9875d92b25)
-- [Deploy Tally](https://testnet.monadvision.com/tx/0x592dd5181c24c74b5b92004db07ebbd52cb4e419b5c9731af953f49eff049c2c)
-- [Register the demo café](https://testnet.monadvision.com/tx/0x3f6c51ef74c158f728afee88194b4ac67b5a539f921607912ba597aaa6c4271b)
+- [Deploy MockAUSD](https://testnet.monadvision.com/tx/0xfc59670096c9e6a6b1d6b9e18da18625665b61395649fd3faaf3bd92b3fd36c1)
+- [Deploy Tally](https://testnet.monadvision.com/tx/0x3b05bb8ab9d4ceef7bd15c1febad5a1d52ef834d95b6e0322695544ed8e37328)
+- [Register the demo café](https://testnet.monadvision.com/tx/0x1683f8d3f6db67e0452cc4da394f6f82913ea01921c0910d6166ec6d0237cc57)
 
 ## Gas (forge gas report)
 
