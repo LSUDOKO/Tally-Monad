@@ -46,3 +46,15 @@ describe("blocked attempts", () => {
     expect(b[1].price).toBe(9_900_000n);
   });
 });
+
+describe("family top-ups", () => {
+  it("leaves out the owner's own deposits", async () => {
+    const { familyOnly } = await import("../lib/activity");
+    const owner = "0xAbC0000000000000000000000000000000000001";
+    const rows = [
+      { capsuleId: 1n, from: "0xabc0000000000000000000000000000000000001", amount: 40n, note: "", txHash: "0x1", timestamp: 1 },
+      { capsuleId: 1n, from: "0x0000000000000000000000000000000000000f00", amount: 20n, note: "For lunches", txHash: "0x2", timestamp: 2 },
+    ] as const;
+    expect(familyOnly([...rows], owner).map((t) => t.note)).toEqual(["For lunches"]);
+  });
+});
