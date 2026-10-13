@@ -6,7 +6,7 @@ We record the time from opening the link to "Paid", where they hesitated, and an
 
 | # | Who (role) | Device | Time to first payment | Hesitated at | "Crypto" words noticed | What we changed |
 |---|---|---|---|---|---|---|
-| 0 | Automated run (Playwright, virtual passkey) | Chromium, 390×844 | ~25 s (welcome credit ≈ 7 s) | none | none | Found two Monad reserve-balance and gas bugs in the welcome credit; fixed with `Drip.welcome` and estimated gas |
+| 0 | Automated run (Playwright, virtual passkey) | Chromium, 390×844 | 19 s (welcome 5 s, allowance 11 s, paid 0.9 s settle) | none | none | Found two Monad reserve-balance and gas bugs in the welcome credit; fixed with `Drip.welcome` and estimated gas |
 | 1 | | | | | | |
 | 2 | | | | | | |
 | 3 | | | | | | |
