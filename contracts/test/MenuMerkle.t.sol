@@ -18,6 +18,6 @@ contract MenuMerkleTest is Test {
         // item 0x11..11, coffee(3), $4.50, floor $4.50; same vector in web/test/menu.test.ts
         bytes32 l = h.leaf(bytes16(0x11111111111111111111111111111111), 3, 4_500_000, 4_500_000);
         assertEq(l, keccak256(abi.encodePacked(hex"00", hex"11111111111111111111111111111111", hex"0003",
-            hex"000000000000000000000000004faa30", hex"000000000000000000000000004faa30")));
+            hex"0000000000000000000000000044aa20", hex"0000000000000000000000000044aa20")));
     }
 }
