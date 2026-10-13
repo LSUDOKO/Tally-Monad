@@ -1,0 +1,18 @@
+$ cd contracts && forge test
+Ran 3 tests for test/MenuMerkle.t.sol:MenuMerkleTest
+Suite result: ok. 3 passed; 0 failed; 0 skipped; finished in 3.17ms (2.25ms CPU time)
+Ran 2 tests for test/Drip.t.sol:DripWelcomeTest
+Suite result: ok. 2 passed; 0 failed; 0 skipped; finished in 3.43ms (2.12ms CPU time)
+Ran 2 tests for test/Drip.t.sol:DripTest
+Suite result: ok. 2 passed; 0 failed; 0 skipped; finished in 3.53ms (1.92ms CPU time)
+Ran 2 tests for test/MockAUSD.t.sol:MockAUSDTest
+Suite result: ok. 2 passed; 0 failed; 0 skipped; finished in 3.57ms (1.46ms CPU time)
+Ran 23 tests for test/Tally.t.sol:TallyTest
+[PASS] test_FloorFraudSlashes() (gas: 166929)
+[PASS] test_PaysCheapestMatchAutonomously() (gas: 146809)
+[PASS] test_PricierPickWithOwnerCosign() (gas: 151615)
+[PASS] test_RevertPriceInflation() (gas: 60299)
+[PASS] test_RevertReplay() (gas: 156428)
+…
+Suite result: ok. 23 passed; 0 failed; 0 skipped; finished in 9.68ms (82.01ms CPU time)
+Ran 5 test suites in 19.03ms (23.39ms CPU time): 32 tests passed, 0 failed, 0 skipped (32 total tests)

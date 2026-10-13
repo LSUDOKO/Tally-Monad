@@ -1,0 +1,10 @@
+$ curl -s https://sourcify.dev/server/v2/contract/10143/0xe7d22F222a799218908997f837CF3e0Fd1c1e40a | python -m json.tool
+{
+    "matchId": "56062990",
+    "creationMatch": "exact_match",
+    "runtimeMatch": "exact_match",
+    "verifiedAt": "2026-10-13T18:03:50Z",
+    "match": "exact_match",
+    "chainId": "10143",
+    "address": "0xe7d22F222a799218908997f837CF3e0Fd1c1e40a"
+}

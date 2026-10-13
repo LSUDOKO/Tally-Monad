@@ -1,0 +1,19 @@
+$ cast receipt 0xa2660324300c27f8e75810636742b44de66ca96fc60161b982794194219268c4 status -r https://testnet-rpc.monad.xyz
+0 (failed)
+# ^ the 2nd welcome transfer, sent right after the 1st
+
+$ cast receipt 0xa2660324300c27f8e75810636742b44de66ca96fc60161b982794194219268c4 -r https://testnet-rpc.monad.xyz | grep -E 'blockNumber|from|gasUsed|status'
+blockNumber          70737772
+from                 0xF19e5Ab096Eb0fD81181e2bCFC51F6DD5a2FF7f1
+gasUsed              21000
+status               0 (failed)
+
+# fix: Drip.welcome sends every welcome in ONE tx (Monad reserve balance, k=3)
+$ cast receipt 0x3d8d1b76d752d8856a42efbb1dddb5e3e9de1f8da3fe5bf71069953cf62bfe4f -r https://testnet-rpc.monad.xyz | grep -E 'blockNumber|contractAddress|gasUsed|status'
+blockNumber          70741735
+contractAddress      0xafA3C3598E2051BDd615Fd7b7df8018fE22B625E
+gasUsed              234646
+status               1 (success)
+
+$ cast code 0xafA3C3598E2051BDd615Fd7b7df8018fE22B625E -r https://testnet-rpc.monad.xyz | grep -c $(cast sig "welcome(address[],uint256[],address,address,uint256)" | cut -c3-)
+1

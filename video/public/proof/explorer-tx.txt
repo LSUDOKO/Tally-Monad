@@ -1,0 +1,17 @@
+$ cast receipt 0x583fa31698333d4fd56332ff7a6671d2bfb533f9501f354463b8bc524554623c -r https://testnet-rpc.monad.xyz
+blockHash            0x686dea8e3002f8ac69b78cab191e6c6830b02b0b6d53953b3aefe6dee7cc6bf0
+blockNumber          70752030
+effectiveGasPrice    102000000000
+from                 0x8f7A9A3d7A101ed90Ff914BA98f0dBf0Dc9E5203
+gasUsed              184720
+status               1 (success)
+transactionHash      0x583fa31698333d4fd56332ff7a6671d2bfb533f9501f354463b8bc524554623c
+to                   0xe7d22F222a799218908997f837CF3e0Fd1c1e40a
+
+$ cast receipt 0x583fa31698333d4fd56332ff7a6671d2bfb533f9501f354463b8bc524554623c --json -r https://testnet-rpc.monad.xyz \
+    | jq -r '.logs[1].data' | xargs cast decode-abi "Paid()(bytes16,uint16,uint128,bool,bytes32)"
+0x7a11e0000000000000000000000000a2
+3
+5900000 [5.9e6]
+true
+0xbff953fc2489f07c2f40b0be414dd013024f82a7781f8177156f84f5355ab73b

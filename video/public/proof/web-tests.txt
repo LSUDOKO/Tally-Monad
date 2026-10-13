@@ -1,0 +1,10 @@
+$ cd web && pnpm test
+
+$ vitest run
+
+ RUN  v5.0.4 /home/arpit/Desktop/hackathon_projects/Tally-Monad/web
+
+ Test Files  14 passed | 1 skipped (15)
+      Tests  65 passed | 1 skipped (66)
+   Start at  01:13:10
+   Duration  2.19s (import 87%, tests 8%, transform 4%, worker 1%)

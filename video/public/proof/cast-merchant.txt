@@ -1,0 +1,16 @@
+$ cast call 0xe7d22F222a799218908997f837CF3e0Fd1c1e40a "merchants(address)(address,address,bytes32,uint128,uint128,bool)" 0xF19e5Ab096Eb0fD81181e2bCFC51F6DD5a2FF7f1 --rpc-url https://testnet-rpc.monad.xyz
+0x44465dbA8aF170EaB1d4aAD438643Db778Acdcb6
+0xF19e5Ab096Eb0fD81181e2bCFC51F6DD5a2FF7f1
+0x54616c6c792044656d6f20436166650000000000000000000000000000000000
+500000000 [5e8]
+0
+true
+
+$ cast parse-bytes32-string 0x54616c6c792044656d6f20436166650000000000000000000000000000000000
+Tally Demo Cafe
+
+$ cast call 0xe7d22F222a799218908997f837CF3e0Fd1c1e40a "nextCapsuleId()(uint256)" --rpc-url https://testnet-rpc.monad.xyz
+11
+
+$ cast chain-id --rpc-url https://testnet-rpc.monad.xyz
+10143

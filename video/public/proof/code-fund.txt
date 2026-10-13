@@ -1,0 +1,21 @@
+$ sed -n '94p;183,193p;274,279p' contracts/src/Tally.sol
+    event Funded(uint256 indexed id, address indexed from, uint128 amount, string note);
+…
+    function fund(uint256 id, uint128 amount, string calldata note) external nonReentrant {
+        if (_capsules[id].owner == address(0)) revert Unauthorized();
+        if (bytes(note).length > 64) revert InvalidRules();
+        _fund(id, amount, note);
+    }
+
+    function _fund(uint256 id, uint128 amount, string memory note) internal {
+        _capsules[id].balance += amount;
+        token.safeTransferFrom(msg.sender, address(this), amount);
+        emit Funded(id, msg.sender, amount, note);
+    }
+…
+        // 8. Cheapest-Match, bond tier and extended windows need the owner
+        bool needsOwner = item.price > item.floor || m.bond < c.rules.minMerchantBond || extended;
+        if (needsOwner && msg.sender != c.owner) {
+            bytes32 d = cosignDigest(id, menu.merchant, menu.menuNonce, item.itemId, item.price);
+            if (ownerSig.length != 65 || ECDSA.recover(d, ownerSig) != c.owner) revert OwnerCosignRequired();
+        }
