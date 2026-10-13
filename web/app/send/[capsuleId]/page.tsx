@@ -48,7 +48,15 @@ function SendInner() {
     try {
       const want = BigInt(amount) * 1_000_000n;
       // the welcome credit can take a few seconds to land after sign-up
-      for (let i = 0; i < 20 && (await usdBalance(s.keys.owner.address)) < want; i++) await new Promise((r) => setTimeout(r, 1000));
+      let have = await usdBalance(s.keys.owner.address);
+      for (let i = 0; i < 20 && have < want; i++) {
+        await new Promise((r) => setTimeout(r, 1000));
+        have = await usdBalance(s.keys.owner.address);
+      }
+      if (have < want) {
+        setErr(`You have $${(Number(have) / 1e6).toFixed(2)} to send right now. Pick a smaller amount.`);
+        return;
+      }
       const t0 = performance.now();
       const r = await fundAllowance(s.keys.owner, id, want, note);
       setDone({ hash: r.transactionHash, ms: Math.round(performance.now() - t0) });
