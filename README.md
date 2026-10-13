@@ -12,7 +12,7 @@ Family tops up a student's allowance from anywhere, in about a second, for cents
 It can only buy what a counter signed, at the signed price, inside the family's rules.<br>
 The student's AI assistant can order, but a Monad contract (not the model) makes it pick the cheapest match.
 
-**[▶ Try it: tally-monad.vercel.app](https://tally-monad.vercel.app)** · [Counter QR](https://tally-monad.vercel.app/counter) · [Contract on Monad Testnet](https://testnet.monadvision.com/address/0xe7d22F222a799218908997f837CF3e0Fd1c1e40a) · [Market gap](docs/MARKET-GAP.md) · [Verify it](docs/VERIFY.md)
+**[▶ Try it: tally-monad.vercel.app](https://tally-monad.vercel.app)** · **[Download the Android app (v2.0.0)](https://github.com/LSUDOKO/Tally-Monad/releases/download/v2.0.0/tally-monad-v2.0.0.apk)** · [Counter QR](https://tally-monad.vercel.app/counter) · [Contract on Monad Testnet](https://testnet.monadvision.com/address/0xe7d22F222a799218908997f837CF3e0Fd1c1e40a) · [Market gap](docs/MARKET-GAP.md) · [Verify it](docs/VERIFY.md)
 
 Built for **Monad Metropolis**: Consumer Products & Payments
 
@@ -20,12 +20,13 @@ Built for **Monad Metropolis**: Consumer Products & Payments
 
 ---
 
-<p align="center"><img src="docs/images/monad/flow-strip.png" alt="Checkout, Second Look, Paid, Home: recorded on Monad Testnet" width="100%"></p>
-<p align="center"><sub>Recorded on the live app against Monad Testnet: the assistant picks the cheapest latte and it pays alone; the large one waits for Face ID.</sub></p>
+<p align="center"><img src="docs/images/monad/v2/strip-1.png" alt="Welcome, Home, the agent's pick and Second Look, recorded on Monad Testnet" width="100%"></p>
+<p align="center"><img src="docs/images/monad/v2/strip-2.png" alt="Paid, red team, receipts and keys, recorded on Monad Testnet" width="100%"></p>
+<p align="center"><sub>Recorded on the live app against Monad Testnet. The agent pays the cheapest latte alone; the large one waits for Face ID; four attacks bounce off the contract.</sub></p>
 
 ## Judges: try it in two minutes
 
-You need a **phone** whose passkeys sync (iCloud Keychain, Google Password Manager or 1Password). Desktop Chrome with a passkey saved only to that profile can't produce the PRF output Mera needs.
+Use a **phone**: install the [Android app](https://github.com/LSUDOKO/Tally-Monad/releases/download/v2.0.0/tally-monad-v2.0.0.apk), or open the web app on any phone whose passkeys sync (iCloud Keychain, Google Password Manager or 1Password). Desktop Chrome with a passkey saved only to that profile can't produce the PRF output Mera needs.
 
 1. On a laptop, open **[tally-monad.vercel.app/counter](https://tally-monad.vercel.app/counter)**. This is the demo café's live, re-signing QR.
 2. On your phone, open **[tally-monad.vercel.app](https://tally-monad.vercel.app)** → **Get started** → your first name → **Create with Face ID**. You get a $50 welcome credit; there is no seed phrase, extension, wallet or gas.
@@ -114,6 +115,7 @@ Evidence (more in [docs/VERIFY.md](docs/VERIFY.md)):
 | [`contracts`](contracts) | Foundry: `Tally.sol`, `MenuMerkle.sol`, `Drip.sol`, `MockAUSD.sol`, 32 tests including the attack suite |
 | [`web`](web) | Next.js PWA: Mera sign-in, allowance, scan, assistant, Second Look, receipts, family top-up, merchant mode, red team; 55 vitest tests + 1 live testnet run |
 | [`indexer`](indexer) | Envio HyperIndex |
+| [`android`](android) | The Android app: a Trusted Web Activity over the live app (so Mera passkeys run in Chrome), verified with Digital Asset Links |
 | [`docs`](docs) | [Market gap](docs/MARKET-GAP.md), [Monad notes](docs/MONAD.md), [verify guide](docs/VERIFY.md), [plan](docs/superpowers/plans/2026-10-13-tally-monad.md), and the original Solana design docs this was ported from |
 
 ```bash
