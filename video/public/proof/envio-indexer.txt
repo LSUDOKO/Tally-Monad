@@ -1,0 +1,14 @@
+$ npx -y envio-cloud indexer get tally-monad --org lsudoko
+INDEXER: tally-monad
+ORGANIZATION: lsudoko
+DESCRIPTION: Tally on Monad: payments, family top-ups, merchants
+CREATED: 2026-10-13
+
+DEPLOYMENTS (3):
+CREATED      STATUS     TIER          COMMIT     QUERY ENDPOINT
+--------     --------   --------      --------   --------
+2026-10-13   none       development   c1ee571    https://indexer.dev.hyperindex.xyz/facbc59/v1/graphql
+2026-10-13   none       development   553d35c    https://indexer.dev.hyperindex.xyz/28a1536/v1/graphql
+2026-10-13   none       development   e516e6d    https://indexer.dev.hyperindex.xyz/a8a78bb/v1/graphql
+
+Total deployments: 3

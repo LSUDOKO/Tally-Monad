@@ -1,0 +1,5 @@
+$ curl -s https://api.moonshot.ai/v1/models -H "Authorization: Bearer $KIMI_API_KEY" | jq -r ".data[].id"
+kimi-k3
+kimi-k2.7-code-highspeed
+kimi-k2.7-code
+kimi-k2.6

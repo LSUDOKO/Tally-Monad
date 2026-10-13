@@ -1,0 +1,21 @@
+$ sed -n '3p;16,33p' web/app/api/agent/route.ts
+import { rulePick, sanitizePayload, validatePick } from "@/lib/firewall";
+…
+export async function POST(req: Request) {
+  const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
+  const payload = sanitizePayload(await req.json().catch(() => ({})));
+  const useModel = !!process.env.KIMI_API_KEY && perIp(ip);
+  if (useModel) {
+    try {
+      const kimi = new OpenAI({ apiKey: process.env.KIMI_API_KEY, baseURL: process.env.KIMI_BASE_URL ?? "https://api.moonshot.ai/v1" });
+      const r = await kimi.chat.completions.create({
+        model: process.env.KIMI_MODEL ?? "kimi-k2.6",
+        temperature: 0,
+        response_format: { type: "json_object" },
+        messages: [
+          { role: "system", content: SYSTEM },
+          { role: "user", content: JSON.stringify(payload) },
+        ],
+      });
+      const pick = validatePick(JSON.parse(r.choices[0]?.message?.content ?? "{}"), payload);
+      if (pick) return NextResponse.json({ ...pick, by: "kimi" });

@@ -1,0 +1,23 @@
+$ curl -s https://indexer.dev.hyperindex.xyz/a8a78bb/v1/graphql -H 'Content-Type: application/json' \
+    -d '{"query":"{ Payment(limit:4, order_by:{timestamp:desc}){ capsuleId price cosigned txHash } Merchant { name sales count bond } }"}' | python -m json.tool
+{
+    "data": {
+        "Payment": [
+…
+            {
+                "capsuleId": "7",
+                "price": "5900000",
+                "cosigned": true,
+                "txHash": "0x4dd56b4c395d799c4626fae9ec8556e27f74326c013ab54a42d4220df39f3d39"
+            }
+        ],
+        "Merchant": [
+            {
+                "name": "Tally Demo Cafe",
+                "sales": "40200000",
+                "count": 8,
+                "bond": "500000000"
+            }
+        ]
+    }
+}

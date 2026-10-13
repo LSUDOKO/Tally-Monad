@@ -1,0 +1,10 @@
+$ cd indexer && pnpm test
+
+$ vitest run --test-timeout=20000
+
+ RUN  v4.1.0 /home/arpit/Desktop/hackathon_projects/Tally-Monad/indexer
+
+ Test Files  1 passed (1)
+      Tests  2 passed (2)
+   Start at  01:13:10
+   Duration  2.67s (transform 96ms, setup 0ms, import 2.12s, tests 78ms, environment 0ms)
