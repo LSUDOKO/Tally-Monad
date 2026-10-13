@@ -1,0 +1,417 @@
+[
+  {
+    "start": 0.25,
+    "end": 2.377,
+    "text": "My parents send me money from home."
+  },
+  {
+    "start": 2.377,
+    "end": 4.685,
+    "text": "These days, my AI assistant spends it."
+  },
+  {
+    "start": 4.685,
+    "end": 6.873,
+    "text": "So who checks what it actually buys?"
+  },
+  {
+    "start": 8.25,
+    "end": 9.636,
+    "text": "Riya studies in Toronto."
+  },
+  {
+    "start": 9.636,
+    "end": 11.252,
+    "text": "Her parents in Pune send her"
+  },
+  {
+    "start": 11.252,
+    "end": 12.811,
+    "text": "lunch money through a bank."
+  },
+  {
+    "start": 12.811,
+    "end": 13.619,
+    "text": "It takes days,"
+  },
+  {
+    "start": 13.619,
+    "end": 15.756,
+    "text": "about six percent disappears in fees,"
+  },
+  {
+    "start": 15.756,
+    "end": 16.795,
+    "text": "and once it lands,"
+  },
+  {
+    "start": 16.795,
+    "end": 18.873,
+    "text": "nobody can say what it was spent on."
+  },
+  {
+    "start": 19.25,
+    "end": 21.404,
+    "text": "And now her assistant orders for her."
+  },
+  {
+    "start": 21.404,
+    "end": 22.918,
+    "text": "One line of menu text says"
+  },
+  {
+    "start": 22.918,
+    "end": 24.315,
+    "text": "the regular is sold out,"
+  },
+  {
+    "start": 24.315,
+    "end": 25.596,
+    "text": "and it buys the large."
+  },
+  {
+    "start": 25.596,
+    "end": 27.226,
+    "text": "Every spending cap says yes,"
+  },
+  {
+    "start": 27.226,
+    "end": 28.972,
+    "text": "because caps check the amount,"
+  },
+  {
+    "start": 28.972,
+    "end": 29.729,
+    "text": "not the item."
+  },
+  {
+    "start": 30.25,
+    "end": 32.04,
+    "text": "Teen cards control the store."
+  },
+  {
+    "start": 32.04,
+    "end": 34.448,
+    "text": "Agent payment schemes control the cart."
+  },
+  {
+    "start": 34.448,
+    "end": 35.991,
+    "text": "Nobody controls the item,"
+  },
+  {
+    "start": 35.991,
+    "end": 37.72,
+    "text": "or the agent's choice of it."
+  },
+  {
+    "start": 38.25,
+    "end": 38.914,
+    "text": "Meet Tally."
+  },
+  {
+    "start": 38.914,
+    "end": 40.483,
+    "text": "Pocket money that can't be"
+  },
+  {
+    "start": 40.483,
+    "end": 42.353,
+    "text": "talked into the wrong purchase."
+  },
+  {
+    "start": 42.353,
+    "end": 43.258,
+    "text": "Built on Monad."
+  },
+  {
+    "start": 46.25,
+    "end": 47.942,
+    "text": "Riya signs up with Face ID."
+  },
+  {
+    "start": 47.942,
+    "end": 50.386,
+    "text": "Mera turns one passkey into three keys:"
+  },
+  {
+    "start": 50.386,
+    "end": 52.642,
+    "text": "her account, her agent's capped key,"
+  },
+  {
+    "start": 52.642,
+    "end": 55.086,
+    "text": "and a menu key if she ever runs a café."
+  },
+  {
+    "start": 55.086,
+    "end": 57.404,
+    "text": "No seed phrase, no extension, no gas."
+  },
+  {
+    "start": 58.25,
+    "end": 60.758,
+    "text": "She sets the rules once: coffee and food,"
+  },
+  {
+    "start": 60.758,
+    "end": 63.328,
+    "text": "ten dollars a purchase, twenty-five a day."
+  },
+  {
+    "start": 63.328,
+    "end": 65.163,
+    "text": "They live in a Monad contract,"
+  },
+  {
+    "start": 65.163,
+    "end": 67.182,
+    "text": "and only her key can change them."
+  },
+  {
+    "start": 68.25,
+    "end": 69.824,
+    "text": "At the counter she scans"
+  },
+  {
+    "start": 69.824,
+    "end": 71.333,
+    "text": "a menu the café signed."
+  },
+  {
+    "start": 71.333,
+    "end": 72.579,
+    "text": "She says oat latte."
+  },
+  {
+    "start": 72.579,
+    "end": 75.006,
+    "text": "Her agent, behind a context firewall,"
+  },
+  {
+    "start": 75.006,
+    "end": 76.777,
+    "text": "sees only items and prices,"
+  },
+  {
+    "start": 76.777,
+    "end": 78.417,
+    "text": "picks the cheapest match,"
+  },
+  {
+    "start": 78.417,
+    "end": 80.188,
+    "text": "and Tally's contract checks"
+  },
+  {
+    "start": 80.188,
+    "end": 82.221,
+    "text": "every rule before a cent moves."
+  },
+  {
+    "start": 82.221,
+    "end": 83.729,
+    "text": "Paid in under a second."
+  },
+  {
+    "start": 84.25,
+    "end": 86.817,
+    "text": "If the agent is talked into the large one,"
+  },
+  {
+    "start": 86.817,
+    "end": 89.017,
+    "text": "the contract won't let it pay alone."
+  },
+  {
+    "start": 89.017,
+    "end": 90.606,
+    "text": "It's one dollar forty more"
+  },
+  {
+    "start": 90.606,
+    "end": 92.134,
+    "text": "than the cheapest coffee,"
+  },
+  {
+    "start": 92.134,
+    "end": 94.212,
+    "text": "so Tally waits for Riya's Face ID."
+  },
+  {
+    "start": 97.25,
+    "end": 99.352,
+    "text": "Back in Pune, her mom opens a link,"
+  },
+  {
+    "start": 99.352,
+    "end": 100.613,
+    "text": "uses her fingerprint,"
+  },
+  {
+    "start": 100.613,
+    "end": 102.835,
+    "text": "and sends twenty dollars with a note:"
+  },
+  {
+    "start": 102.835,
+    "end": 104.156,
+    "text": "for lunches this week."
+  },
+  {
+    "start": 104.156,
+    "end": 106.619,
+    "text": "It arrives in about a second, in dollars,"
+  },
+  {
+    "start": 106.619,
+    "end": 108.06,
+    "text": "and it can only be spent"
+  },
+  {
+    "start": 108.06,
+    "end": 109.501,
+    "text": "the way the rules allow."
+  },
+  {
+    "start": 110.25,
+    "end": 111.933,
+    "text": "Don't take our word for it."
+  },
+  {
+    "start": 111.933,
+    "end": 114.301,
+    "text": "Attack your own agent: a fake counter,"
+  },
+  {
+    "start": 114.301,
+    "end": 116.918,
+    "text": "a phantom fee, a doubled price, an upsell."
+  },
+  {
+    "start": 116.918,
+    "end": 118.663,
+    "text": "All four reach the contract,"
+  },
+  {
+    "start": 118.663,
+    "end": 120.222,
+    "text": "and all four are refused."
+  },
+  {
+    "start": 122.25,
+    "end": 123.171,
+    "text": "Every payment,"
+  },
+  {
+    "start": 123.171,
+    "end": 124.356,
+    "text": "top-up and blocked"
+  },
+  {
+    "start": 124.356,
+    "end": 126.0,
+    "text": "attempt is on the record,"
+  },
+  {
+    "start": 126.0,
+    "end": 127.119,
+    "text": "indexed by Envio,"
+  },
+  {
+    "start": 127.119,
+    "end": 129.488,
+    "text": "with points for real purchases only."
+  },
+  {
+    "start": 132.25,
+    "end": 133.429,
+    "text": "Any café can join."
+  },
+  {
+    "start": 133.429,
+    "end": 135.525,
+    "text": "The same passkey signs its menu,"
+  },
+  {
+    "start": 135.525,
+    "end": 137.228,
+    "text": "and a bond that anyone can"
+  },
+  {
+    "start": 137.228,
+    "end": 139.062,
+    "text": "slash keeps the menu honest."
+  },
+  {
+    "start": 140.25,
+    "end": 141.263,
+    "text": "And it's real."
+  },
+  {
+    "start": 141.263,
+    "end": 142.638,
+    "text": "A Sourcify-verified"
+  },
+  {
+    "start": 142.638,
+    "end": 144.52,
+    "text": "contract on Monad testnet,"
+  },
+  {
+    "start": 144.52,
+    "end": 146.33,
+    "text": "thirty-two contract tests"
+  },
+  {
+    "start": 146.33,
+    "end": 148.139,
+    "text": "and sixty-five app tests."
+  },
+  {
+    "start": 148.139,
+    "end": 151.034,
+    "text": "Mera derives every key from one passkey."
+  },
+  {
+    "start": 151.034,
+    "end": 153.495,
+    "text": "AUSD top-ups carry a purpose note."
+  },
+  {
+    "start": 153.495,
+    "end": 155.376,
+    "text": "Envio indexes the history."
+  },
+  {
+    "start": 155.376,
+    "end": 157.475,
+    "text": "Kimi picks behind a firewall."
+  },
+  {
+    "start": 157.475,
+    "end": 159.285,
+    "text": "And it runs as an Android"
+  },
+  {
+    "start": 159.285,
+    "end": 160.732,
+    "text": "app on a real phone."
+  },
+  {
+    "start": 166.25,
+    "end": 168.204,
+    "text": "Greenlight controls the store."
+  },
+  {
+    "start": 168.204,
+    "end": 169.638,
+    "text": "AP2 controls the cart."
+  },
+  {
+    "start": 169.638,
+    "end": 171.201,
+    "text": "Tally controls the item."
+  }
+]
