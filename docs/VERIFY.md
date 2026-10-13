@@ -1,103 +1,54 @@
-# Verify Tally yourself
+# Verify Tally on Monad yourself
 
-This page is for judges and reviewers. Every claim in the README maps to something you can run, open on the explorer, or read in the code. It also says plainly what is shipped, what is research motivation, and what is not done yet.
+Every claim in the README maps to something you can run, open on the explorer, or read in the code.
 
-**Short on time?** Do these three things (≈ 5 minutes):
+## 1. Live product
 
-1. Open the **[latest CI run](https://github.com/LSUDOKO/Tally/actions/workflows/ci.yml)**: every push builds the program (SBF) and runs all four test suites.
-2. Open the **[program on Solana Explorer](https://explorer.solana.com/address/3ofJTv8xX68aFTQJLNZV2tDXESPuCjcfRHpeLd37djqk?cluster=devnet)**: a deployed, executable upgradeable program on devnet.
-3. Open two transactions from the [evidence table](#3-on-chain-evidence-what-to-look-for): one **Paid**, one **Reverted**, and read the program's log line.
+- App: https://tally-monad.vercel.app (use a phone: passkeys need PRF, which iCloud Keychain, Google Password Manager and 1Password support)
+- Demo café counter: https://tally-monad.vercel.app/counter. A fresh EIP-712-signed menu is served every 20 s, timed by the chain's clock.
 
----
-
-## 1. Shipped vs. research vs. not done
-
-| | Status | Where to check |
-|---|---|---|
-| Anchor program `tally` (24 instructions) on devnet | **Shipped, deployed** | [Explorer](https://explorer.solana.com/address/3ofJTv8xX68aFTQJLNZV2tDXESPuCjcfRHpeLd37djqk?cluster=devnet) · [`programs/tally`](../programs/tally) |
-| `pay_offer` with ten invariants (~20.4k CU) | **Shipped, tested** | [code map below](#4-code-map-the-ten-invariants) · [`tests/litesvm`](../tests/litesvm) |
-| Android app (Kotlin + Compose): wallet sign-in (MWA), capsule, scan/NFC, agent, Second Look, red team, receipts, rewards, merchant mode, App lock | **Shipped**, APK [v1.2.0](https://github.com/LSUDOKO/Tally/releases/tag/v1.2.0) | [`app/`](../app) · [demo video](https://youtu.be/Bj0FDTXTpZA) |
-| SKR merchant bond, trust tiers, fraud-proof slashing, disputes, bond unlock delay | **Shipped in the program**; on devnet the SKR is a **mock mint** from our faucet | [`instructions/merchant.rs`](../programs/tally/src/instructions/merchant.rs) · [`slashing.rs`](../programs/tally/src/instructions/slashing.rs) · [`dispute.rs`](../programs/tally/src/instructions/dispute.rs) |
-| Seeker Genesis Token check | **Shipped**; devnet uses a **mock SGT collection** | [`sgt.rs`](../programs/tally/src/instructions/sgt.rs) |
-| Tally cloud: demo counter, MCP server, Telegram bot, Helius alerts, Places | **Shipped, live** (free tier, cold start 30–50 s) | [counter](https://tally-cloud-b792.onrender.com/counter) · [`mcp/`](../mcp) |
-| 73.3% steering, 140 → 0, simulation drift, gross outflow, witness freshness | **Research motivation**, not our measurements. These are other teams' published results that shaped the design. | [docs/03](03-research-foundation.md) · [docs/19](19-sources.md) |
-| Security audit | **Not done.** The program has not been audited. | [Security, honestly](../README.md#security-honestly) |
-| Mainnet | **Not deployed.** Devnet only. | — |
-| Merchant pilots | **Not started.** No real café uses Tally yet. | [§6](#6-merchant-adoption-honest-status) |
-
-## 2. Run the tests (expected counts)
-
-All four suites run in CI on every push ([workflow](../.github/workflows/ci.yml)). To run them locally:
+## 2. Run the tests
 
 ```bash
-# Rust: core vectors + LiteSVM threat suite against the compiled .so   → 155 passed
-cargo build-sbf --manifest-path programs/tally/Cargo.toml
-cargo test --workspace
+cd contracts && forge test
+# 5 suites, 30 tests: Tally (21: ten invariants, attacks, cosign, top-up note, slashing), MenuMerkle (3), Drip (4), MockAUSD (2)
 
-# TypeScript SDK: byte parity with Rust                                 → 19 passed
-pnpm install && pnpm -C sdk test
+cd web && pnpm install && pnpm test
+# 51 tests + 1 skipped live test: menu tree ⇄ Solidity vectors, QR codec, Mera key derivation, firewall,
+# preflight, error sentences, welcome plan, reserve window, counter signing, red-team builder, fx hints
 
-# Cloud: MCP policy, Telegram bot, payment alerts, Places proxy         → 16 passed
-pnpm -C mcp test
-
-# Kotlin core (the app's engine): byte parity, agent, Second Look, …    → 97 passed
-cd app && ./gradlew :core:test
+E2E=1 pnpm vitest run test/e2e.live.test.ts
+# real Monad Testnet (needs web/.env.local with a funded DRIP_PRIVATE_KEY and DEMO_MERCHANT_SIGNER_KEY):
+# create allowance → on-chain menuDigest == viem hashTypedData → pay cheapest → "needs your approval"
+# → cosigned pay → "Already paid" → family top-up with a note → exact balance
 ```
 
-Requires Rust 1.97.1 (pinned) and Solana CLI 4.0.x. Each on-chain attack in the [threat model](11-threat-model.md) has a test that asserts its **exact** error code: see the [threat suite map](../tests/litesvm/THREAT_SUITE.md).
+The cross-language byte check: `contracts/test/MenuMerkle.t.sol::test_ThreeItemRootMatchesTypeScript` pins the root that `web/lib/menu.ts` builds for the same three items (`0x40782891…5b005b`).
 
-**No devnet SOL needed:** the [local end-to-end](../README.md#local-end-to-end-no-devnet-sol-needed) runs the whole flow (honest pay, payee swap, phantom add-on, stale menu, upsell) against `solana-test-validator` with the real compiled program.
+## 3. On-chain evidence (Monad Testnet, chain 10143)
 
-## 3. On-chain evidence: what to look for
-
-Program: [`3ofJTv8x…djqk`](https://explorer.solana.com/address/3ofJTv8xX68aFTQJLNZV2tDXESPuCjcfRHpeLd37djqk?cluster=devnet) (devnet).
-
-| Transaction | Expected on Explorer |
+| What | Link |
 |---|---|
-| [Honest purchase, $4.50 oat latte](https://explorer.solana.com/tx/5X3yy6tRD3nVwSWK5vFBf3shBMN8hJDksrby8kk1PUyeykkkGZCKY73i16VJta9RfpDA2piYZz7tsFoqYtWZwcF?cluster=devnet) | **Success.** Instructions: Ed25519 precompile, then `pay_offer`. USDC moves vault → the merchant's registered payout. |
-| [Payee swap](https://explorer.solana.com/tx/4eCo3iQviYdcfnjLxqyETCoWZTCqFskQX3uBieXeEeR9vNfVPVwK2wcQnEQ75As8p7Qw6TkyvmejuAtLN6XBvPCE?cluster=devnet) | **Failed, custom error 2001** (`has_one` payout constraint). No token movement. |
-| [Phantom $2.99 add-on](https://explorer.solana.com/tx/4oot9a8F18zqqAFXjK6ntL7uKEh8s93LuaMMBqqb5shNwtqbUE8GUdsQpaghyAjH7sosj2wdoRm6yPDwbsxDx8NS?cluster=devnet) | **Failed, 6009 NotOnMenu**: the leaf isn't under the signed Merkle root. |
-| [Stale menu replay](https://explorer.solana.com/tx/3wmMJMoqVCwAM2kgjktfyZssyCCWhYDTmLzr9o9kjP9EgkTirBhX15gFQVShuKCZCJ9amTtsCbv3rQJcijYHJkzH?cluster=devnet) | **Failed, 6007 Stale**: outside the 150-slot window. |
-| [Whisper upsell, agent alone](https://explorer.solana.com/tx/8PMbmycaGYKJr17VPQCEkqyn7qaR7uapAWH6pT5oXEGG45wor122am1M7RR8tEkPiXdATcRdRSkbroHRrXcyszd?cluster=devnet) | **Failed, 6013 OwnerCosignRequired**: pricier than the cheapest match. |
-| [Same upsell, owner co-signed](https://explorer.solana.com/tx/56gBBA1r2CyJZ12f9udR8Mt9NJcrw11M84R2JBCc5qehkKo33VqSL4qRKcRV8g5LDSXpk5s6js6o3AX7C7rrmMH7?cluster=devnet) | **Success** with two signers: agent + owner. |
-| [Real phone: Second Look approved in Solflare](https://explorer.solana.com/tx/58ePPqG3hK7TWYzXYtsoJXn5iSaNYX2tN8R67uzRhs2TA3esUx8Nb1CQPNqoAag7bxhcTwg2fgNWKLtzBbaHEGyD?cluster=devnet) | **Success**: agent key (Android Keystore) + owner (Solflare via MWA) in one transaction. |
-| [Real phone: capsule created with a Seeker Genesis Token](https://explorer.solana.com/tx/5C5pkK2Q48DkbNoPLcDBQB1vLNtBMAL1HhbEqpkCR3DAaSf2eHrM838J7Hpixk2pZqxiMfPiaTX962eE67ABrBax?cluster=devnet) | **Success**: the program reads the token's group (mock collection on devnet). |
+| Tally contract (Sourcify exact match) | [0x5c7b…AEE7](https://testnet.monadvision.com/address/0x5c7b28d93a424d87018fBf11cD86217a0d68AEE7) |
+| Deploy Tally | [0x592d…c2c](https://testnet.monadvision.com/tx/0x592dd5181c24c74b5b92004db07ebbd52cb4e419b5c9731af953f49eff049c2c) |
+| Demo café registered with a $500 bond | [0x3f6c…71b](https://testnet.monadvision.com/tx/0x3f6c51ef74c158f728afee88194b4ac67b5a539f921607912ba597aaa6c4271b) |
+| Assistant pays the cheapest latte alone (invariants 1–10, no cosign) | [0x1fcb…250a](https://testnet.monadvision.com/tx/0x1fcb42c4d187dd86036f78b0c3058b7e2d92f26903fdd2e4298c93c325d7250a) |
+| Large latte, owner's EIP-712 cosign relayed by the assistant | [0x2191…4a45](https://testnet.monadvision.com/tx/0x21916ee8a9b57d73d3201200134259d4714a712d7572255b2d5a558e757a4a45) |
+| Reserve-balance revert we hit (a second sponsor transfer in one 3-block window) | [0xa266…68c4](https://testnet.monadvision.com/tx/0xa2660324300c27f8e75810636742b44de66ca96fc60161b982794194219268c4) |
 
-Error codes are defined in [`programs/tally/src/errors.rs`](../programs/tally/src/errors.rs) (6000 + position); the app translates them into sentences in `ErrorText` ([`Chain.kt`](../app/core/src/main/kotlin/app/tally/core/Chain.kt)).
+## 4. Code map
 
-## 4. Code map: the ten invariants
+| Claim | Code |
+|---|---|
+| Ten invariants | `contracts/src/Tally.sol` `payOffer`, numbered comments 1–10 |
+| Cheapest match → owner | `Tally.sol` step 8; `web/lib/pay.ts` `preflight` mirrors it before Face ID |
+| Floor-fraud slashing | `Tally.sol` `proveFloorFraud`; test `test_FloorFraudSlashes` |
+| One passkey, three keys | `web/lib/mera.ts` `PATHS`, `deriveKeys`, `toKeys` |
+| Context firewall | `web/lib/firewall.ts`; test "never puts display names in the agent payload" |
+| Kimi agent with schema check | `web/app/api/agent/route.ts` + `validatePick` |
+| One-transaction welcome (reserve balance) | `contracts/src/Drip.sol` `welcome`; `web/app/api/onboard/route.ts` `waitForWindow` |
+| Purpose-bound top-up | `Tally.fund(id, amount, note)` → `Funded(..., note)`; `web/app/send/[capsuleId]/page.tsx` |
 
-All in [`programs/tally/src/instructions/pay_offer.rs`](../programs/tally/src/instructions/pay_offer.rs) unless noted.
+## 5. Not done
 
-| # | Invariant | Where |
-|---|---|---|
-| 1 | Agent signer, capsule not frozen/expired, merchant active | accounts struct (`has_one = agent`) and lines 86–88 |
-| 2 | Previous instruction is the Ed25519 precompile (sysvar introspection) | `verify_prev_ed25519` in [`checks/introspection.rs`](../programs/tally/src/checks/introspection.rs), called at line ~101 |
-| 3 | Offset hardening: one signature, every `*_instruction_index == u16::MAX`, message == rebuilt header | `parse_single` in [`crates/tally-core/src/ed25519.rs`](../crates/tally-core/src/ed25519.rs) (line 66); header rebuilt with `build_header` |
-| 4 | Freshness ≤ 150 slots (≤ 9,000 only with owner co-sign) | lines 109–119 |
-| 5 | Payout = the merchant's registered account | accounts struct: `#[account(has_one = payout)]` on `merchant` + mint constraint |
-| 6 | Program hashes the leaf itself; Merkle inclusion | `leaf_hash` ([`menu.rs`](../crates/tally-core/src/menu.rs)) and line 132 |
-| 7 | Category bitmap, per-purchase cap, rolling daily cap | lines 151–161 |
-| 8 | Cheapest match, bond tier, long window → owner co-sign | lines 167–169 |
-| 9 | Receipt PDA `init`: no double charge | accounts struct (line 64) |
-| 10 | `transfer_checked`, then exact vault/payout deltas | lines 176–204 ([`post.rs`](../crates/tally-core/src/post.rs)) |
-
-Each invariant has negative tests in [`tests/litesvm/tests`](../tests/litesvm/tests) (introspection, menu, policy, settlement, capsule, merchant, slashing, pow, sgt, compute).
-
-## 5. Watch it uncut
-
-- **Demo video:** <https://youtu.be/Bj0FDTXTpZA>
-- **Real-device recordings** (Moto G34 + Solflare, devnet): the GIFs in the [README](../README.md#see-it) are cut only to speed up waits; nothing is staged.
-- **Try it on your phone:** install [`tally-v1.2.0-devnet.apk`](https://github.com/LSUDOKO/Tally/releases/download/v1.2.0/tally-v1.2.0-devnet.apk), switch Solflare to Devnet, request test funds through the [issue template](https://github.com/LSUDOKO/Tally/issues/new?template=devnet-test-funds.yml), scan the [live counter](https://tally-cloud-b792.onrender.com/counter), and open **Red team**.
-
-## 6. Merchant adoption: honest status
-
-- **Today:** no real merchant uses Tally. The counter you scan is our demo café, signed by Tally cloud with a registered devnet key.
-- **What exists for a merchant:** the same APK has a merchant mode (register with an SKR bond, sign the menu, show QR / NFC, Solana Pay fallback). Onboarding takes about 5 minutes on a phone they already own.
-- **Who we'd pilot with first:** 5 cafés near one campus, then pop-up counters at Seeker community events ([plan](12-skr-and-merchants.md#launch-plan-post-hackathon)).
-- **What we would measure:** share of agent purchases that clear autonomously vs. need Second Look, blocked attempts per 100 purchases, and repeat use (weekly active capsules).
-- **Why a merchant would join:** agents will route spend to merchants they can verify; signed menus give every order an on-chain receipt, which cuts disputes; no new hardware; zero platform fee in v1.
-
-## 7. Scope, deliberately
-
-Tally is one mechanism, "pay only for what tallies", with the surfaces it needs to be usable: the program (the mechanism), the Android app (the owner), merchant mode (the other side of the trade), and the cloud (so agents outside the phone can propose, never pay). Rewards, alerts and the directory are small conveniences on top of the same on-chain receipts.
+No audit, no mainnet deployment, no real AUSD on testnet (a stand-in token), no merchant pilots yet. User testing results are in `docs/USER-TESTING.md` once collected.
