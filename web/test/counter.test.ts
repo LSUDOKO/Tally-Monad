@@ -43,3 +43,16 @@ describe("merchant menu rows", () => {
     expect(new Set(items.map((i) => i.itemId)).size).toBe(3);
   });
 });
+
+describe("merchant editor input", () => {
+  it("skips half-typed rows instead of throwing", async () => {
+    const { rowsToItems } = await import("../lib/counter");
+    const items = rowsToItems([
+      { name: "Filter coffee", price: 2, category: 3 },
+      { name: "Cappuccino", price: Number(""), category: 3 },
+      { name: "", price: 4, category: 0 },
+      { name: "Chai", price: NaN, category: 1 },
+    ]);
+    expect(items.map((i) => i.name)).toEqual(["Filter coffee", "Cappuccino"].slice(0, 1));
+  });
+});
