@@ -16,7 +16,7 @@ import { agentPayload, type Pick } from "@/lib/firewall";
 import { staleRecovery, type MenuSource } from "@/lib/flow";
 import { signIn as passkeyConfirm } from "@/lib/mera";
 import { decodeQr, type Item, type SignedMenu } from "@/lib/menu";
-import { pay, preflight, type Preflight } from "@/lib/pay";
+import { alreadyPaid, pay, preflight, type Preflight } from "@/lib/pay";
 import { useSession } from "@/lib/session";
 import { chainNow, readMerchant, setFrozen, type Merchant } from "@/lib/tally";
 import { useAllowance } from "@/lib/useAllowance";
@@ -109,8 +109,11 @@ function ScanInner() {
   };
 
   const review = async (ctx: Ctx, item: Item, pick: Pick & { by: string }) => {
-    if (!a.capsule) return;
-    const check = preflight(a.capsule, ctx.merchant.bond, ctx.menu, item, await chainNow());
+    if (!a.capsule || a.id === undefined) return;
+    let check = preflight(a.capsule, ctx.merchant.bond, ctx.menu, item, await chainNow());
+    if (check.ok && (await alreadyPaid(a.id, ctx.menu, item).catch(() => false))) {
+      check = { ok: false, code: "paid", message: "Already paid. You won't be charged twice." };
+    }
     if (!check.ok && a.id !== undefined && check.code !== "stale") {
       rememberBlocked(a.id, { title: item.name, reason: check.message, price: item.price, timestamp: Math.floor(Date.now() / 1000) });
     }
