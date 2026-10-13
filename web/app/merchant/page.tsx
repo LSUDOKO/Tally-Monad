@@ -128,7 +128,7 @@ export default function MerchantPage() {
       ) : (
         <>
           <Card className="flex flex-col items-center">
-            <div className="rounded-2xl bg-white p-3">{qr ? <QRCodeSVG value={qr} size={240} level="M" /> : <div className="h-60 w-60" />}</div>
+            <div className="rounded-2xl bg-white p-3">{qr ? <QRCodeSVG value={qr} size={300} level="L" marginSize={1} /> : <div className="h-60 w-60" />}</div>
             <p className="mt-3 text-sm text-faint">Signed by your passkey · re-signs every 20 s</p>
           </Card>
 

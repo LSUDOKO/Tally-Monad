@@ -41,7 +41,7 @@ export default function Counter() {
       </div>
       <p className="mt-2 text-sm text-muted">Scan with Tally to pay. The menu re-signs every 20 seconds.</p>
       <div className="mt-6 rounded-3xl bg-white p-4">
-        {qr ? <QRCodeSVG value={qr} size={300} level="M" /> : <div className="h-[300px] w-[300px] animate-pulse rounded-2xl bg-slate-200" />}
+        {qr ? <QRCodeSVG value={qr} size={340} level="L" marginSize={1} /> : <div className="h-[300px] w-[300px] animate-pulse rounded-2xl bg-slate-200" />}
       </div>
       <p className="tabular mt-3 text-sm text-faint">New code in {left}s</p>
       <ul className="glass mt-6 w-full divide-y divide-white/5 rounded-3xl px-5 text-left">
