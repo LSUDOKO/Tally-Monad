@@ -12,7 +12,7 @@ Family tops up a student's allowance from anywhere, in about a second, for cents
 It can only buy what a counter signed, at the signed price, inside the family's rules.<br>
 The student's AI assistant can order, but a Monad contract (not the model) makes it pick the cheapest match.
 
-**[▶ Try it: tally-monad.vercel.app](https://tally-monad.vercel.app)** · [Counter QR](https://tally-monad.vercel.app/counter) · [Contract on Monad Testnet](https://testnet.monadvision.com/address/0x5c7b28d93a424d87018fBf11cD86217a0d68AEE7) · [Market gap](docs/MARKET-GAP.md) · [Verify it](docs/VERIFY.md)
+**[▶ Try it: tally-monad.vercel.app](https://tally-monad.vercel.app)** · [Counter QR](https://tally-monad.vercel.app/counter) · [Contract on Monad Testnet](https://testnet.monadvision.com/address/0xe7d22F222a799218908997f837CF3e0Fd1c1e40a) · [Market gap](docs/MARKET-GAP.md) · [Verify it](docs/VERIFY.md)
 
 Built for **Monad Metropolis**: Consumer Products & Payments
 
@@ -76,7 +76,7 @@ No login credentials are needed: your passkey is the account.
 | 9 | Receipt nullifier `keccak(capsule, counter, menuNonce, itemId)` | Double charges |
 | 10 | `transfer`, then `Δcontract == −price` and `Δpayout == +price` | Hidden drains, fee-on-transfer tokens |
 
-Plus **trustless slashing**: `proveFloorFraud` lets anyone slash 20% of a counter's bond when its own signed menu lists an item cheaper than the floor it certified (the reporter gets 10% of the slash). Code: [`contracts/src/Tally.sol`](contracts/src/Tally.sol).
+Plus **trustless slashing**: `proveFloorFraud` lets anyone slash 20% of a counter's bond when its own signed menu lists an item cheaper than the floor it certified (the reporter gets 10% of the slash). It accepts any menu key the counter *ever* registered, so rotating the key can't dodge a proof. Bonds and the compensation pool are not withdrawable yet (demo scope). Code: [`contracts/src/Tally.sol`](contracts/src/Tally.sol).
 
 ## Built on Monad, and what Monad changed
 
@@ -99,26 +99,26 @@ Plus **trustless slashing**: `proveFloorFraud` lets anyone slash 20% of a counte
 
 | Contract | Address |
 |---|---|
-| Tally | [`0x5c7b28d93a424d87018fBf11cD86217a0d68AEE7`](https://testnet.monadvision.com/address/0x5c7b28d93a424d87018fBf11cD86217a0d68AEE7) (Sourcify verified) |
-| AUSD (test) | [`0x935864aB732A31da51738C6dF9705F0dB415754F`](https://testnet.monadvision.com/address/0x935864aB732A31da51738C6dF9705F0dB415754F) |
+| Tally | [`0xe7d22F222a799218908997f837CF3e0Fd1c1e40a`](https://testnet.monadvision.com/address/0xe7d22F222a799218908997f837CF3e0Fd1c1e40a) (Sourcify verified) |
+| AUSD (test) | [`0xad4B854A7eF968FDC53D4C8CC6590Dc24Cb536F1`](https://testnet.monadvision.com/address/0xad4B854A7eF968FDC53D4C8CC6590Dc24Cb536F1) |
 | Drip | [`0xafA3C3598E2051BDd615Fd7b7df8018fE22B625E`](https://testnet.monadvision.com/address/0xafA3C3598E2051BDd615Fd7b7df8018fE22B625E) |
 
 Evidence (more in [docs/VERIFY.md](docs/VERIFY.md)):
-- [Assistant pays the cheapest latte alone](https://testnet.monadvision.com/tx/0x1fcb42c4d187dd86036f78b0c3058b7e2d92f26903fdd2e4298c93c325d7250a)
-- [Large latte paid with the owner's cosign](https://testnet.monadvision.com/tx/0x21916ee8a9b57d73d3201200134259d4714a712d7572255b2d5a558e757a4a45)
+- [Assistant pays the cheapest latte alone](https://testnet.monadvision.com/tx/0x00be7f8c1b270a92df972b79c897548332d43273aab911b8b69369eec195f092)
+- [Large latte paid with the owner's cosign](https://testnet.monadvision.com/tx/0x583fa31698333d4fd56332ff7a6671d2bfb533f9501f354463b8bc524554623c)
 
 ## Repo
 
 | Path | What |
 |---|---|
-| [`contracts`](contracts) | Foundry: `Tally.sol`, `MenuMerkle.sol`, `Drip.sol`, `MockAUSD.sol`, 30 tests including the attack suite |
-| [`web`](web) | Next.js PWA: Mera sign-in, allowance, scan, assistant, Second Look, receipts, family top-up, merchant mode, red team; 51 vitest tests + 1 live testnet run |
+| [`contracts`](contracts) | Foundry: `Tally.sol`, `MenuMerkle.sol`, `Drip.sol`, `MockAUSD.sol`, 32 tests including the attack suite |
+| [`web`](web) | Next.js PWA: Mera sign-in, allowance, scan, assistant, Second Look, receipts, family top-up, merchant mode, red team; 55 vitest tests + 1 live testnet run |
 | [`indexer`](indexer) | Envio HyperIndex |
 | [`docs`](docs) | [Market gap](docs/MARKET-GAP.md), [Monad notes](docs/MONAD.md), [verify guide](docs/VERIFY.md), [plan](docs/superpowers/plans/2026-10-13-tally-monad.md), and the original Solana design docs this was ported from |
 
 ```bash
-cd contracts && forge test                 # 30 tests: invariants, attacks, slashing, drip
-cd web && pnpm install && pnpm test        # 51 tests: menu tree ⇄ Solidity vector, firewall, preflight, keys…
+cd contracts && forge test                 # 32 tests: invariants, attacks, slashing, drip
+cd web && pnpm install && pnpm test        # 55 tests: menu tree ⇄ Solidity vector, firewall, preflight, keys…
 E2E=1 pnpm vitest run test/e2e.live.test.ts  # real Monad Testnet: pay, second look, replay, top-up
 ```
 
