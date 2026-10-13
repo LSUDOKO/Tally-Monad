@@ -26,10 +26,11 @@ export const Header: React.FC<{
   sub?: string;
   align?: "left" | "center";
   titleSize?: number;
+  subSize?: number;
   width?: number;
   delay?: number;
   children?: React.ReactNode;
-}> = ({ eyebrow, title, sub, align = "left", titleSize = 84, width, delay = 0, children }) => {
+}> = ({ eyebrow, title, sub, align = "left", titleSize = 84, subSize = 32, width, delay = 0, children }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const rise = (d: number) => {
@@ -65,7 +66,7 @@ export const Header: React.FC<{
             marginTop: 30,
             fontFamily: FONT.sans,
             fontWeight: 400,
-            fontSize: 32,
+            fontSize: subSize,
             lineHeight: 1.38,
             color: C.muted,
             maxWidth: width,
