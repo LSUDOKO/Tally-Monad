@@ -128,3 +128,24 @@ export async function getSales(merchant: Hex, limit = 30): Promise<Receipt[]> {
 }
 
 export const indexerOn = () => !!ENVIO;
+
+// ---------- blocked attempts (red team and refused payments), shown on Receipts ----------
+
+export type Blocked = { title: string; reason: string; price: bigint; timestamp: number };
+const BKEY = (id: bigint) => `tally.blocked.${id}`;
+
+export function rememberBlocked(id: bigint, b: Blocked) {
+  try {
+    const all = blockedAttempts(id).map((x) => ({ ...x, price: `${x.price}` }));
+    localStorage.setItem(BKEY(id), JSON.stringify([{ ...b, price: `${b.price}` }, ...all].slice(0, 50)));
+  } catch {}
+}
+
+export function blockedAttempts(id: bigint): Blocked[] {
+  try {
+    const raw = JSON.parse(localStorage.getItem(BKEY(id)) ?? "[]") as (Omit<Blocked, "price"> & { price: string })[];
+    return raw.map((x) => ({ ...x, price: BigInt(x.price) }));
+  } catch {
+    return [];
+  }
+}
