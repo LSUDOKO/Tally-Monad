@@ -1,0 +1,18 @@
+$ ~/Android/Sdk/build-tools/36.0.0/aapt2 dump badging android/app/build/outputs/apk/release/app-release.apk | head
+package: name='app.tally.monad' versionCode='2' versionName='2.0.0' platformBuildVersionName='16' platformBuildVersionCode='36' compileSdkVersion='36' compileSdkVersionCodename='16'
+minSdkVersion:'28'
+targetSdkVersion:'36'
+uses-permission: name='android.permission.INTERNET'
+uses-permission: name='android.permission.CAMERA'
+application-label:'Tally'
+application-label-af:'Tally'
+…
+
+$ gh release view v2.0.0 --repo LSUDOKO/Tally-Monad
+title:  Tally v2.0.0 on Monad
+tag:  v2.0.0
+author:  LSUDOKO
+created:  2026-10-13T19:13:33Z
+published:  2026-10-13T19:13:50Z
+url:  https://github.com/LSUDOKO/Tally-Monad/releases/tag/v2.0.0
+asset:  tally-monad-v2.0.0.apk

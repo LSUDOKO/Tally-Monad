@@ -1,0 +1,22 @@
+$ sed -n '15,27p;51,55p;63p' web/lib/mera.ts
+export const PATHS = {
+  owner: "m/44'/60'/0'/0/0",
+  agent: "m/44'/60'/0'/0/1",
+  merchant: "m/44'/60'/0'/0/2",
+} as const;
+
+const CRED_KEY = "tally.credential";
+
+export function deriveKeys(prf: Uint8Array) {
+  const root = HDKey.fromMasterSeed(mnemonicToSeedSync(entropyToMnemonic(prf, wordlist)));
+  const key = (p: string) => root.derive(p).privateKey!;
+  return { owner: key(PATHS.owner), agent: key(PATHS.agent), merchant: key(PATHS.merchant) };
+}
+…
+export async function signUp(displayName: string): Promise<Keys> {
+  const { prfOutput, credentialId, transports } = await createPasskeyWithPrfOutput({
+    rp: { id: location.hostname, name: "Tally" },
+    user: { name: displayName, displayName },
+  });
+…
+  const { prfOutput, credentialId } = await getPasskeyPrfOutput({ rpId: location.hostname, credential });

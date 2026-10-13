@@ -1,0 +1,17 @@
+[
+  { "file": "forge-test.txt", "title": "Contract tests: 32 passing", "sponsor": "Monad" },
+  { "file": "web-tests.txt", "title": "Web app tests: 65 passing", "sponsor": "Monad" },
+  { "file": "indexer-tests.txt", "title": "Indexer handler tests", "sponsor": "Envio" },
+  { "file": "sourcify.txt", "title": "Tally verified on Sourcify (exact match)", "sponsor": "Monad" },
+  { "file": "cast-merchant.txt", "title": "Live merchant state on Monad Testnet", "sponsor": "Monad" },
+  { "file": "explorer-tx.txt", "title": "A real cosigned payment receipt", "sponsor": "Monad" },
+  { "file": "envio-indexer.txt", "title": "Hosted HyperIndex deployments", "sponsor": "Envio" },
+  { "file": "envio-graphql.txt", "title": "Payments and merchant from Envio GraphQL", "sponsor": "Envio" },
+  { "file": "kimi-models.txt", "title": "Kimi models the agent can call", "sponsor": "Kimi" },
+  { "file": "assetlinks.txt", "title": "Digital Asset Links: site trusts app.tally.monad", "sponsor": "Mera" },
+  { "file": "apk.txt", "title": "Android APK and GitHub release v2.0.0", "sponsor": "Mera" },
+  { "file": "code-mera.txt", "title": "One passkey, three keys (Mera PRF)", "sponsor": "Mera" },
+  { "file": "code-fund.txt", "title": "fund() and the cheapest-match cosign rule", "sponsor": "Monad" },
+  { "file": "code-agent.txt", "title": "Kimi picks, the firewall validates", "sponsor": "Kimi" },
+  { "file": "drip-reserve.txt", "title": "Reserve balance revert and the one-tx Drip fix", "sponsor": "Monad" }
+]

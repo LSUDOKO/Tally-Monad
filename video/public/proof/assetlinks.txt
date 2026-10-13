@@ -1,0 +1,22 @@
+$ curl -s "https://digitalassetlinks.googleapis.com/v1/statements:list?source.web.site=https://tally-monad.vercel.app&relation=delegate_permission/common.handle_all_urls"
+{
+  "statements": [
+    {
+      "source": {
+        "web": {
+          "site": "https://tally-monad.vercel.app."
+        }
+      },
+      "relation": "delegate_permission/common.handle_all_urls",
+      "target": {
+        "androidApp": {
+          "packageName": "app.tally.monad",
+          "certificate": {
+            "sha256Fingerprint": "3E:0A:E8:FB:7B:08:A2:83:14:DC:06:0F:4C:30:B0:98:FB:06:97:76:BB:36:A7:CA:9D:73:FC:AD:CA:F1:E6:AE"
+          }
+        }
+      }
+    }
+  ],
+  "maxAge": "1629.734125914s"
+}
