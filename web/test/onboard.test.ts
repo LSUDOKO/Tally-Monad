@@ -22,3 +22,11 @@ describe("welcome plan", () => {
     expect(() => welcomePlan({ owner: "0x12", agent, ownerMon: 0n, agentMon: 0n, ownerUsd: 0n })).toThrow(/address/);
   });
 });
+
+describe("reserve-balance window", () => {
+  it("is clear only when the sponsor sent nothing in the last 3 blocks", async () => {
+    const { windowClear } = await import("../lib/onboard");
+    expect(windowClear(10, 10)).toBe(true);
+    expect(windowClear(11, 10)).toBe(false);
+  });
+});
