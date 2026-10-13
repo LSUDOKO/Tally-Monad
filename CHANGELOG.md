@@ -1,12 +1,26 @@
 # Changelog
 
-All notable changes to Tally. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and versions follow [Semantic Versioning](https://semver.org/). Dates are UTC. Tally runs on Solana devnet only; nothing here is audited or meant for mainnet funds.
+All notable changes to Tally. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and versions follow [Semantic Versioning](https://semver.org/). Dates are UTC. Versions 2.x run on Monad Testnet and 1.x ran on Solana devnet; nothing here is audited or meant for mainnet funds.
 
 ## [Unreleased]
 
 ### Added
 - [docs/VERIFY.md](docs/VERIFY.md): a reviewer's audit guide (shipped vs. research, test commands with expected counts, explorer evidence, a code map of the ten invariants, merchant status).
 - Community files: Code of Conduct, contributing guide, security policy, issue and pull request templates.
+
+## [2.0.0] - 2026-10-13 (Monad)
+
+### Added
+- **Tally on Monad**: `Tally.sol` replaces the Anchor program. It enforces the same ten pay invariants with an EIP-712 signed menu header, a keccak Merkle leaf, a cheapest-match owner cosign, a receipt nullifier and exact-delta post-conditions, and keeps floor-fraud slashing.
+- **Purpose-bound family top-ups**: `fund(id, amount, note)` and a share link with passkey onboarding, a local-currency hint and a note ("For lunches this week").
+- **Mera passkey accounts**: one Face ID derives the owner key, a scoped assistant key and a merchant menu-signing key.
+- **Mobile web app** (Next.js PWA): allowance setup, scan → assistant → Second Look → Paid, receipts, merchant mode, red team.
+- **Envio HyperIndex** for payments, top-ups, capsules and merchants.
+- **Kimi** as the assistant behind the context firewall, with a deterministic fallback.
+- `Drip.welcome`: one-transaction sponsored welcome that respects Monad's reserve-balance rule.
+
+### Removed
+- Android app, Seed Vault/MWA sign-in, SKR bond mint, Seeker Genesis Token checks, proof-of-work gate, Lighthouse assertions and NFC. They remain in the [Solana repo](https://github.com/LSUDOKO/Tally).
 
 ## [1.2.0] - 2026-10-12
 
