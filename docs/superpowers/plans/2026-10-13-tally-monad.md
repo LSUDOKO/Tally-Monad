@@ -46,7 +46,12 @@
 
 Judges score Design & Craft against an **invisible blockchain**, and Founder/Market Readiness against a **named consumer segment**. "AI agent security" alone reads as infrastructure, so we reframe it.
 
-**Recommended:** *Tally is an allowance that can't be talked into the wrong purchase.*
+**DECIDED (user): both stories in one product.**
+- Positioning: *purpose-bound pocket money for the AI-agent era*.
+- Gap analysis and sources: `docs/MARKET-GAP.md`.
+- Gap 2 adds a purpose note to top-ups: `fund(id, amount, note)` → `Funded(id, from, amount, note)`.
+
+*Tally is an allowance that can't be talked into the wrong purchase.*
 - **Who:** families who send money to a student living away from home (for example Indian parents funding a child at college in another city or country). The parent tops up an **allowance** in dollars (AUSD). The student, or the student's AI assistant, spends it only at Tally counters (campus café, canteen), only on categories the parent allowed, and only at the menu's signed price.
 - **Why it needs onchain rails:** a bank card can cap the amount. It can't prove *which item at which signed price*, it can't refuse a pricier upsell unless you approve it, and money from abroad takes days to arrive and loses 3–6% in fees. With AUSD on Monad the transfer is settled in under a second, and the rules run in the contract, not on a server you have to trust.
 - **The AI part stays.** "Tell Tally 'oat latte'" → the agent picks the cheapest match → it pays alone. A pricier pick waits for your thumb (Second Look).
