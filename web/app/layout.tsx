@@ -20,7 +20,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="en">
       <body className={`${interTight.variable} ${jetbrains.variable} antialiased sky`}>
         <SessionProvider>
-          <main className="mx-auto flex min-h-dvh w-full max-w-md flex-col px-4 pb-10 pt-5">{children}</main>
+          <main className="mx-auto flex min-h-dvh w-full max-w-md flex-col overflow-x-clip px-4 pb-10 pt-5">{children}</main>
         </SessionProvider>
       </body>
     </html>

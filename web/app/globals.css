@@ -42,11 +42,13 @@
 
 html,
 body {
+  overflow-x: hidden;
   background: var(--ink);
   color: var(--text);
 }
 
 body {
+  overflow-x: hidden;
   font-family: var(--font-inter-tight), system-ui, sans-serif;
   -webkit-tap-highlight-color: transparent;
   min-height: 100dvh;
