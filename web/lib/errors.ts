@@ -1,4 +1,4 @@
-import { decodeErrorResult, type Hex } from "viem";
+import { decodeErrorResult, type Abi, type Hex } from "viem";
 import { TALLY_ABI } from "./abi";
 
 /** Contract errors in words a non-crypto user understands (no hashes, no "revert"). */
@@ -20,7 +20,15 @@ export const SENTENCES: Record<string, string> = {
   ReceiptUsed: "Already paid. You won't be charged twice.",
   InvalidRules: "Those limits don't work together.",
   AlreadyRegistered: "This counter is already open.",
+  ERC20InsufficientBalance: "Not enough money on this account yet. Wait a moment and try again.",
+  ERC20InsufficientAllowance: "The approval didn't go through. Try again.",
 };
+
+/** OpenZeppelin v5 token errors: the stablecoin reverts with these, not with Tally's own. */
+const TOKEN_ERRORS: Abi = [
+  { type: "error", name: "ERC20InsufficientBalance", inputs: [{ name: "sender", type: "address" }, { name: "balance", type: "uint256" }, { name: "needed", type: "uint256" }] },
+  { type: "error", name: "ERC20InsufficientAllowance", inputs: [{ name: "spender", type: "address" }, { name: "allowance", type: "uint256" }, { name: "needed", type: "uint256" }] },
+];
 
 function findData(e: unknown, depth = 0): Hex | undefined {
   if (!e || typeof e !== "object" || depth > 6) return undefined;
@@ -45,11 +53,12 @@ export function errorName(e: unknown): string | undefined {
   if (named) return named;
   const data = findData(e);
   if (!data) return undefined;
-  try {
-    return decodeErrorResult({ abi: TALLY_ABI, data }).errorName;
-  } catch {
-    return undefined;
+  for (const abi of [TALLY_ABI, TOKEN_ERRORS]) {
+    try {
+      return decodeErrorResult({ abi, data }).errorName;
+    } catch {}
   }
+  return undefined;
 }
 
 export function humanError(e: unknown): string {
