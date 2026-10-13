@@ -62,10 +62,10 @@ export async function pay(
     });
   }
   const args = [capsuleId, m.header, m.sig, { itemId: item.itemId, category: item.category, price: item.price, floor: item.floor }, proof, ownerSig] as const;
-  const t0 = performance.now();
   const req = { address: TALLY, abi: TALLY_ABI, functionName: "payOffer", args, account: agent } as const;
   const gas = withMargin(await publicClient.estimateContractGas(req as never));
   const hash = await wallet(agent).writeContract({ ...req, gas } as never);
+  const t0 = performance.now(); // settlement time: broadcast → included
   const r = await publicClient.waitForTransactionReceipt({ hash });
   if (r.status !== "success") throw new Error("Payment reverted");
   const ev = parseEventLogs({ abi: TALLY_ABI, logs: r.logs, eventName: "Paid" })[0] as unknown as { args: { receipt: Hex } };
