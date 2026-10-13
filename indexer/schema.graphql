@@ -1,0 +1,40 @@
+type Payment {
+  id: ID!
+  capsuleId: BigInt! @index
+  merchant: String! @index
+  itemId: String!
+  category: Int!
+  price: BigInt!
+  cosigned: Boolean!
+  receipt: String!
+  txHash: String!
+  timestamp: Int!
+}
+
+type Topup {
+  id: ID!
+  capsuleId: BigInt! @index
+  from: String!
+  amount: BigInt!
+  note: String!
+  txHash: String!
+  timestamp: Int!
+}
+
+type Capsule {
+  id: ID!
+  owner: String! @index
+  agent: String!
+  funded: BigInt!
+  spent: BigInt!
+  payments: Int!
+}
+
+type Merchant {
+  id: ID!
+  name: String!
+  bond: BigInt!
+  sales: BigInt!
+  count: Int!
+  slashed: BigInt!
+}
