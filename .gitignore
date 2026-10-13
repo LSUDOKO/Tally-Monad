@@ -12,3 +12,4 @@ indexer/generated/
 .superpowers/
 iassets/image*.png
 contracts/broadcast/**/run-[0-9]*.json
+.envio-token
