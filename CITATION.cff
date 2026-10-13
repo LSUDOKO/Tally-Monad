@@ -1,25 +1,25 @@
-cff-version: 1.2.0
+cff-version: 2.0.0
 message: "If you use Tally or its design in your work, please cite it as below."
-title: "Tally: let your agent pay, only for what tallies"
+title: "Tally: pocket money that can't be talked into the wrong purchase"
 abstract: >-
-  An on-chain spending guard for AI agents on Solana. An agent may pay only for an
-  item a merchant signed, at the signed price, to the registered merchant, inside
-  the owner's rules; a Solana program checks every payment and anything else reverts.
+  A family-funded, purpose-bound allowance on Monad. It (or the holder's AI assistant)
+  may pay only for an item a merchant signed, at the signed price, to the registered
+  merchant, inside the family's rules; a Monad contract enforces the cheapest match.
 type: software
 authors:
   - name: "Arpit Singh"
     alias: LSUDOKO
-repository-code: "https://github.com/LSUDOKO/Tally"
-url: "https://youtu.be/Bj0FDTXTpZA"
-license: MIT
-version: 1.2.0
-date-released: 2026-10-12
+repository-code: "https://github.com/LSUDOKO/Tally-Monad"
+url: "https://tally-monad.vercel.app"
+license: Apache-2.0
+version: 2.0.0
+date-released: 2026-10-13
 keywords:
-  - solana
-  - solana-mobile
+  - monad
+  - passkeys
   - ai-agents
   - agentic-payments
-  - anchor
-  - android
-  - mobile-wallet-adapter
+  - solidity
+  - envio
+  - stablecoin-payments
   - model-context-protocol
