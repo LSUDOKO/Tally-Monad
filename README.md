@@ -93,7 +93,7 @@ Plus **trustless slashing**: `proveFloorFraud` lets anyone slash 20% of a counte
 | **Mera: best UX** | Mera is the whole account layer: `createPasskeyWithPrfOutput` / `getPasskeyPrfOutput` → `createSecp256k1SigningSession` → `toViemAccount`. No seed phrase, extension or custody backend. [`web/lib/mera.ts`](web/lib/mera.ts) |
 | **Mera: one passkey, many keys** | The same PRF gives the owner key, a **scoped agent key** (the contract only lets it spend inside rules) and a **merchant menu-signing key**. The non-wallet use: your Face ID signs your café's menu. |
 | **Agora AUSD cross-border** | A family top-up link with passkey onboarding funds a rule-bound allowance in AUSD with a purpose note. The testnet uses a 6-decimal stand-in, because AUSD is deployed only on mainnet (`0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a`). The token address is a constructor argument. |
-| **Envio** | HyperIndex indexes `Paid`, `Funded`, `CapsuleCreated`, `MerchantRegistered` and `Slashed` → Receipts, this week's spend, family top-ups and merchant sales ([`indexer/`](indexer)). |
+| **Envio** | HyperIndex indexes `Paid`, `Funded`, `CapsuleCreated`, `MerchantRegistered` and `Slashed` → Receipts, this week's spend, family top-ups, points and merchant sales ([`indexer/`](indexer)). Hosted on Envio Cloud: [GraphQL endpoint](https://indexer.dev.hyperindex.xyz/a8a78bb/v1/graphql). |
 | **Kimi** | `/api/agent` asks Kimi (OpenAI-compatible) to pick one item id from the firewalled payload; the reply is schema-checked. It falls back to a deterministic rule without a key. |
 
 ## Deployed (Monad Testnet, chain 10143)
