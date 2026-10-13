@@ -11,7 +11,7 @@ Tally runs on **Monad Testnet only** and has **not been audited**. Do not use it
 | 2.x (Monad, `main`) | Yes |
 | 1.x (Solana, separate repo) | No |
 
-The deployed testnet contract is `0x5c7b28d93a424d87018fBf11cD86217a0d68AEE7` (Monad Testnet, chain 10143).
+The deployed testnet contract is `0xe7d22F222a799218908997f837CF3e0Fd1c1e40a` (Monad Testnet, chain 10143).
 
 ## Reporting a vulnerability
 

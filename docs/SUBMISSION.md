@@ -8,7 +8,7 @@
 | Live product | https://tally-monad.vercel.app (judges: use a phone; the counter QR is at `/counter`) |
 | Repo | https://github.com/LSUDOKO/Tally-Monad. Give `metropolis@hackathon.monad.xyz` access. |
 | Logo | `docs/brand/app-icon-1024.png` (PNG, under 3 MB) |
-| Contract | Monad Testnet `0x5c7b28d93a424d87018fBf11cD86217a0d68AEE7` |
+| Contract | Monad Testnet `0xe7d22F222a799218908997f837CF3e0Fd1c1e40a` |
 | Test login | None needed: the passkey is the account, and a $50 test credit is added automatically |
 
 ## Pitch video (≤ 2:00)
