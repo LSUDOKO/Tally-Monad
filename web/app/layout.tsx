@@ -18,9 +18,9 @@ export const viewport: Viewport = { themeColor: "#03060f", width: "device-width"
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={`${interTight.variable} ${jetbrains.variable} antialiased backdrop`}>
+      <body className={`${interTight.variable} ${jetbrains.variable} antialiased sky`}>
         <SessionProvider>
-          <main className="mx-auto flex min-h-dvh w-full max-w-md flex-col px-4 pb-10 pt-6">{children}</main>
+          <main className="mx-auto flex min-h-dvh w-full max-w-md flex-col px-4 pb-10 pt-5">{children}</main>
         </SessionProvider>
       </body>
     </html>
