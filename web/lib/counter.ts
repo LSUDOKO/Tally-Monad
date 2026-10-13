@@ -27,7 +27,9 @@ export async function signMenu(account: LocalAccount, merchant: Hex, items: Item
 export type MenuRow = { name: string; price: number; category: number };
 
 /** Floors are computed, never typed, so an honest counter can't be slashed by accident. */
-export function rowsToItems(rows: MenuRow[]): Item[] {
+export function rowsToItems(input: MenuRow[]): Item[] {
+  // half-typed rows (empty name, empty or zero price) are left off the signed menu until they're complete
+  const rows = input.filter((r) => r.name.trim() && Number.isFinite(r.price) && r.price > 0);
   const micro = (n: number) => BigInt(Math.round(n * 1e6));
   const floor = new Map<number, bigint>();
   for (const r of rows) {
