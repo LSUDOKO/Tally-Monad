@@ -3,5 +3,6 @@
   "tally": "0x5c7b28d93a424d87018fBf11cD86217a0d68AEE7",
   "ausd": "0x935864aB732A31da51738C6dF9705F0dB415754F",
   "demoMerchant": "0xF19e5Ab096Eb0fD81181e2bCFC51F6DD5a2FF7f1",
-  "deployBlock": 70733299
+  "deployBlock": 70733299,
+  "drip": "0x3bb10F7FFfa76071eCE265D6Aa258C06e4b5Cb11"
 }
