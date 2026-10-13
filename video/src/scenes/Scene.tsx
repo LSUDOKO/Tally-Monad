@@ -11,7 +11,7 @@ export const Scene: React.FC<{ scene: SceneDef }> = ({ scene }) => {
   const v = scene.visual;
   switch (v.kind) {
     case "story":
-      return <StoryScene scene={scene} image={v.image} stats={v.stats} />;
+      return <StoryScene scene={scene} image={v.image} stats={v.stats} layout={v.layout} focus={v.focus} />;
     case "phone":
       return <PhoneScene scene={scene} video={v.video} chip={v.chip} story={v.story} />;
     case "gap":

@@ -13,7 +13,9 @@
       "sub": "Who checks what it buys?",
       "visual": {
         "kind": "story",
-        "image": "story/01-family-video-call.png"
+        "image": "story/01-family-video-call.png",
+        "layout": "full",
+        "focus": 50
       },
       "vo": "My parents send me money from home. These days, my AI assistant spends it. So who checks what it actually buys?"
     },
@@ -40,7 +42,9 @@
             "days",
             "before it arrives"
           ]
-        ]
+        ],
+        "layout": "split",
+        "focus": 72
       },
       "vo": "Riya studies in Toronto. Her parents in Pune send her lunch money through a bank. It takes days, about six percent disappears in fees, and once it lands, nobody can say what it was spent on."
     },
@@ -63,7 +67,9 @@
             "0",
             "caps that check the item"
           ]
-        ]
+        ],
+        "layout": "split",
+        "focus": 66
       },
       "vo": "And now her assistant orders for her. One line of menu text says the regular is sold out, and it buys the large. Every spending cap says yes, because caps check the amount, not the item."
     },

@@ -3,7 +3,7 @@ import raw from "../storyboard.json";
 export type Stat = [string, string];
 export type ProofCard = { sponsor: string; line: string; proof?: string; shot?: string };
 export type Visual =
-  | { kind: "story"; image: string; stats?: Stat[] }
+  | { kind: "story"; image: string; stats?: Stat[]; layout?: "full" | "split"; focus?: number }
   | { kind: "phone"; video: string; chip?: string; story?: string }
   | { kind: "gap" }
   | { kind: "proof"; cards: ProofCard[] }
