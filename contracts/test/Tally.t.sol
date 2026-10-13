@@ -237,4 +237,28 @@ contract TallyTest is Test {
         vm.expectRevert(Tally.NotAFraud.selector);
         tally.proveFloorFraud(m, sig, items[0], _proof(0), items[1], _proof(1));
     }
+
+    function test_RotatingKeyDoesNotEscapeSlashing() public {
+        items[0].price = 3_000_000;
+        items[0].floor = 3_000_000;
+        leaves[0] = MenuMerkle.leaf(items[0].itemId, 3, 3_000_000, 3_000_000);
+        Tally.Menu memory m = _menu(9, 60);
+        bytes memory sig = _sign(signerPk, tally.menuDigest(m));
+        vm.prank(merchant);
+        tally.rotateSigningKey(vm.addr(0x9999));
+        vm.prank(address(0x5EE));
+        tally.proveFloorFraud(m, sig, items[0], _proof(0), items[1], _proof(1));
+        assertEq(usd.balanceOf(address(0x5EE)), 2e6);
+    }
+
+    function test_RevertFraudProofFromNeverRegisteredKey() public {
+        items[0].price = 3_000_000;
+        items[0].floor = 3_000_000;
+        leaves[0] = MenuMerkle.leaf(items[0].itemId, 3, 3_000_000, 3_000_000);
+        Tally.Menu memory m = _menu(9, 60);
+        bytes memory sig = _sign(badPk, tally.menuDigest(m));
+        vm.prank(address(0x5EE));
+        vm.expectRevert(Tally.WrongSigner.selector);
+        tally.proveFloorFraud(m, sig, items[0], _proof(0), items[1], _proof(1));
+    }
 }
