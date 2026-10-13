@@ -1,6 +1,6 @@
 # Contributing to Tally
 
-Thanks for your interest. Tally is a devnet-only, unaudited project, so the bar for a change is simple: it must keep every payment check on-chain, and it must come with a test that proves it.
+Tally is a testnet-only, unaudited project, so the bar for a change is simple: every payment check stays in the contract, and every change comes with a test that proves it.
 
 By taking part you agree to the [Code of Conduct](CODE_OF_CONDUCT.md). Security issues go through [SECURITY.md](SECURITY.md), never a public issue.
 
@@ -8,75 +8,50 @@ By taking part you agree to the [Code of Conduct](CODE_OF_CONDUCT.md). Security 
 
 | Path | What | Language |
 |---|---|---|
-| `programs/tally` | Anchor program, 24 instructions | Rust |
-| `crates/tally-core` | Byte-level primitives shared by the program and tests | Rust |
-| `tests/litesvm` | Threat-model suite against the compiled `.so` | Rust |
-| `fixtures` | Cross-language vectors every client must reproduce | JSON |
-| `sdk` | TypeScript SDK (`@solana/kit` + Codama client) | TypeScript |
-| `scripts` | Deploy, initialise, seed, faucet, attack replay | TypeScript |
-| `mcp` | Tally cloud: MCP server, Telegram bot, alerts, demo counter | TypeScript |
-| `app` | Android app, user and merchant modes in one APK | Kotlin |
-| `docs` | Whitepaper, specs, threat model, research | Markdown |
+| `contracts` | `Tally.sol` (pay invariants, cosign, slashing), `MenuMerkle.sol`, `Drip.sol`, `MockAUSD.sol` | Solidity (Foundry) |
+| `web` | Next.js PWA: Mera passkeys, allowance, scan, assistant, receipts, family top-up, merchant mode | TypeScript |
+| `indexer` | Envio HyperIndex for payments, top-ups, capsules, merchants | TypeScript |
+| `docs` | Market gap, Monad notes, verify guide, plans, original Solana design docs | Markdown |
 
 ## Set up
 
 | Tool | Version |
 |---|---|
-| Rust | 1.97.1 (pinned in `rust-toolchain.toml`) |
-| Solana CLI | 4.0.x |
-| Anchor | 1.2.1 |
+| Foundry | 1.4.x |
 | Node.js | 22 |
-| pnpm | 10.19.0 (pinned in `package.json`) |
-| JDK | 21, with the Android SDK (platform 37, build-tools 36.0.0) |
+| pnpm | 10+ |
 
 ```bash
-pnpm install
-cargo build-sbf --manifest-path programs/tally/Cargo.toml
+cd contracts && forge build
+cd web && pnpm install
+cd indexer && pnpm install && pnpm codegen
 ```
 
-Secrets (Groq, Helius, Google Places, Telegram) live in a gitignored `.env` and are optional. Never commit one, and never paste a key into an issue, a pull request or a screenshot.
+Secrets (`DRIP_PRIVATE_KEY`, `DEMO_MERCHANT_SIGNER_KEY`, `KIMI_API_KEY`, `ENVIO_API_TOKEN`) live in gitignored `.env` / `.env.local` files. Never commit one, and never paste a key into an issue, a pull request or a screenshot.
 
 ## Run the checks CI runs
 
-Every pull request runs these in [CI](.github/workflows/ci.yml). Run them locally first:
-
 ```bash
-# Rust
-cargo fmt --all -- --check
-cargo clippy --workspace --all-targets -- -D warnings
-cargo test --workspace
-
-# TypeScript
-pnpm -C sdk typecheck && pnpm -C sdk test
-pnpm -C scripts typecheck
-pnpm -C mcp typecheck && pnpm -C mcp test
-
-# Android
-cd app && ./gradlew :core:test :app:assembleDebug
+cd contracts && forge test
+cd web && pnpm test && pnpm exec tsc --noEmit
+cd indexer && pnpm test
 ```
-
-[docs/VERIFY.md](docs/VERIFY.md#2-run-the-tests-expected-counts) lists the expected test counts.
 
 ## Rules for changes
 
-- **On-chain checks stay on-chain.** The app and the cloud may explain or pre-check a payment, but the program is the only thing that decides. A change that moves a check off-chain will not be merged.
-- **Every attack has a test with its exact error code.** A new check needs a negative test in `tests/litesvm` that asserts the precise `TallyError` (or Anchor) code, and a row in [THREAT_SUITE.md](tests/litesvm/THREAT_SUITE.md).
-- **Bytes match across languages.** If you change a header, leaf, Merkle or QR encoding, update `fixtures/` and make the Rust, TypeScript and Kotlin tests pass against the same vectors.
-- **The IDL drives the SDK.** After changing an instruction or account, rebuild the program and run `pnpm -C sdk codegen`; commit the generated client with the change.
-- **Errors read as sentences.** A new error code needs a plain-language explanation in the SDK (`sdk/src/errors.ts`) and the app (`ErrorText`).
-- **Keep it on devnet.** Do not add mainnet endpoints, keys or addresses.
+- **On-chain checks stay on-chain.** The app may explain or pre-check a payment (`web/lib/pay.ts` `preflight`), but `payOffer` decides.
+- **Every attack has a test with its exact custom error** in `contracts/test/Tally.t.sol`.
+- **Bytes match across languages.** A change to leaf, node, EIP-712 types or the QR codec must keep `MenuMerkle.t.sol::test_ThreeItemRootMatchesTypeScript` and `web/test/menu.test.ts` green.
+- **Errors read as sentences.** A new contract error needs a sentence in `web/lib/errors.ts`.
+- **Respect Monad's rules:** explicit gas from `estimateGas × 1.2` (Monad bills the limit), and one value-moving sponsor transaction per 3-block window (reserve balance).
+- **Keep it on testnet.** Do not add mainnet keys.
 
 ## Commits and pull requests
 
-- One logical change per commit. Messages use a short area prefix and the imperative mood, as in the history: `app: ...`, `program: ...`, `sdk: ...`, `cloud: ...`, `docs: ...`, `ci: ...`.
-- Open the pull request against `main` and fill in the template. Link the issue it closes.
-- For an app change that is visible on screen, attach a screenshot or a short recording from a device or emulator.
+- One logical change per commit, with a short area prefix: `feat(contracts): …`, `fix(web): …`, `docs: …`.
+- Open the pull request against `main`, fill in the template and attach a screenshot for UI changes.
 - Add a line under `[Unreleased]` in [CHANGELOG.md](CHANGELOG.md).
-
-## Reporting bugs and asking for features
-
-Use the [issue forms](https://github.com/LSUDOKO/Tally/issues/new/choose). For a failed payment, the transaction signature on devnet is the most useful thing you can include. To try Tally on your phone, request devnet test funds with the [test funds form](https://github.com/LSUDOKO/Tally/issues/new?template=devnet-test-funds.yml).
 
 ## License
 
-By contributing, you agree that your contributions are licensed under the [MIT License](LICENSE).
+By contributing you agree that your contributions are licensed under the [Apache-2.0 License](LICENSE).
