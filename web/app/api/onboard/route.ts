@@ -6,10 +6,14 @@ import { MOCK_AUSD_ABI } from "@/lib/abi";
 import { DRIP_ABI } from "@/lib/abi-drip";
 import { RESERVE_WINDOW_BLOCKS, welcomePlan, windowClear } from "@/lib/onboard";
 import d from "@/lib/deployments.json";
+import { createBudget, createLimiter } from "@/lib/ratelimit";
 
 export const runtime = "nodejs";
 
 const inFlight = new Set<string>();
+// A venue shares one IP, so the per-IP cap is generous; the hourly MON budget is the real guard.
+const perIp = createLimiter(20, 3_600_000);
+const hourlyMon = createBudget(1_000_000_000_000_000_000n, 3_600_000); // 1 MON / hour
 
 async function waitForWindow(sponsor: Hex) {
   for (let i = 0; i < 20; i++) {
@@ -38,6 +42,11 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "bad request" }, { status: 400 });
   }
   if (inFlight.has(owner)) return NextResponse.json({ ok: true, pending: true });
+  const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
+  const mon = plan.ownerMon + plan.agentMon;
+  if (mon + plan.usd > 0n && (!perIp(ip) || !hourlyMon(mon))) {
+    return NextResponse.json({ error: "Lots of new people right now. Try again in a few minutes." }, { status: 429 });
+  }
   inFlight.add(owner);
   try {
     const sponsor = privateKeyToAccount(process.env.DRIP_PRIVATE_KEY as Hex);
