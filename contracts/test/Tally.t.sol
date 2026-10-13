@@ -79,6 +79,15 @@ contract TallyTest is Test {
         return tally.payOffer(capId, m, sig, items[i], _proof(i), ownerSig);
     }
 
+    function _payReverts(uint256 i, Tally.Menu memory m, uint256 sigPk, bytes memory ownerSig, bytes4 err) internal {
+        bytes memory sig = _sign(sigPk, tally.menuDigest(m));
+        Tally.Item memory it = items[i];
+        bytes32[] memory p = _proof(i);
+        vm.prank(agent);
+        vm.expectRevert(err);
+        tally.payOffer(capId, m, sig, it, p, ownerSig);
+    }
+
     function test_PaysCheapestMatchAutonomously() public {
         _pay(0, _menu(1, 60), signerPk, "");
         assertEq(usd.balanceOf(payout), 4_500_000);
@@ -115,32 +124,27 @@ contract TallyTest is Test {
     function test_RevertReplay() public {
         Tally.Menu memory m = _menu(1, 60);
         _pay(0, m, signerPk, "");
-        vm.expectRevert(Tally.ReceiptUsed.selector);
-        _pay(0, m, signerPk, "");
+                _payReverts(0, m, signerPk, "", Tally.ReceiptUsed.selector);
     }
 
     function test_RevertStale() public {
         Tally.Menu memory m = _menu(1, 60);
         vm.warp(block.timestamp + 120);
-        vm.expectRevert(Tally.Stale.selector);
-        _pay(0, m, signerPk, "");
+                _payReverts(0, m, signerPk, "", Tally.Stale.selector);
     }
 
     function test_RevertWindowTooLongWithoutFlag() public {
-        vm.expectRevert(Tally.WindowTooLong.selector);
-        _pay(0, _menu(1, 600), signerPk, "");
+                _payReverts(0, _menu(1, 600), signerPk, "", Tally.WindowTooLong.selector);
     }
 
     function test_RevertCategoryNotAllowed() public {
-        vm.expectRevert(Tally.Category.selector);
-        _pay(3, _menu(1, 60), signerPk, "");
+                _payReverts(3, _menu(1, 60), signerPk, "", Tally.Category.selector);
     }
 
     function test_RevertOverDaily() public {
         _pay(0, _menu(1, 60), signerPk, "");
         _pay(0, _menu(2, 60), signerPk, "");
-        vm.expectRevert(Tally.OverDaily.selector);
-        _pay(0, _menu(3, 60), signerPk, "");
+                _payReverts(0, _menu(3, 60), signerPk, "", Tally.OverDaily.selector);
     }
 
     function test_DailyResetsAfterCycle() public {
@@ -154,13 +158,11 @@ contract TallyTest is Test {
     function test_RevertInsufficientBalance() public {
         vm.prank(owner);
         tally.withdraw(capId, 48e6);
-        vm.expectRevert(Tally.InsufficientBalance.selector);
-        _pay(0, _menu(1, 60), signerPk, "");
+                _payReverts(0, _menu(1, 60), signerPk, "", Tally.InsufficientBalance.selector);
     }
 
     function test_PricierPickNeedsOwner() public {
-        vm.expectRevert(Tally.OwnerCosignRequired.selector);
-        _pay(1, _menu(1, 60), signerPk, "");
+                _payReverts(1, _menu(1, 60), signerPk, "", Tally.OwnerCosignRequired.selector);
     }
 
     function test_PricierPickWithOwnerCosign() public {
@@ -173,15 +175,13 @@ contract TallyTest is Test {
 
     function test_RevertCosignByNonOwner() public {
         bytes memory os = _sign(badPk, tally.cosignDigest(capId, merchant, 1, items[1].itemId, items[1].price));
-        vm.expectRevert(Tally.OwnerCosignRequired.selector);
-        _pay(1, _menu(1, 60), signerPk, os);
+                _payReverts(1, _menu(1, 60), signerPk, os, Tally.OwnerCosignRequired.selector);
     }
 
     function test_RevertFrozen() public {
         vm.prank(owner);
         tally.setFrozen(capId, true);
-        vm.expectRevert(Tally.Frozen.selector);
-        _pay(0, _menu(1, 60), signerPk, "");
+                _payReverts(0, _menu(1, 60), signerPk, "", Tally.Frozen.selector);
     }
 
     function test_RevertNotAgent() public {
@@ -197,8 +197,7 @@ contract TallyTest is Test {
         r.minMerchantBond = 500e6;
         vm.prank(owner);
         tally.updateRules(capId, r);
-        vm.expectRevert(Tally.OwnerCosignRequired.selector);
-        _pay(0, _menu(1, 60), signerPk, "");
+                _payReverts(0, _menu(1, 60), signerPk, "", Tally.OwnerCosignRequired.selector);
     }
 
     function test_AnyoneCanFundWithPurposeNote() public {
