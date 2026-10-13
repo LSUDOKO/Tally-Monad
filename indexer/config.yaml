@@ -1,0 +1,16 @@
+# yaml-language-server: $schema=./node_modules/envio/evm.schema.json
+name: tally-indexer
+disable_default_cross_chain: true
+chains:
+- id: 10143
+  start_block: 70733299
+  contracts:
+  - name: Tally
+    address:
+    - "0x5c7b28d93a424d87018fBf11cD86217a0d68AEE7"
+    events:
+    - event: CapsuleCreated(uint256 indexed id, address indexed owner, address agent)
+    - event: Funded(uint256 indexed id, address indexed from, uint128 amount, string note)
+    - event: MerchantRegistered(address indexed merchant, bytes32 name, address signingKey, address payout, uint128 bond)
+    - event: Paid(uint256 indexed capsuleId, address indexed merchant, bytes16 itemId, uint16 category, uint128 price, bool cosigned, bytes32 receipt)
+    - event: Slashed(address indexed merchant, bytes32 menuRoot, address reporter, uint128 amount)
