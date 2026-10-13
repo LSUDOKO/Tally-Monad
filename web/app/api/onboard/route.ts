@@ -49,16 +49,20 @@ export async function POST(req: Request) {
     const amount: bigint[] = [];
     if (plan.ownerMon > 0n) (to.push(owner), amount.push(plan.ownerMon));
     if (plan.agentMon > 0n) (to.push(agent), amount.push(plan.agentMon));
-    if (to.length > 0) {
-      // one value-moving tx per window (Monad reserve balance), so both floats go through Drip together
+    if (to.length > 0 || plan.usd > 0n) {
+      // the whole welcome is ONE transaction: under Monad's reserve-balance rule a second sponsor tx in the
+      // same 3-block window reverts once the first has moved MON
       const value = amount.reduce((a, b) => a + b, 0n);
       hashes.push(
-        await w.writeContract({ address: d.drip as Hex, abi: DRIP_ABI, functionName: "drip", args: [to, amount], value, gas: 90_000n, nonce: nonce++ }),
-      );
-    }
-    if (plan.usd > 0n) {
-      hashes.push(
-        await w.writeContract({ address: AUSD, abi: MOCK_AUSD_ABI, functionName: "mint", args: [owner, plan.usd], gas: 90_000n, nonce: nonce++ }),
+        await w.writeContract({
+          address: d.drip as Hex,
+          abi: DRIP_ABI,
+          functionName: "welcome",
+          args: [to, amount, AUSD, owner, plan.usd],
+          value,
+          gas: 160_000n,
+          nonce: nonce++,
+        }),
       );
     }
     const receipts = await Promise.all(hashes.map((hash) => publicClient.waitForTransactionReceipt({ hash })));
