@@ -3,11 +3,25 @@ import { createWalletClient, http, type Hex } from "viem";
 import { privateKeyToAccount } from "viem/accounts";
 import { chain, RPC, AUSD, publicClient } from "@/lib/chain";
 import { MOCK_AUSD_ABI } from "@/lib/abi";
-import { welcomePlan } from "@/lib/onboard";
+import { DRIP_ABI } from "@/lib/abi-drip";
+import { RESERVE_WINDOW_BLOCKS, welcomePlan, windowClear } from "@/lib/onboard";
+import d from "@/lib/deployments.json";
 
 export const runtime = "nodejs";
 
 const inFlight = new Set<string>();
+
+async function waitForWindow(sponsor: Hex) {
+  for (let i = 0; i < 20; i++) {
+    const head = await publicClient.getBlockNumber();
+    const [now, then] = await Promise.all([
+      publicClient.getTransactionCount({ address: sponsor, blockNumber: head }),
+      publicClient.getTransactionCount({ address: sponsor, blockNumber: head - RESERVE_WINDOW_BLOCKS }),
+    ]);
+    if (windowClear(now, then)) return;
+    await new Promise((r) => setTimeout(r, 450));
+  }
+}
 
 /** Sponsors a new user: a little MON for fees on both keys and $50 of test AUSD. */
 export async function POST(req: Request) {
@@ -28,16 +42,27 @@ export async function POST(req: Request) {
   try {
     const sponsor = privateKeyToAccount(process.env.DRIP_PRIVATE_KEY as Hex);
     const w = createWalletClient({ account: sponsor, chain, transport: http(RPC) });
+    await waitForWindow(sponsor.address);
     let nonce = await publicClient.getTransactionCount({ address: sponsor.address, blockTag: "pending" });
     const hashes: Hex[] = [];
-    if (plan.ownerMon > 0n) hashes.push(await w.sendTransaction({ to: owner, value: plan.ownerMon, gas: 21_000n, nonce: nonce++ }));
-    if (plan.agentMon > 0n) hashes.push(await w.sendTransaction({ to: agent, value: plan.agentMon, gas: 21_000n, nonce: nonce++ }));
+    const to: Hex[] = [];
+    const amount: bigint[] = [];
+    if (plan.ownerMon > 0n) (to.push(owner), amount.push(plan.ownerMon));
+    if (plan.agentMon > 0n) (to.push(agent), amount.push(plan.agentMon));
+    if (to.length > 0) {
+      // one value-moving tx per window (Monad reserve balance), so both floats go through Drip together
+      const value = amount.reduce((a, b) => a + b, 0n);
+      hashes.push(
+        await w.writeContract({ address: d.drip as Hex, abi: DRIP_ABI, functionName: "drip", args: [to, amount], value, gas: 90_000n, nonce: nonce++ }),
+      );
+    }
     if (plan.usd > 0n) {
       hashes.push(
         await w.writeContract({ address: AUSD, abi: MOCK_AUSD_ABI, functionName: "mint", args: [owner, plan.usd], gas: 90_000n, nonce: nonce++ }),
       );
     }
-    await Promise.all(hashes.map((hash) => publicClient.waitForTransactionReceipt({ hash })));
+    const receipts = await Promise.all(hashes.map((hash) => publicClient.waitForTransactionReceipt({ hash })));
+    if (receipts.some((r) => r.status !== "success")) throw new Error("a welcome transaction reverted");
     return NextResponse.json({ ok: true, welcomeUsd: Number(plan.usd) / 1e6 });
   } catch (e) {
     console.error("onboard failed", e);
