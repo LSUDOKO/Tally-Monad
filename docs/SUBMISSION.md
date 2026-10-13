@@ -8,6 +8,8 @@
 | Live product | https://tally-monad.vercel.app (judges: use a phone; the counter QR is at `/counter`) |
 | Repo | https://github.com/LSUDOKO/Tally-Monad. Give `metropolis@hackathon.monad.xyz` access. |
 | Logo | `docs/brand/app-icon-1024.png` (PNG, under 3 MB) |
+| Demo video | `video/out/tally-monad-demo.mp4` (4:48, 1080p, narrated, captions). It is also attached to the [v2.0.0 release](https://github.com/LSUDOKO/Tally-Monad/releases/tag/v2.0.0). Upload it to YouTube or Loom for the form. |
+| Android app | [tally-monad-v2.0.0.apk](https://github.com/LSUDOKO/Tally-Monad/releases/download/v2.0.0/tally-monad-v2.0.0.apk) |
 | Contract | Monad Testnet `0xe7d22F222a799218908997f837CF3e0Fd1c1e40a` |
 | Test login | None needed: the passkey is the account, and a $50 test credit is added automatically |
 
@@ -24,7 +26,21 @@
 | 1:35 | "Who first: 1.9 million Indian students abroad and the families who fund them. Next 100 users: two campus cafés near us and a student-society group." | Distribution slide |
 | 1:50 | "Greenlight controls the store. AP2 controls the cart. Tally controls the item." | Logo |
 
-## Technical demo video (≤ 3:00, live product only)
+## Technical demo video
+
+The rendered film (`video/`, Remotion) runs 4:48:
+1. Logo intro.
+2. Riya's story, using the ChatGPT images.
+3. Real source screenshots: World Bank, ICEF/MEA, AgentLAB, Greenlight and Stripe.
+4. The "agent wallets today" table.
+5. Every feature, recorded live on testnet.
+6. The how-it-works diagram and why-Monad.
+7. Sponsor proof from real CLI output.
+8. Outro.
+
+The brief caps the demo at 3:00. If that matters, render a cut by shortening scenes in `video/storyboard.json`.
+
+### Original 3-minute shot list (live product only)
 
 1. **0:00 Phone, fresh.** Get started → name → Face ID. The $50 welcome appears. Say: "That was a passkey through Mera; there's no seed phrase."
 2. **0:20 Allowance.** Coffee and food, $10 per purchase, $25 a day → Create.
