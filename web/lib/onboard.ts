@@ -1,7 +1,7 @@
 import { isAddress, parseEther } from "viem";
 
 const OWNER_FLOAT = parseEther("0.05");
-const AGENT_FLOAT = parseEther("0.08");
+const AGENT_FLOAT = parseEther("0.06");
 const LOW = parseEther("0.01");
 const WELCOME_USD = 50_000_000n; // $50 test AUSD
 
