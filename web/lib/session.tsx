@@ -14,6 +14,7 @@ type Session = {
   signUp: (name: string) => Promise<boolean>;
   signIn: () => Promise<boolean>;
   signOut: () => void;
+  retryWelcome: () => void;
 };
 
 const Ctx = createContext<Session | null>(null);
@@ -71,6 +72,11 @@ export function SessionProvider({ children }: { children: ReactNode }) {
         signUp: (name) => run(() => meraSignUp(name)),
         signIn: () => run(meraSignIn),
         signOut,
+        retryWelcome: () => {
+          if (!keys) return;
+          setError(undefined);
+          welcome(keys).then(setWelcomeUsd, (e) => setError(e.message));
+        },
       }}
     >
       {children}
