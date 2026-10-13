@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { createWalletClient, http, type Hex } from "viem";
 import { privateKeyToAccount } from "viem/accounts";
-import { chain, RPC, AUSD, publicClient } from "@/lib/chain";
+import { chain, RPC, AUSD, publicClient, withMargin } from "@/lib/chain";
 import { MOCK_AUSD_ABI } from "@/lib/abi";
 import { DRIP_ABI } from "@/lib/abi-drip";
 import { RESERVE_WINDOW_BLOCKS, welcomePlan, windowClear } from "@/lib/onboard";
@@ -53,17 +53,10 @@ export async function POST(req: Request) {
       // the whole welcome is ONE transaction: under Monad's reserve-balance rule a second sponsor tx in the
       // same 3-block window reverts once the first has moved MON
       const value = amount.reduce((a, b) => a + b, 0n);
-      hashes.push(
-        await w.writeContract({
-          address: d.drip as Hex,
-          abi: DRIP_ABI,
-          functionName: "welcome",
-          args: [to, amount, AUSD, owner, plan.usd],
-          value,
-          gas: 160_000n,
-          nonce: nonce++,
-        }),
-      );
+      const call = { address: d.drip as Hex, abi: DRIP_ABI, functionName: "welcome", args: [to, amount, AUSD, owner, plan.usd], value } as const;
+      // Monad prices cold accounts and new storage above Ethereum, so estimate instead of guessing
+      const gas = withMargin(await publicClient.estimateContractGas({ ...call, account: sponsor }));
+      hashes.push(await w.writeContract({ ...call, gas, nonce: nonce++ }));
     }
     const receipts = await Promise.all(hashes.map((hash) => publicClient.waitForTransactionReceipt({ hash })));
     if (receipts.some((r) => r.status !== "success")) throw new Error("a welcome transaction reverted");
