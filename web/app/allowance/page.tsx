@@ -3,9 +3,11 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { RequireSession } from "@/components/RequireSession";
-import { Button, Card, Header, Spinner, usd } from "@/components/ui";
+import { CategoryIcon } from "@/components/CategoryIcon";
+import { Mascot } from "@/components/Mascot";
+import { Button, Card, Header, Label, Spinner, usd } from "@/components/ui";
 import { useSession } from "@/lib/session";
-import { CATEGORIES, CATEGORY_ICON, CATEGORY_LABEL, chainNow, createAllowance, describeRules, rulesFromForm } from "@/lib/tally";
+import { CATEGORIES, CATEGORY_LABEL, chainNow, createAllowance, describeRules, rulesFromForm } from "@/lib/tally";
 import { useAllowance } from "@/lib/useAllowance";
 
 const CHOICES = [CATEGORIES.coffee, CATEGORIES.food, CATEGORIES.drinks, CATEGORIES.snacks, CATEGORIES.groceries, CATEGORIES.transit, CATEGORIES.tips];
@@ -14,7 +16,7 @@ function Slider({ label, value, min, max, step, onChange, fmt }: { label: string
   return (
     <label className="block">
       <div className="flex justify-between text-sm">
-        <span className="text-muted">{label}</span>
+        <span className="text-[13px] text-muted">{label}</span>
         <span className="tabular font-medium">{fmt(value)}</span>
       </div>
       <input type="range" min={min} max={max} step={step} value={value} onChange={(e) => onChange(Number(e.target.value))} className="mt-2 w-full accent-[#1f6bff]" />
@@ -61,17 +63,25 @@ function AllowanceInner() {
   return (
     <div className="flex flex-1 flex-col gap-4">
       <Header title="Your allowance" back="/home" />
+      <div className="flex items-end justify-between">
+        <h1 className="statement text-[34px] leading-[38px]">
+          Set the rules
+          <br />
+          once.
+        </h1>
+        <Mascot mood="thinking" height={120} />
+      </div>
 
       <Card>
-        <p className="mb-3 text-sm text-muted">It can be spent on</p>
+        <Label className="mb-3">It can be spent on</Label>
         <div className="flex flex-wrap gap-2">
           {CHOICES.map((c) => (
             <button
               key={c}
               onClick={() => toggle(c)}
-              className={`rounded-full px-4 py-2 text-sm transition ${cats.includes(c) ? "bg-brand text-white" : "bg-white/5 text-muted"}`}
+              className={`inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-[14px] transition ${cats.includes(c) ? "btn-primary text-white" : "glass text-muted"}`}
             >
-              {CATEGORY_ICON[c]} {CATEGORY_LABEL[c]}
+              <CategoryIcon category={c} size={15} /> {CATEGORY_LABEL[c]}
             </button>
           ))}
         </div>
@@ -85,7 +95,10 @@ function AllowanceInner() {
         <p className="text-xs text-faint">Available to load: {usd(a.walletUsd)}</p>
       </Card>
 
-      <p className="px-1 text-sm text-muted">{preview}. A pricier pick than the cheapest match always asks you first.</p>
+      <Card tint="var(--needs)">
+        <p className="text-[14px]">{preview}.</p>
+        <p className="mt-1 text-[13px] text-muted">Anything pricier than the cheapest match always waits for your Face ID. Family can top it up; only you can take money out.</p>
+      </Card>
 
       {err && <p className="rounded-2xl bg-blocked/10 p-3 text-sm text-blocked">{err}</p>}
       <div className="mt-auto">
