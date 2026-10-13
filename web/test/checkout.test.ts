@@ -14,7 +14,7 @@ const cap = {
   frozen: false,
   rules: { categories: 0b1001n, perTxCap: 10_000_000n, dailyCap: 25_000_000n, minMerchantBond: 50_000_000n, expiry: 10n ** 12n, allowExtended: false },
 } as const;
-const menu = (exp: bigint) => ({ header: { expiresAt: exp, issuedAt: 0n } }) as never;
+const menu = (exp: bigint) => ({ header: { expiresAt: exp, issuedAt: exp - 60n } }) as never;
 const fresh = { ...cap, spentInCycle: 0n };
 
 describe("preflight", () => {
