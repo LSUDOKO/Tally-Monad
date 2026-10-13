@@ -56,7 +56,7 @@ function ReceiptsInner() {
   useEffect(() => {
     if (a.id === undefined) return;
     getReceipts(a.id, 100).then(setPaid);
-    getTopups(a.id).then(setTops);
+    getTopups(a.id, a.capsule?.owner).then(setTops);
     setBlocked(blockedAttempts(a.id));
   }, [a.id]);
 

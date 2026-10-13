@@ -102,13 +102,18 @@ export async function getReceipts(capsuleId: bigint, limit = 50): Promise<Receip
   return mergeReceipts(localReceipts(capsuleId), (data?.Payment ?? []).map(fromEnvio)).slice(0, limit);
 }
 
-export async function getTopups(capsuleId: bigint): Promise<Topup[]> {
+/** The owner loading their own allowance is not a top-up from family. */
+export function familyOnly(rows: Topup[], owner?: string): Topup[] {
+  return owner ? rows.filter((t) => t.from.toLowerCase() !== owner.toLowerCase()) : rows;
+}
+
+export async function getTopups(capsuleId: bigint, owner?: string): Promise<Topup[]> {
   const data = await gql<{ Topup: { capsuleId: string; from: string; amount: string; note: string; txHash: string; timestamp: number }[] }>(
     `query($id: numeric!) { Topup(where: {capsuleId: {_eq: $id}}, order_by: {timestamp: desc}, limit: 20) {
       capsuleId from amount note txHash timestamp } }`,
     { id: `${capsuleId}` },
   );
-  return (data?.Topup ?? []).map((t) => ({
+  const rows = (data?.Topup ?? []).map((t) => ({
     capsuleId: BigInt(t.capsuleId),
     from: t.from as Hex,
     amount: BigInt(t.amount),
@@ -116,6 +121,7 @@ export async function getTopups(capsuleId: bigint): Promise<Topup[]> {
     txHash: t.txHash as Hex,
     timestamp: Number(t.timestamp),
   }));
+  return familyOnly(rows, owner);
 }
 
 export async function getSales(merchant: Hex, limit = 30): Promise<Receipt[]> {

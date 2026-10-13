@@ -185,7 +185,7 @@ function HomeInner() {
         </Round>
       </div>
 
-      <RecentReceipts capsuleId={a.id} limit={3} />
+      <RecentReceipts capsuleId={a.id} limit={3} owner={c.owner} />
       <BottomNav scanEnabled={!c.frozen} />
     </div>
   );

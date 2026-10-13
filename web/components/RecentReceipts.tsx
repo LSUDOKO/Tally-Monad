@@ -51,13 +51,13 @@ export function TopupRow({ t }: { t: Topup }) {
   );
 }
 
-export function RecentReceipts({ capsuleId, limit }: { capsuleId: bigint; limit: number }) {
+export function RecentReceipts({ capsuleId, limit, owner }: { capsuleId: bigint; limit: number; owner?: string }) {
   const [rows, setRows] = useState<Receipt[]>([]);
   const [tops, setTops] = useState<Topup[]>([]);
   useEffect(() => {
     getReceipts(capsuleId, limit).then(setRows);
-    getTopups(capsuleId).then((t) => setTops(t.slice(0, 1)));
-  }, [capsuleId, limit]);
+    getTopups(capsuleId, owner).then((t) => setTops(t.slice(0, 1)));
+  }, [capsuleId, limit, owner]);
   if (rows.length === 0 && tops.length === 0) return null;
   return (
     <section className="glass rounded-[28px] px-5 pb-1 pt-4">
