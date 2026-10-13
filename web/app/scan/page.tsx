@@ -17,15 +17,16 @@ import { useSession } from "@/lib/session";
 import { CATEGORY_ICON, chainNow, readMerchant, type Merchant } from "@/lib/tally";
 import { useAllowance } from "@/lib/useAllowance";
 import { signedBy } from "@/lib/verify";
+import { staleRecovery, type MenuSource } from "@/lib/flow";
 
 const Scanner = dynamic(() => import("@yudiel/react-qr-scanner").then((m) => m.Scanner), { ssr: false });
 
 type Stage =
   | { s: "scan" }
   | { s: "loading" }
-  | { s: "menu"; menu: SignedMenu; merchant: Merchant }
-  | { s: "thinking"; menu: SignedMenu; merchant: Merchant; request: string }
-  | { s: "checkout"; menu: SignedMenu; merchant: Merchant; item: Item; pick: Pick & { by: string }; check: Preflight }
+  | { s: "menu"; menu: SignedMenu; merchant: Merchant; source: MenuSource }
+  | { s: "thinking"; menu: SignedMenu; merchant: Merchant; source: MenuSource; request: string }
+  | { s: "checkout"; menu: SignedMenu; merchant: Merchant; source: MenuSource; item: Item; pick: Pick & { by: string }; check: Preflight }
   | { s: "paying"; item: Item; merchant: Merchant; cosign: boolean }
   | { s: "paid"; item: Item; merchant: Merchant; hash: string; ms: number; cosigned: boolean };
 
@@ -38,7 +39,7 @@ function ScanInner() {
   const [request, setRequest] = useState("");
   const [err, setErr] = useState<string>();
 
-  const load = async (raw: string) => {
+  const load = async (raw: string, source: MenuSource = "scan") => {
     setErr(undefined);
     setSt({ s: "loading" });
     try {
@@ -46,7 +47,7 @@ function ScanInner() {
       const merchant = await readMerchant(menu.header.merchant);
       if (!merchant || !merchant.active) throw new Error("This counter isn't registered with Tally.");
       if (!(await signedBy(menu, merchant.signingKey))) throw new Error("This menu wasn't signed by the counter. Don't pay it.");
-      setSt({ s: "menu", menu, merchant });
+      setSt({ s: "menu", menu, merchant, source });
     } catch (e) {
       setErr((e as Error).message.includes("Tally") || (e as Error).message.includes("counter") ? (e as Error).message : "That's not a Tally menu.");
       setSt({ s: "scan" });
@@ -55,27 +56,27 @@ function ScanInner() {
 
   const demoCafe = async () => {
     const r = await fetch("/api/counter", { cache: "no-store" });
-    await load((await r.json()).qr);
+    await load((await r.json()).qr, "demo");
   };
 
-  const ask = async (menu: SignedMenu, merchant: Merchant, text: string) => {
+  const ask = async (menu: SignedMenu, merchant: Merchant, source: MenuSource, text: string) => {
     if (!a.capsule || a.id === undefined) return;
     setErr(undefined);
-    setSt({ s: "thinking", menu, merchant, request: text });
+    setSt({ s: "thinking", menu, merchant, source, request: text });
     const payload = agentPayload(text, a.capsule.rules, menu.items);
     const r = await fetch("/api/agent", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(payload) });
     const pick = (await r.json()) as Pick & { by: string };
     const item = menu.items.find((i) => i.itemId === pick.item_id);
     if (!item) {
       setErr("Nothing on this menu matches. Try different words.");
-      setSt({ s: "menu", menu, merchant });
+      setSt({ s: "menu", menu, merchant, source });
       return;
     }
     const check = preflight(a.capsule, merchant.bond, menu, item, await chainNow());
-    setSt({ s: "checkout", menu, merchant, item, pick, check });
+    setSt({ s: "checkout", menu, merchant, source, item, pick, check });
   };
 
-  const confirm = async (menu: SignedMenu, merchant: Merchant, item: Item, needsOwner: boolean) => {
+  const confirm = async (menu: SignedMenu, merchant: Merchant, source: MenuSource, item: Item, needsOwner: boolean) => {
     if (!keys || a.id === undefined) return;
     setErr(undefined);
     setSt({ s: "paying", item, merchant, cosign: needsOwner });
@@ -100,8 +101,15 @@ function ScanInner() {
       a.refresh();
     } catch (e) {
       const msg = humanError(e);
-      setErr(msg.includes("menu refreshed") || msg.includes("Scan again") ? "The menu refreshed. Scan again." : msg);
-      setSt({ s: "menu", menu, merchant });
+      if (msg.includes("Scan again")) {
+        // the 60 s menu expired between the scan and the tap: recover from where it came from
+        setErr("The menu refreshed.");
+        if (staleRecovery(source).refetchDemo) await demoCafe();
+        else setSt({ s: "scan" });
+        return;
+      }
+      setErr(msg);
+      setSt({ s: "menu", menu, merchant, source });
     } finally {
       fresh?.end();
     }
@@ -163,19 +171,19 @@ function ScanInner() {
             <input
               value={request}
               onChange={(e) => setRequest(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && request && ask(st.menu, st.merchant, request)}
+              onKeyDown={(e) => e.key === "Enter" && request && ask(st.menu, st.merchant, st.source, request)}
               placeholder="e.g. oat latte"
               className="glass mt-3 h-12 w-full rounded-xl px-3 outline-none"
             />
             <div className="mt-3 flex flex-wrap gap-2">
               {QUICK.map((q) => (
-                <button key={q} onClick={() => ask(st.menu, st.merchant, q)} className="rounded-full bg-white/5 px-3 py-1.5 text-sm">
+                <button key={q} onClick={() => ask(st.menu, st.merchant, st.source, q)} className="rounded-full bg-white/5 px-3 py-1.5 text-sm">
                   {q}
                 </button>
               ))}
             </div>
           </Card>
-          <Button onClick={() => request && ask(st.menu, st.merchant, request)} disabled={!request || st.s === "thinking"}>
+          <Button onClick={() => request && ask(st.menu, st.merchant, st.source, request)} disabled={!request || st.s === "thinking"}>
             {st.s === "thinking" ? <Spinner /> : "Ask my assistant"}
           </Button>
         </>
@@ -218,13 +226,13 @@ function ScanInner() {
           )}
 
           {st.check.ok ? (
-            <Button onClick={() => st.check.ok && confirm(st.menu, st.merchant, st.item, st.check.needsOwner)}>
+            <Button onClick={() => st.check.ok && confirm(st.menu, st.merchant, st.source, st.item, st.check.needsOwner)}>
               {st.check.needsOwner ? `Approve ${usd(st.item.price)} with Face ID` : `Pay ${usd(st.item.price)}`}
             </Button>
           ) : st.check.code === "stale" ? (
-            <Button onClick={demoCafe}>Get the fresh menu</Button>
+            <Button onClick={() => (staleRecovery(st.source).refetchDemo ? demoCafe() : setSt({ s: "scan" }))}>{staleRecovery(st.source).label}</Button>
           ) : null}
-          <Button variant="ghost" onClick={() => setSt({ s: "menu", menu: st.menu, merchant: st.merchant })}>
+          <Button variant="ghost" onClick={() => setSt({ s: "menu", menu: st.menu, merchant: st.merchant, source: st.source })}>
             Pick something else
           </Button>
         </>
