@@ -1,10 +1,10 @@
 blank_issues_enabled: false
 contact_links:
   - name: Report a security vulnerability
-    url: https://github.com/LSUDOKO/Tally/security/advisories/new
+    url: https://github.com/LSUDOKO/Tally-Monad/security/advisories/new
     about: Please report security issues privately, not as a public issue.
   - name: Verify Tally yourself
-    url: https://github.com/LSUDOKO/Tally/blob/main/docs/VERIFY.md
+    url: https://github.com/LSUDOKO/Tally-Monad/blob/main/docs/VERIFY.md
     about: Tests, explorer evidence and the code map, for reviewers and judges.
   - name: Watch the demo
     url: https://youtu.be/Bj0FDTXTpZA
