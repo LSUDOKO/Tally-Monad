@@ -33,3 +33,16 @@ describe("activity", () => {
     expect(merged[0].name).toBe("Oat latte");
   });
 });
+
+describe("blocked attempts", () => {
+  it("keeps the newest first and survives a reload", async () => {
+    const store = new Map<string, string>();
+    (globalThis as any).localStorage = { getItem: (k: string) => store.get(k) ?? null, setItem: (k: string, v: string) => store.set(k, v) };
+    const { rememberBlocked, blockedAttempts } = await import("../lib/activity");
+    rememberBlocked(9n, { title: "Price inflation", reason: "That item or price is not on the signed menu.", price: 9_900_000n, timestamp: 1 });
+    rememberBlocked(9n, { title: "Whisper upsell", reason: "This one needs your approval.", price: 5_900_000n, timestamp: 2 });
+    const b = blockedAttempts(9n);
+    expect(b.map((x) => x.title)).toEqual(["Whisper upsell", "Price inflation"]);
+    expect(b[1].price).toBe(9_900_000n);
+  });
+});
