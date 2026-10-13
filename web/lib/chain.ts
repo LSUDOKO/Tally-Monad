@@ -4,7 +4,7 @@ import d from "./deployments.json";
 
 export const chain = monadTestnet;
 export const RPC = process.env.NEXT_PUBLIC_RPC_URL ?? "https://testnet-rpc.monad.xyz";
-export const publicClient = createPublicClient({ chain, transport: http(RPC) });
+export const publicClient = createPublicClient({ chain, transport: http(RPC), pollingInterval: 250 });
 export const TALLY = d.tally as `0x${string}`;
 export const AUSD = d.ausd as `0x${string}`;
 export const DEMO_MERCHANT = d.demoMerchant as `0x${string}`;
