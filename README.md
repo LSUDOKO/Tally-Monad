@@ -12,7 +12,7 @@ Family tops up a student's allowance from anywhere, in about a second, for cents
 It only buys what a counter signed, at the signed price, inside the family's rules.<br>
 The student's AI agent can order, but a **Monad** contract (not the model) makes it take the cheapest match.
 
-**[▶ Live app](https://tally-monad.vercel.app)** · **[Android APK v2.0.0](https://github.com/LSUDOKO/Tally-Monad/releases/download/v2.0.0/tally-monad-v2.0.0.apk)** · **[Demo video](https://github.com/LSUDOKO/Tally-Monad/releases/tag/v2.0.0)** · [Counter QR](https://tally-monad.vercel.app/counter) · [Contract](https://testnet.monadvision.com/address/0xe7d22F222a799218908997f837CF3e0Fd1c1e40a) · [Verify it](docs/VERIFY.md)
+**[▶ Live app](https://tally-monad.vercel.app)** · **[Android APK v2.0.0](https://github.com/LSUDOKO/Tally-Monad/releases/download/v2.0.0/tally-monad-v2.0.0.apk)** · **[Demo video (4:48)](https://github.com/LSUDOKO/Tally-Monad/releases/download/v2.0.0/tally-monad-demo.mp4)** · [Counter QR](https://tally-monad.vercel.app/counter) · [Contract](https://testnet.monadvision.com/address/0xe7d22F222a799218908997f837CF3e0Fd1c1e40a) · [Verify it](docs/VERIFY.md)
 
 ![Monad Testnet](https://img.shields.io/badge/Monad-Testnet%2010143-836EF9) ![Contract tests](https://img.shields.io/badge/forge-32%20passing-3DBD8C) ![App tests](https://img.shields.io/badge/vitest-65%20passing-3DBD8C) ![Envio](https://img.shields.io/badge/Envio-HyperIndex%20hosted-1F6BFF) ![Mera](https://img.shields.io/badge/Mera-passkeys-1F6BFF) ![Android](https://img.shields.io/badge/Android-TWA%20APK-1F6BFF) ![License](https://img.shields.io/badge/license-Apache--2.0-0A3DB8)
 
