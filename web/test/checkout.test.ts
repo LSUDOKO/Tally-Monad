@@ -65,3 +65,10 @@ describe("humanError", () => {
     expect(humanError(new Error("execution reverted 0x1234"))).not.toMatch(/0x|revert/i);
   });
 });
+
+describe("receipt key", () => {
+  it("matches the contract's keccak(abi.encode(id, merchant, nonce, itemId)) (vector from cast)", async () => {
+    const { receiptKey } = await import("../lib/pay");
+    expect(receiptKey(1n, "0x000000000000000000000000000000000000cafe", 7n, "0x7a11e0000000000000000000000000a1")).toBe("0xe77e0ba8e8408fa324fd53de32c1e23c8e3e7910ba13d87aa6df367bf5eb84df");
+  });
+});
