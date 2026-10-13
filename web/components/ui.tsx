@@ -1,35 +1,76 @@
 "use client";
 
+import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import type { ButtonHTMLAttributes, ReactNode } from "react";
 
-export function Button({ variant = "primary", className = "", ...p }: ButtonHTMLAttributes<HTMLButtonElement> & { variant?: "primary" | "ghost" | "danger" }) {
+type Variant = "primary" | "needs" | "blocked" | "ghost";
+
+/** Pill buttons from the app: one lit cobalt primary per screen, amber when it waits for you, red for attacks. */
+export function Button({ variant = "primary", className = "", ...p }: ButtonHTMLAttributes<HTMLButtonElement> & { variant?: Variant }) {
   const v = {
-    primary: "bg-brand text-white shadow-[0_8px_30px_rgba(31,107,255,0.45)] active:bg-brand-deep",
-    ghost: "glass text-text active:bg-surface",
-    danger: "bg-blocked/15 text-blocked border border-blocked/40",
+    primary: "btn-primary text-white",
+    needs: "btn-needs",
+    blocked: "btn-blocked",
+    ghost: "glass text-text",
   }[variant];
   return (
     <button
       {...p}
-      className={`h-14 w-full rounded-2xl text-[17px] font-semibold transition disabled:opacity-50 ${v} ${className}`}
+      className={`flex h-14 w-full items-center justify-center gap-2 rounded-full text-[15px] font-semibold transition active:scale-[0.98] disabled:opacity-45 ${v} ${className}`}
     />
   );
 }
 
-export function Card({ children, className = "" }: { children: ReactNode; className?: string }) {
-  return <div className={`glass rounded-3xl p-5 ${className}`}>{children}</div>;
+export function Card({ children, className = "", tint }: { children: ReactNode; className?: string; tint?: string }) {
+  return (
+    <div className={`rounded-[28px] p-5 ${tint ? "tint" : "glass"} ${className}`} style={tint ? ({ "--c": tint } as React.CSSProperties) : undefined}>
+      {children}
+    </div>
+  );
+}
+
+export function Chip({ children, color = "var(--brand-bright)", icon }: { children: ReactNode; color?: string; icon?: ReactNode }) {
+  return (
+    <span
+      className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[13px] font-medium"
+      style={{ color, background: `color-mix(in srgb, ${color} 13%, transparent)`, border: `1px solid color-mix(in srgb, ${color} 28%, transparent)` }}
+    >
+      {icon}
+      {children}
+    </span>
+  );
+}
+
+export function Label({ children, className = "" }: { children: ReactNode; className?: string }) {
+  return <p className={`label ${className}`}>{children}</p>;
+}
+
+export function Mono({ children, className = "" }: { children: ReactNode; className?: string }) {
+  return <p className={`font-mono text-[12px] leading-[17px] text-muted ${className}`}>{children}</p>;
+}
+
+/** The square icon tile in front of every list row. */
+export function Tile({ children, color = "var(--brand-bright)" }: { children: ReactNode; color?: string }) {
+  return (
+    <span
+      className="grid h-10 w-10 shrink-0 place-items-center rounded-xl"
+      style={{ color, background: `color-mix(in srgb, ${color} 14%, transparent)`, border: `1px solid color-mix(in srgb, ${color} 30%, transparent)` }}
+    >
+      {children}
+    </span>
+  );
 }
 
 export function Header({ title, back }: { title: string; back?: string }) {
   return (
-    <header className="mb-5 flex items-center gap-3">
+    <header className="mb-4 flex items-center gap-3">
       {back && (
-        <Link href={back} aria-label="Back" className="glass grid h-10 w-10 place-items-center rounded-full text-lg">
-          ‹
+        <Link href={back} aria-label="Back" className="glass grid h-10 w-10 place-items-center rounded-full">
+          <ArrowLeft size={18} />
         </Link>
       )}
-      <h1 className="text-xl font-semibold">{title}</h1>
+      <h1 className="text-[19px] font-medium">{title}</h1>
     </header>
   );
 }
