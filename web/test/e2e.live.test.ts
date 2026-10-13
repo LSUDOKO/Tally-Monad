@@ -6,8 +6,10 @@ import { readFileSync } from "node:fs";
 import { describe, it, expect } from "vitest";
 import { createWalletClient, hashTypedData, http, parseEther, type Hex } from "viem";
 import { generatePrivateKey, privateKeyToAccount } from "viem/accounts";
-import { AUSD, DEMO_MERCHANT, RPC, TALLY, chain, publicClient } from "../lib/chain";
-import { MOCK_AUSD_ABI, TALLY_ABI } from "../lib/abi";
+import { AUSD, DEMO_MERCHANT, RPC, TALLY, chain, publicClient, withMargin } from "../lib/chain";
+import { DRIP_ABI } from "../lib/abi-drip";
+import d from "../lib/deployments.json";
+import { TALLY_ABI } from "../lib/abi";
 import { DEMO_ITEMS, signMenu } from "../lib/counter";
 import { menuTypes, tallyDomain } from "../lib/menu";
 import { pay } from "../lib/pay";
@@ -28,14 +30,23 @@ describe.runIf(process.env.E2E === "1")("live Monad Testnet", () => {
     const owner = privateKeyToAccount(generatePrivateKey());
     const agent = privateKeyToAccount(generatePrivateKey());
     const w = createWalletClient({ account: sponsor, chain, transport: http(RPC) });
-    let nonce = await publicClient.getTransactionCount({ address: sponsor.address, blockTag: "pending" });
-    const hs = [
-      await w.sendTransaction({ to: owner.address, value: parseEther("0.06"), gas: 21_000n, nonce: nonce++ }),
-      await w.sendTransaction({ to: agent.address, value: parseEther("0.06"), gas: 21_000n, nonce: nonce++ }),
-      await w.writeContract({ address: AUSD, abi: MOCK_AUSD_ABI, functionName: "mint", args: [owner.address, 30_000_000n], gas: 90_000n, nonce: nonce++ }),
-      await w.writeContract({ address: AUSD, abi: MOCK_AUSD_ABI, functionName: "mint", args: [sponsor.address, 10_000_000n], gas: 90_000n, nonce: nonce++ }),
-    ];
-    for (const hash of hs) await publicClient.waitForTransactionReceipt({ hash });
+    // one sponsor tx per 3-block window (Monad reserve balance): floats + both mints travel through Drip.welcome
+    const fund = async (args: readonly [Hex[], bigint[], Hex, Hex, bigint], value: bigint) => {
+      for (let i = 0; i < 20; i++) {
+        const [now, then] = await Promise.all([
+          publicClient.getTransactionCount({ address: sponsor.address }),
+          publicClient.getTransactionCount({ address: sponsor.address, blockNumber: (await publicClient.getBlockNumber()) - 3n }),
+        ]);
+        if (now === then) break;
+        await new Promise((r) => setTimeout(r, 450));
+      }
+      const call = { address: d.drip as Hex, abi: DRIP_ABI, functionName: "welcome", args, value } as const;
+      const gas = withMargin(await publicClient.estimateContractGas({ ...call, account: sponsor }));
+      const r = await publicClient.waitForTransactionReceipt({ hash: await w.writeContract({ ...call, gas }) });
+      expect(r.status).toBe("success");
+    };
+    await fund([[owner.address, agent.address], [parseEther("0.06"), parseEther("0.06")], AUSD, owner.address, 30_000_000n], parseEther("0.12"));
+    await fund([[], [], AUSD, sponsor.address, 10_000_000n], 0n);
 
     const rules = rulesFromForm({ categories: [CATEGORIES.coffee, CATEGORIES.food], perPurchase: 10, daily: 25, days: 7, nowSec: Number(await chainNow()) });
     const id = await createAllowance(owner, agent.address, rules, 30_000_000n);
