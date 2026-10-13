@@ -15,10 +15,10 @@ body:
       options:
         - Web app (allowance, scan, pay)
         - Web app (merchant mode, family top-up)
-        - On-chain program
-        - TypeScript SDK or scripts
-        - Tally cloud (counter, MCP server)
-        - Telegram bot or payment alerts
+        - Contract (Tally.sol, Drip.sol)
+        - Welcome credit / sponsor route
+        - Assistant (Kimi or rules)
+        - Receipts / Envio indexer
         - Docs
     validations:
       required: true
