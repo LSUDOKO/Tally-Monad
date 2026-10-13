@@ -1,4 +1,4 @@
-import type { LocalAccount } from "viem";
+import { keccak256, stringToHex, type LocalAccount } from "viem";
 import { buildTree, menuTypes, tallyDomain, verifyFloors, type Hex, type Item, type SignedMenu } from "./menu";
 
 /** The demo café. Each category's floor is its cheapest item, so only pricier picks need the owner. */
@@ -22,4 +22,24 @@ export async function signMenu(account: LocalAccount, merchant: Hex, items: Item
   const header = { merchant, menuRoot: root, issuedAt, expiresAt: issuedAt + WINDOW, menuNonce: nonce, itemCount: items.length };
   const sig = await account.signTypedData({ domain: tallyDomain(), types: menuTypes, primaryType: "Menu", message: header });
   return { header, sig, items };
+}
+
+export type MenuRow = { name: string; price: number; category: number };
+
+/** Floors are computed, never typed, so an honest counter can't be slashed by accident. */
+export function rowsToItems(rows: MenuRow[]): Item[] {
+  const micro = (n: number) => BigInt(Math.round(n * 1e6));
+  const floor = new Map<number, bigint>();
+  for (const r of rows) {
+    const p = micro(r.price);
+    const f = floor.get(r.category);
+    if (f === undefined || p < f) floor.set(r.category, p);
+  }
+  return rows.map((r, i) => ({
+    itemId: keccak256(stringToHex(`${i}:${r.name}`)).slice(0, 34) as Hex,
+    category: r.category,
+    price: micro(r.price),
+    floor: floor.get(r.category)!,
+    name: r.name,
+  }));
 }
