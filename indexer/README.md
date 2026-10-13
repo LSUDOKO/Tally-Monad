@@ -1,17 +1,18 @@
-## Envio Indexer
+# Tally indexer (Envio HyperIndex)
 
-*Please refer to the [documentation website](https://docs.envio.dev) for a thorough guide on all [Envio](https://envio.dev) indexer features*
+Indexes the Tally contract on Monad Testnet (chain 10143) from block 70747699. Monad's public RPC caps `eth_getLogs` at about 100 blocks, so the app's history (Receipts, this week's spend, family top-ups, merchant sales) is served from here.
 
-### Run
-
-```bash
-pnpm dev
-```
-
-Visit http://localhost:8080 to see the GraphQL Playground, local password is `testing`.
-
-### Generate files from `config.yaml` or `schema.graphql`
+| Entity | From event | Used by |
+|---|---|---|
+| `Payment` | `Paid` | Receipts, Home "recent payments", points, merchant sales |
+| `Topup` | `Funded` (with the family's note) | Receipts, Home |
+| `Capsule` | `CapsuleCreated`, `Paid`, `Funded` | funded and spent totals per allowance |
+| `Merchant` | `MerchantRegistered`, `Paid`, `Slashed` | sales, bond and slashed totals |
 
 ```bash
-pnpm codegen
+pnpm install && pnpm codegen
+pnpm test     # handler tests with simulated events
+pnpm dev      # local run (needs Docker)
 ```
+
+Hosted on Envio Cloud as `tally-monad`. The web app reads it through `NEXT_PUBLIC_ENVIO_URL`.
