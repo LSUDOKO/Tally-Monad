@@ -1,0 +1,13 @@
+node_modules/
+.env
+.env.local
+.next/
+out/
+contracts/out/
+contracts/cache/
+contracts/broadcast/*/31337/
+indexer/generated/
+.vercel/
+.DS_Store
+.superpowers/
+iassets/image*.png
