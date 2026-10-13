@@ -1,26 +1,67 @@
 @import "tailwindcss";
 
+/* Tally brand (docs/brand/README.md): one blue action per screen, three steps of text. */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --ink: #03060f;
+  --night: #060b1a;
+  --surface: #0b1430;
+  --brand: #1f6bff;
+  --brand-bright: #5c9dff;
+  --brand-core: #bfdbff;
+  --brand-deep: #0a3db8;
+  --text: #eef4ff;
+  --muted: #b3c2de;
+  --faint: #7f90b5;
+  --paid: #3dbd8c;
+  --blocked: #ff6b6b;
+  --needs: #ffb547;
+  --hairline: rgba(194, 220, 255, 0.14);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-ink: var(--ink);
+  --color-night: var(--night);
+  --color-surface: var(--surface);
+  --color-brand: var(--brand);
+  --color-brand-bright: var(--brand-bright);
+  --color-brand-core: var(--brand-core);
+  --color-brand-deep: var(--brand-deep);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-paid: var(--paid);
+  --color-blocked: var(--blocked);
+  --color-needs: var(--needs);
+  --color-hairline: var(--hairline);
+  --font-sans: var(--font-inter-tight);
+  --font-mono: var(--font-jetbrains);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html,
+body {
+  background: var(--ink);
+  color: var(--text);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter-tight), system-ui, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+  min-height: 100dvh;
+}
+
+.backdrop {
+  background:
+    radial-gradient(120% 60% at 50% -10%, rgba(31, 107, 255, 0.35), transparent 60%),
+    radial-gradient(80% 40% at 100% 100%, rgba(10, 61, 184, 0.25), transparent 60%),
+    var(--ink);
+}
+
+.glass {
+  background: rgba(4, 10, 28, 0.56);
+  border: 1px solid var(--hairline);
+  backdrop-filter: blur(18px);
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
 }
