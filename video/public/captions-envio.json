@@ -1,0 +1,167 @@
+[
+  {
+    "start": 0.3,
+    "end": 2.46,
+    "text": "Tally, for the best use of Envio."
+  },
+  {
+    "start": 6.3,
+    "end": 8.519,
+    "text": "Tally's receipts, family top-ups"
+  },
+  {
+    "start": 8.519,
+    "end": 10.46,
+    "text": "and points all need history."
+  },
+  {
+    "start": 10.46,
+    "end": 12.817,
+    "text": "But Monad's public RPC rejects log"
+  },
+  {
+    "start": 12.817,
+    "end": 15.451,
+    "text": "queries beyond about a hundred blocks."
+  },
+  {
+    "start": 15.451,
+    "end": 17.67,
+    "text": "So the history comes from Envio."
+  },
+  {
+    "start": 18.3,
+    "end": 19.872,
+    "text": "Here is the whole path."
+  },
+  {
+    "start": 19.872,
+    "end": 21.786,
+    "text": "A payment in the app becomes"
+  },
+  {
+    "start": 21.786,
+    "end": 23.153,
+    "text": "a Monad transaction."
+  },
+  {
+    "start": 23.153,
+    "end": 25.34,
+    "text": "HyperSync streams the block, our"
+  },
+  {
+    "start": 25.34,
+    "end": 27.596,
+    "text": "HyperIndex handler turns the Paid"
+  },
+  {
+    "start": 27.596,
+    "end": 29.304,
+    "text": "event into a Payment row,"
+  },
+  {
+    "start": 29.304,
+    "end": 31.97,
+    "text": "and the app reads it back over GraphQL."
+  },
+  {
+    "start": 34.3,
+    "end": 36.921,
+    "text": "Riya pays four fifty for an oat latte."
+  },
+  {
+    "start": 36.921,
+    "end": 38.715,
+    "text": "The transaction settles on"
+  },
+  {
+    "start": 38.715,
+    "end": 40.37,
+    "text": "Monad in under a second."
+  },
+  {
+    "start": 48.3,
+    "end": 50.716,
+    "text": "Our handler listens for the Paid event,"
+  },
+  {
+    "start": 50.716,
+    "end": 53.07,
+    "text": "writes a Payment with the item, price,"
+  },
+  {
+    "start": 53.07,
+    "end": 55.115,
+    "text": "cosign flag and transaction hash,"
+  },
+  {
+    "start": 55.115,
+    "end": 57.097,
+    "text": "and rolls it into the merchant's"
+  },
+  {
+    "start": 57.097,
+    "end": 58.77,
+    "text": "and the allowance's totals."
+  },
+  {
+    "start": 62.3,
+    "end": 64.44,
+    "text": "Seconds later the hosted indexer"
+  },
+  {
+    "start": 64.44,
+    "end": 66.178,
+    "text": "returns that same payment."
+  },
+  {
+    "start": 66.178,
+    "end": 68.452,
+    "text": "Same transaction hash, same price,"
+  },
+  {
+    "start": 68.452,
+    "end": 71.06,
+    "text": "with the family top-up right beside it."
+  },
+  {
+    "start": 78.3,
+    "end": 79.91,
+    "text": "And it's back in the app."
+  },
+  {
+    "start": 79.91,
+    "end": 81.714,
+    "text": "Receipts, this week's spend,"
+  },
+  {
+    "start": 81.714,
+    "end": 84.097,
+    "text": "family top-ups, points and the café's"
+  },
+  {
+    "start": 84.097,
+    "end": 86.03,
+    "text": "sales are all read from Envio."
+  },
+  {
+    "start": 92.3,
+    "end": 94.796,
+    "text": "The indexer is deployed on Envio Cloud"
+  },
+  {
+    "start": 94.796,
+    "end": 96.7,
+    "text": "straight from our repository."
+  },
+  {
+    "start": 102.3,
+    "end": 102.665,
+    "text": "Tally."
+  },
+  {
+    "start": 102.665,
+    "end": 104.43,
+    "text": "Every payment, on the record."
+  }
+]
