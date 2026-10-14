@@ -15,7 +15,13 @@ export type Visual =
   | { kind: "table"; rows: TableRow[]; cols: [string, string] }
   | { kind: "diagram" }
   | { kind: "monad"; stats: Stat[] }
-  | { kind: "outro" };
+  | { kind: "outro" }
+  | { kind: "sponsor"; logo?: string; name: string }
+  | { kind: "phones"; left: PhoneSide; right: PhoneSide }
+  | { kind: "terminal"; proof: string }
+  | { kind: "flow" };
+
+export type PhoneSide = { video: string; label: string };
 
 export type SceneDef = {
   id: string;
@@ -28,24 +34,61 @@ export type SceneDef = {
   vo?: string;
 };
 
-export const STORYBOARD = raw as unknown as {
+/** A storyboard JSON file: scenes plus optional audio and caption paths (relative to public/). */
+export type BoardJson = {
   fps: number;
   width: number;
   height: number;
   music?: string;
+  vo?: string;
+  captions?: string;
   scenes: SceneDef[];
 };
 
-export const SCENES = STORYBOARD.scenes;
-/** Total length in seconds: the last scene's start plus its duration (starts are cumulative). */
-export const TOTAL_SECONDS = SCENES[SCENES.length - 1].start + SCENES[SCENES.length - 1].duration;
-export const TOTAL_FRAMES = Math.round(TOTAL_SECONDS * STORYBOARD.fps);
-export const sceneFrames = (s: SceneDef) => Math.round(s.duration * STORYBOARD.fps);
+/** A storyboard ready to drive a <Film>: totals computed, audio and caption paths resolved. */
+export type Board = BoardJson & {
+  name: string;
+  totalFrames: number;
+  /** Music bed fades, in seconds. */
+  musicFadeIn: number;
+  musicFadeOut: number;
+  /** Sponsor logo (from scene 0's visual.logo) shown small on every scene but the intro and outro. */
+  sponsor?: { logo?: string; name: string };
+};
 
-// Every scene must start where the previous one ends, or the voice drifts from the picture.
-SCENES.forEach((s, i) => {
-  const prev = SCENES[i - 1];
-  if (prev && Math.abs(prev.start + prev.duration - s.start) > 1e-6) {
-    console.warn(`storyboard: ${s.id} starts at ${s.start}s, expected ${prev.start + prev.duration}s`);
-  }
+export const sceneFramesAt = (s: SceneDef, fps: number) => Math.round(s.duration * fps);
+
+export function makeBoard(name: string, raw: BoardJson, opts: Partial<Board> = {}): Board {
+  const scenes = raw.scenes;
+  const last = scenes[scenes.length - 1];
+  // Every scene must start where the previous one ends, or the voice drifts from the picture.
+  scenes.forEach((s, i) => {
+    const prev = scenes[i - 1];
+    if (prev && Math.abs(prev.start + prev.duration - s.start) > 1e-6) {
+      console.warn(`${name}: ${s.id} starts at ${s.start}s, expected ${prev.start + prev.duration}s`);
+    }
+  });
+  const v0 = scenes[0]?.visual;
+  return {
+    ...raw,
+    name,
+    totalFrames: Math.round((last.start + last.duration) * raw.fps),
+    musicFadeIn: 1.5,
+    musicFadeOut: 2,
+    sponsor: v0?.kind === "sponsor" ? { logo: v0.logo, name: v0.name } : undefined,
+    ...opts,
+  };
+}
+
+/** The main Tally film: its audio and captions keep their original paths and fades. */
+export const STORYBOARD = makeBoard("Tally", raw as unknown as BoardJson, {
+  vo: "audio/vo.wav",
+  captions: "captions.json",
+  music: (raw as { music?: string }).music ?? "audio/music.wav",
+  musicFadeIn: 2,
+  musicFadeOut: 3,
 });
+
+export const SCENES = STORYBOARD.scenes;
+export const TOTAL_FRAMES = STORYBOARD.totalFrames;
+export const sceneFrames = (s: SceneDef) => sceneFramesAt(s, STORYBOARD.fps);
