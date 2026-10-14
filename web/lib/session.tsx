@@ -46,6 +46,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
       const k = await fn();
       setKeys(k);
       setStatus("signed-in");
+      setReturning(true); // a passkey now exists on this device, so the next visit says "Continue"
       welcome(k).then(setWelcomeUsd, (e) => setError(e.message));
       return true;
     } catch (e) {
