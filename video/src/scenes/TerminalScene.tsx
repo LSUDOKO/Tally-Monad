@@ -4,14 +4,15 @@ import { Header, LeftColumn } from "../components/Header";
 import { TerminalFrame } from "../components/TerminalFrame";
 import { ifStatic, useStaticText } from "../lib/assets";
 import type { SceneDef } from "../storyboard";
-import { C, FONT, H, PAD } from "../theme";
+import { C, FONT, PAD } from "../theme";
 
-const PANEL = { left: 720, width: 1090, height: 770 };
-const FONT_SIZE = 24;
+const PANEL = { left: 720, top: 132, width: 1090, height: 760 };
 const LINE_H = 37;
+/** Long files shrink to fit down to this line height; past it the view scrolls. */
+const MIN_LINE_H = 29;
 const BAR_H = 47;
 const BODY_PAD = 22;
-const VISIBLE = Math.floor((PANEL.height - BAR_H - BODY_PAD * 2) / LINE_H);
+const BODY_H = PANEL.height - BAR_H - BODY_PAD * 2;
 /** An output line lands whole, worth this many typed characters. */
 const OUTPUT_COST = 5;
 const TEXT_W = 540;
@@ -63,18 +64,20 @@ export const TerminalScene: React.FC<{ scene: SceneDef; proof: string }> = ({ sc
     budget -= c;
   }
   const done = rows.length === lines.length && !rows[rows.length - 1]?.typing;
-  const view = rows.slice(Math.max(0, rows.length - VISIBLE));
+  const lineH = Math.max(MIN_LINE_H, Math.min(LINE_H, Math.floor(BODY_H / Math.max(1, lines.length))));
+  const fontSize = Math.round(lineH * 0.65);
+  const visible = Math.floor(BODY_H / lineH);
+  const view = rows.slice(Math.max(0, rows.length - visible));
   const blink = Math.floor(frame / 16) % 2 === 0;
 
   const p = spring({ frame: frame - 2, fps, config: { damping: 18, stiffness: 90 } });
-  const top = (H - PANEL.height) / 2;
   return (
     <AbsoluteFill>
       <div
         style={{
           position: "absolute",
           left: PANEL.left,
-          top,
+          top: PANEL.top,
           width: PANEL.width,
           opacity: Math.min(1, p * 1.3),
           transform: `translateX(${(1 - p) * 60}px) scale(${0.97 + 0.03 * p})`,
@@ -85,8 +88,8 @@ export const TerminalScene: React.FC<{ scene: SceneDef; proof: string }> = ({ sc
             style={{
               padding: `${BODY_PAD}px 30px`,
               fontFamily: FONT.mono,
-              fontSize: FONT_SIZE,
-              lineHeight: `${LINE_H}px`,
+              fontSize,
+              lineHeight: `${lineH}px`,
               fontVariantLigatures: "none",
             }}
           >
