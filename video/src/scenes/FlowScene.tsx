@@ -233,12 +233,12 @@ const NodeView: React.FC<{ node: Node; i: number; at: number }> = ({ node, i, at
         style={{
           marginTop: 10,
           fontFamily: FONT.mono,
-          fontSize: 21,
+          fontSize: 20,
+          whiteSpace: "nowrap",
           lineHeight: 1.3,
           color: on > 0.5 ? C.core : C.faint,
           textAlign: "center",
           opacity: 0.4 + 0.6 * on,
-          maxWidth: SPAN - 20,
         }}
       >
         {node.detail}
