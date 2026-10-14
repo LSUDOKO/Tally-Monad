@@ -1,6 +1,6 @@
 import React from "react";
 import { Img, staticFile } from "remotion";
-import { ifStatic } from "../lib/assets";
+import { logoOnDark } from "../lib/assets";
 import { C, FONT } from "../theme";
 import { Glass } from "./Glass";
 
@@ -8,7 +8,7 @@ export const BADGE_H = 44;
 
 /** The sponsor's logo, small in the top-right corner (or its name in a glass pill when the logo is missing). */
 export const SponsorBadge: React.FC<{ logo?: string; name: string; opacity: number }> = ({ logo, name, opacity }) => {
-  const src = ifStatic(logo);
+  const src = logoOnDark(logo, false);
   if (opacity <= 0) return null;
   return (
     <div style={{ position: "absolute", top: 46, right: 64, height: BADGE_H, display: "flex", alignItems: "center", opacity: 0.7 * opacity }}>

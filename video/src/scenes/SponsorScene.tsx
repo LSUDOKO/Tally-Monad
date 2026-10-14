@@ -4,7 +4,7 @@ import { Glass } from "../components/Glass";
 import { Mascot } from "../components/Mascot";
 import { TallyMark } from "../components/TallyMark";
 import { EASE, enter, prog } from "../lib/anim";
-import { ifStatic } from "../lib/assets";
+import { logoOnDark } from "../lib/assets";
 import type { SceneDef } from "../storyboard";
 import { C, FONT, H } from "../theme";
 
@@ -21,7 +21,7 @@ const useIn = (delay: number) => {
 };
 
 const SponsorMark: React.FC<{ logo?: string; name: string }> = ({ logo, name }) => {
-  const src = ifStatic(logo);
+  const src = logoOnDark(logo);
   if (src) {
     return (
       <Img

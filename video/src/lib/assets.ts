@@ -43,3 +43,19 @@ export function useStaticText(name: string | null): string | null {
   }, [name, handle]);
   return text;
 }
+
+/** Logos whose own colours already read on the night sky. */
+const KEEP_COLOUR = /envio/i;
+
+/**
+ * A sponsor logo for the dark sky: its "-white" variant when one exists in public/ (logos/x.svg -> logos/x-white.svg).
+ * Logos that already read on the sky keep their colours unless `keepColour` is false.
+ */
+export const logoOnDark = (logo: string | undefined | null, keepColour = true): string | null => {
+  if (!logo) return null;
+  if (!(keepColour && KEEP_COLOUR.test(logo))) {
+    const white = ifStatic(logo.replace(/(\.[^.]+)$/, "-white$1"));
+    if (white) return white;
+  }
+  return ifStatic(logo);
+};
