@@ -6,11 +6,11 @@ import { Glass } from "./Glass";
 
 type Cue = { start: number; end: number; text: string };
 
-/** Bottom-center caption from public/captions.json ({start, end, text} in seconds). Renders nothing when the file is missing. */
-export const Captions: React.FC = () => {
+/** Bottom-center caption from a public/ captions file ({start, end, text} in seconds). Renders nothing when the file is missing. */
+export const Captions: React.FC<{ src?: string }> = ({ src = "captions.json" }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const raw = useStaticText(ifStatic("captions.json"));
+  const raw = useStaticText(ifStatic(src));
   const cues = useMemo<Cue[]>(() => {
     if (!raw) return [];
     try {
