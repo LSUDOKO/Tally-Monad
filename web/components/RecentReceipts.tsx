@@ -51,13 +51,14 @@ export function TopupRow({ t }: { t: Topup }) {
   );
 }
 
-export function RecentReceipts({ capsuleId, limit, owner }: { capsuleId: bigint; limit: number; owner?: string }) {
+/** `refreshKey` changes when the balance moves, so a new payment or family top-up shows up without a reload. */
+export function RecentReceipts({ capsuleId, limit, owner, refreshKey }: { capsuleId: bigint; limit: number; owner?: string; refreshKey?: string }) {
   const [rows, setRows] = useState<Receipt[]>([]);
   const [tops, setTops] = useState<Topup[]>([]);
   useEffect(() => {
     getReceipts(capsuleId, limit).then(setRows);
     getTopups(capsuleId, owner).then((t) => setTops(t.slice(0, 1)));
-  }, [capsuleId, limit, owner]);
+  }, [capsuleId, limit, owner, refreshKey]);
   if (rows.length === 0 && tops.length === 0) return null;
   return (
     <section className="glass rounded-[28px] px-5 pb-1 pt-4">

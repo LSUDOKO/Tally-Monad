@@ -185,7 +185,7 @@ function HomeInner() {
         </Round>
       </div>
 
-      <RecentReceipts capsuleId={a.id} limit={3} owner={c.owner} />
+      <RecentReceipts capsuleId={a.id} limit={3} owner={c.owner} refreshKey={`${c.balance}`} />
       <BottomNav scanEnabled={!c.frozen} />
     </div>
   );
