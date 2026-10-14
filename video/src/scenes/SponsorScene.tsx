@@ -53,6 +53,8 @@ export const SponsorScene: React.FC<{ scene: SceneDef; logo?: string; name: stri
   const bounty = enter(frame, fps, 64, 26);
   const event = enter(frame, fps, 76, 26);
   const pool = prog(frame, 0, 50);
+  // the event line leads with Monad's own wordmark
+  const monad = logoOnDark("logos/monad.svg", false);
   const flash = interpolate(frame, [44, 50, 80], [0, 1, 0.3], clamp);
   const piece = (p: number, dx = 0): React.CSSProperties => ({
     opacity: Math.min(1, p * 1.4),
@@ -133,9 +135,17 @@ export const SponsorScene: React.FC<{ scene: SceneDef; logo?: string; name: stri
             fontSize: 26,
             letterSpacing: "0.04em",
             color: C.muted,
+            display: "flex",
+            alignItems: "center",
+            gap: 12,
           }}
         >
-          Monad Metropolis · Consumer Products &amp; Payments
+          {monad ? (
+            <Img src={staticFile(monad)} style={{ height: 30, opacity: 0.9, transform: "translateY(-1px)" }} />
+          ) : (
+            "Monad"
+          )}
+          <span>Metropolis · Consumer Products &amp; Payments</span>
         </div>
       </div>
       <Mascot mood="hero" height={400} delay={58} style={{ right: 120, bottom: 120 }} />
