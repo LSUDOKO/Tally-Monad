@@ -9,6 +9,10 @@
 | Repo | https://github.com/LSUDOKO/Tally-Monad. Give `metropolis@hackathon.monad.xyz` access. |
 | Logo | `docs/brand/app-icon-1024.png` (PNG, under 3 MB) |
 | Demo video | `video/out/tally-monad-demo.mp4` (4:48, 1080p, narrated, captions). It is also attached to the [v2.0.0 release](https://github.com/LSUDOKO/Tally-Monad/releases/tag/v2.0.0). Upload it to YouTube or Loom for the form. |
+| Agora bounty video | https://github.com/LSUDOKO/Tally-Monad/releases/download/v2.0.0/tally-agora.mp4 (1:59) |
+| Envio bounty video | https://github.com/LSUDOKO/Tally-Monad/releases/download/v2.0.0/tally-envio.mp4 (1:48) |
+| Mera bounty video | https://github.com/LSUDOKO/Tally-Monad/releases/download/v2.0.0/tally-mera.mp4 (1:25) |
+| Product ad (optional) | https://github.com/LSUDOKO/Tally-Monad/releases/download/v2.0.0/tally-ad.mp4 (0:30) |
 | Android app | [tally-monad-v2.0.0.apk](https://github.com/LSUDOKO/Tally-Monad/releases/download/v2.0.0/tally-monad-v2.0.0.apk) |
 | Contract | Monad Testnet `0xe7d22F222a799218908997f837CF3e0Fd1c1e40a` |
 | Test login | None needed: the passkey is the account, and a $50 test credit is added automatically |
