@@ -25,9 +25,19 @@ The student's AI agent can order, but a **Monad** contract (not the model) makes
 <p align="center"><img src="docs/images/monad/v2/strip-1.png" alt="Welcome, Home, the agent's pick and Second Look, recorded on Monad Testnet" width="100%"></p>
 <p align="center"><img src="docs/images/monad/v2/strip-2.png" alt="Paid, red team, receipts and keys, recorded on Monad Testnet" width="100%"></p>
 
+## Videos
+
+| Video | Length | What it shows |
+|---|---|---|
+| [**Demo**](https://github.com/LSUDOKO/Tally-Monad/releases/download/v2.0.0/tally-monad-demo.mp4) | 4:48 | The story, real evidence for the problem, every feature on testnet, how it works, sponsor proof |
+| [**Agora: cross-border payments**](https://github.com/LSUDOKO/Tally-Monad/releases/download/v2.0.0/tally-agora.mp4) | 1:59 | Passkey onboarding on two phones, an AUSD balance, Mom sends $20 from Pune and Riya's balance goes from $40 to $60 in one block, with the explorer and decoded `Funded` event as proof |
+| [**Envio: end to end**](https://github.com/LSUDOKO/Tally-Monad/releases/download/v2.0.0/tally-envio.mp4) | 1:48 | The RPC's 100-block limit, then a real payment → Monad → HyperSync → HyperIndex handler → live GraphQL (same tx hash) → Receipts in the app |
+| [**Mera: UX**](https://github.com/LSUDOKO/Tally-Monad/releases/download/v2.0.0/tally-mera.mp4) | 1:25 | Face ID sign-up, PRF → three keys (owner, agent, café), a fresh Face ID for Second Look, the passkey signing a café menu |
+| [**Ad**](https://github.com/LSUDOKO/Tally-Monad/releases/download/v2.0.0/tally-ad.mp4) | 0:30 | The 30-second product spot |
+
 ## Contents
 
-[The problem](#the-problem) · [What Tally does](#what-tally-does) · [See it](#see-it) · [How it works](#how-it-works) · [Proof: sponsor integrations](#proof-sponsor-integrations) · [Why Monad](#why-monad) · [Try it](#judges-try-it-in-two-minutes) · [Repo](#repo) · [Honest status](#honest-status)
+[Videos](#videos) · [The problem](#the-problem) · [What Tally does](#what-tally-does) · [See it](#see-it) · [How it works](#how-it-works) · [Proof: sponsor integrations](#proof-sponsor-integrations) · [Why Monad](#why-monad) · [Try it](#judges-try-it-in-two-minutes) · [Repo](#repo) · [Honest status](#honest-status)
 
 ## The problem
 
