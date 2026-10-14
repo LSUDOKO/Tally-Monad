@@ -2,14 +2,18 @@ import React from "react";
 import type { SceneDef } from "../storyboard";
 import { DiagramScene } from "./DiagramScene";
 import { EvidenceScene } from "./EvidenceScene";
+import { FlowScene } from "./FlowScene";
 import { GapScene } from "./GapScene";
 import { LogoScene } from "./LogoScene";
 import { MonadScene } from "./MonadScene";
 import { OutroScene } from "./OutroScene";
 import { PhoneScene } from "./PhoneScene";
+import { PhonesScene } from "./PhonesScene";
 import { ProofScene } from "./ProofScene";
+import { SponsorScene } from "./SponsorScene";
 import { StoryScene } from "./StoryScene";
 import { TableScene } from "./TableScene";
+import { TerminalScene } from "./TerminalScene";
 
 /** Picks the layout from the storyboard's visual.kind. */
 export const Scene: React.FC<{ scene: SceneDef }> = ({ scene }) => {
@@ -35,5 +39,13 @@ export const Scene: React.FC<{ scene: SceneDef }> = ({ scene }) => {
       return <ProofScene scene={scene} cards={v.cards} />;
     case "outro":
       return <OutroScene scene={scene} />;
+    case "sponsor":
+      return <SponsorScene scene={scene} logo={v.logo} name={v.name} />;
+    case "phones":
+      return <PhonesScene scene={scene} left={v.left} right={v.right} />;
+    case "terminal":
+      return <TerminalScene scene={scene} proof={v.proof} />;
+    case "flow":
+      return <FlowScene scene={scene} />;
   }
 };
