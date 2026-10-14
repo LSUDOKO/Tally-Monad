@@ -1,0 +1,137 @@
+[
+  {
+    "start": 0.3,
+    "end": 1.79,
+    "text": "Tally, built on Mera."
+  },
+  {
+    "start": 6.3,
+    "end": 7.931,
+    "text": "Sign-up is one button."
+  },
+  {
+    "start": 7.931,
+    "end": 9.858,
+    "text": "Face ID creates a passkey,"
+  },
+  {
+    "start": 9.858,
+    "end": 12.082,
+    "text": "Mera returns its P R F output,"
+  },
+  {
+    "start": 12.082,
+    "end": 14.232,
+    "text": "and that becomes the account."
+  },
+  {
+    "start": 14.232,
+    "end": 16.975,
+    "text": "No seed phrase, no extension, and the"
+  },
+  {
+    "start": 16.975,
+    "end": 19.57,
+    "text": "welcome credit means no gas either."
+  },
+  {
+    "start": 22.3,
+    "end": 24.433,
+    "text": "Coming back is the same gesture."
+  },
+  {
+    "start": 24.433,
+    "end": 26.967,
+    "text": "Mera re-derives exactly the same keys,"
+  },
+  {
+    "start": 26.967,
+    "end": 29.5,
+    "text": "on any device where the passkey syncs."
+  },
+  {
+    "start": 35.3,
+    "end": 36.996,
+    "text": "One passkey, three keys."
+  },
+  {
+    "start": 36.996,
+    "end": 39.257,
+    "text": "The owner key changes the rules."
+  },
+  {
+    "start": 39.257,
+    "end": 41.165,
+    "text": "A capped agent key can only"
+  },
+  {
+    "start": 41.165,
+    "end": 42.436,
+    "text": "spend inside them."
+  },
+  {
+    "start": 42.436,
+    "end": 44.98,
+    "text": "And a third key signs a café's menu."
+  },
+  {
+    "start": 50.3,
+    "end": 52.15,
+    "text": "When the agent picks something"
+  },
+  {
+    "start": 52.15,
+    "end": 54.493,
+    "text": "pricier than the cheapest match, Tally"
+  },
+  {
+    "start": 54.493,
+    "end": 56.652,
+    "text": "asks for a fresh Face ID before the"
+  },
+  {
+    "start": 56.652,
+    "end": 58.44,
+    "text": "owner key signs the approval."
+  },
+  {
+    "start": 65.3,
+    "end": 67.617,
+    "text": "And the non-wallet use: in merchant"
+  },
+  {
+    "start": 67.617,
+    "end": 70.265,
+    "text": "mode, the café owner's passkey signs the"
+  },
+  {
+    "start": 70.265,
+    "end": 72.45,
+    "text": "shop's menu every twenty seconds."
+  },
+  {
+    "start": 77.3,
+    "end": 79.475,
+    "text": "All of it lives in one small file,"
+  },
+  {
+    "start": 79.475,
+    "end": 81.521,
+    "text": "built on Mera's passkey, signing"
+  },
+  {
+    "start": 81.521,
+    "end": 83.76,
+    "text": "session and viem account functions."
+  },
+  {
+    "start": 89.3,
+    "end": 89.709,
+    "text": "Tally."
+  },
+  {
+    "start": 89.709,
+    "end": 91.62,
+    "text": "Your Face ID is your wallet."
+  }
+]
