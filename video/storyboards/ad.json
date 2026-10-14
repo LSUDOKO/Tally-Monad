@@ -1,0 +1,74 @@
+{
+  "fps": 30,
+  "width": 1920,
+  "height": 1080,
+  "voice": "af_heart",
+  "music": "audio/ad/music.wav",
+  "vo": "audio/ad/vo.wav",
+  "captions": "captions-ad.json",
+  "scenes": [
+    {
+      "id": "logo",
+      "start": 0,
+      "duration": 4,
+      "eyebrow": "",
+      "title": "Tally",
+      "sub": "on Monad",
+      "visual": {
+        "kind": "logo"
+      },
+      "vo": ""
+    },
+    {
+      "id": "b1",
+      "start": 4,
+      "duration": 6,
+      "eyebrow": "",
+      "title": "Family tops it up.\nIn a second.",
+      "sub": "",
+      "visual": {
+        "kind": "phone",
+        "video": "rec/06-family.mp4"
+      },
+      "vo": "Family tops it up. In a second."
+    },
+    {
+      "id": "b2",
+      "start": 10,
+      "duration": 7,
+      "eyebrow": "",
+      "title": "Your agent pays.\nOnly for what tallies.",
+      "sub": "",
+      "visual": {
+        "kind": "phone",
+        "video": "rec/04-pay.mp4"
+      },
+      "vo": "Your agent pays, only for what tallies."
+    },
+    {
+      "id": "b3",
+      "start": 17,
+      "duration": 6,
+      "eyebrow": "",
+      "title": "Pricier?\nIt waits for you.",
+      "sub": "",
+      "visual": {
+        "kind": "phone",
+        "video": "rec/05-secondlook.mp4"
+      },
+      "vo": "Pricier? It waits for you."
+    },
+    {
+      "id": "end",
+      "start": 23,
+      "duration": 7,
+      "eyebrow": "",
+      "title": "Pay with proof.",
+      "sub": "tally-monad.vercel.app",
+      "visual": {
+        "kind": "outro"
+      },
+      "vo": "Tally. Pay with proof. On Monad."
+    }
+  ]
+}

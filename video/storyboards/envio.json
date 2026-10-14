@@ -1,0 +1,133 @@
+{
+  "fps": 30,
+  "width": 1920,
+  "height": 1080,
+  "voice": "af_heart",
+  "music": "audio/envio/music.wav",
+  "vo": "audio/envio/vo.wav",
+  "captions": "captions-envio.json",
+  "scenes": [
+    {
+      "id": "intro",
+      "start": 0,
+      "duration": 6,
+      "eyebrow": "",
+      "title": "Tally × Envio",
+      "sub": "Best Use of Envio",
+      "visual": {
+        "kind": "sponsor",
+        "logo": "logos/envio.svg",
+        "name": "Envio"
+      },
+      "vo": "Tally, for the best use of Envio."
+    },
+    {
+      "id": "why",
+      "start": 6,
+      "duration": 12,
+      "eyebrow": "Why we need it",
+      "title": "History can't come\nfrom the RPC.",
+      "sub": "Monad's public RPC rejects eth_getLogs beyond ~100 blocks.",
+      "visual": {
+        "kind": "terminal",
+        "proof": "proof/rpc-getlogs.txt"
+      },
+      "vo": "Tally's receipts, family top-ups and points all need history. But Monad's public RPC rejects log queries beyond about a hundred blocks. So the history comes from Envio."
+    },
+    {
+      "id": "flow",
+      "start": 18,
+      "duration": 16,
+      "eyebrow": "End to end",
+      "title": "From a tap\nto a receipt.",
+      "sub": "",
+      "visual": {
+        "kind": "flow"
+      },
+      "vo": "Here is the whole path. A payment in the app becomes a Monad transaction. HyperSync streams the block, our HyperIndex handler turns the Paid event into a Payment row, and the app reads it back over GraphQL."
+    },
+    {
+      "id": "pay",
+      "start": 34,
+      "duration": 14,
+      "eyebrow": "01 · A real payment",
+      "title": "Riya pays $4.50.",
+      "sub": "The agent picks the cheapest oat latte; Monad settles it.",
+      "visual": {
+        "kind": "phone",
+        "video": "rec/agora/riya-pay.mp4"
+      },
+      "vo": "Riya pays four fifty for an oat latte. The transaction settles on Monad in under a second."
+    },
+    {
+      "id": "handler",
+      "start": 48,
+      "duration": 14,
+      "eyebrow": "02 · The handler",
+      "title": "Paid → Payment.",
+      "sub": "indexer/src/handlers/Tally.ts · schema.graphql · config.yaml",
+      "visual": {
+        "kind": "terminal",
+        "proof": "proof/code-envio-handler.txt"
+      },
+      "vo": "Our handler listens for the Paid event, writes a Payment with the item, price, cosign flag and transaction hash, and rolls it into the merchant's and the allowance's totals."
+    },
+    {
+      "id": "graphql",
+      "start": 62,
+      "duration": 16,
+      "eyebrow": "03 · Live GraphQL",
+      "title": "Same tx hash.\nIndexed.",
+      "sub": "The hosted HyperIndex returns the payment Riya just made.",
+      "visual": {
+        "kind": "terminal",
+        "proof": "proof/envio-live-payment.txt"
+      },
+      "vo": "Seconds later the hosted indexer returns that same payment. Same transaction hash, same price, with the family top-up right beside it."
+    },
+    {
+      "id": "app",
+      "start": 78,
+      "duration": 14,
+      "eyebrow": "04 · Back in the app",
+      "title": "Receipts, points,\nfamily top-ups.",
+      "sub": "Every list in Tally is read from Envio.",
+      "visual": {
+        "kind": "phone",
+        "video": "rec/agora/riya-receipts.mp4",
+        "chip": "History indexed by Envio HyperIndex"
+      },
+      "vo": "And it's back in the app. Receipts, this week's spend, family top-ups, points and the café's sales are all read from Envio."
+    },
+    {
+      "id": "cloud",
+      "start": 92,
+      "duration": 10,
+      "eyebrow": "Hosted on Envio Cloud",
+      "title": "Deployed from\nour repo.",
+      "sub": "envio-cloud indexer get tally-monad",
+      "visual": {
+        "kind": "evidence",
+        "shots": [
+          {
+            "file": "shots/envio-dashboard.png",
+            "source": "envio.dev"
+          }
+        ]
+      },
+      "vo": "The indexer is deployed on Envio Cloud straight from our repository."
+    },
+    {
+      "id": "outro",
+      "start": 102,
+      "duration": 6,
+      "eyebrow": "",
+      "title": "Tally controls the item.",
+      "sub": "tally-monad.vercel.app",
+      "visual": {
+        "kind": "outro"
+      },
+      "vo": "Tally. Every payment, on the record."
+    }
+  ]
+}

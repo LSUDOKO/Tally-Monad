@@ -1,0 +1,157 @@
+{
+  "fps": 30,
+  "width": 1920,
+  "height": 1080,
+  "voice": "af_heart",
+  "music": "audio/agora/music.wav",
+  "vo": "audio/agora/vo.wav",
+  "captions": "captions-agora.json",
+  "scenes": [
+    {
+      "id": "intro",
+      "start": 0,
+      "duration": 6,
+      "eyebrow": "",
+      "title": "Tally × Agora",
+      "sub": "Best Cross-Border Payments App on Monad",
+      "visual": {
+        "kind": "sponsor",
+        "logo": "logos/agora.svg",
+        "name": "Agora"
+      },
+      "vo": "Tally, for the Agora cross-border payments bounty."
+    },
+    {
+      "id": "why",
+      "start": 6,
+      "duration": 9,
+      "eyebrow": "The corridor",
+      "title": "Pune to Toronto.\nDays and 6% today.",
+      "sub": "Riya studies in Toronto. Her parents send lunch money from Pune.",
+      "visual": {
+        "kind": "story",
+        "image": "story/01-family-video-call.png",
+        "layout": "split",
+        "focus": 40
+      },
+      "vo": "Riya studies in Toronto. Her parents in Pune send her lunch money, and today that takes days and loses about six percent."
+    },
+    {
+      "id": "onboard",
+      "start": 15,
+      "duration": 16,
+      "eyebrow": "01 · Passkey onboarding",
+      "title": "Two phones.\nTwo Face IDs.",
+      "sub": "Mera derives each account from a passkey. No seed phrase, no extension, no gas.",
+      "visual": {
+        "kind": "phones",
+        "left": {
+          "video": "rec/agora/mom-onboard.mp4",
+          "label": "Mom · Pune"
+        },
+        "right": {
+          "video": "rec/agora/riya-onboard.mp4",
+          "label": "Riya · Toronto"
+        }
+      },
+      "vo": "Both of them onboard with a passkey. Mom on her phone in Pune, Riya on hers in Toronto. Mera turns each Face ID into an account. No seed phrase, no extension, and no gas to buy."
+    },
+    {
+      "id": "balance",
+      "start": 31,
+      "duration": 13,
+      "eyebrow": "02 · An AUSD balance",
+      "title": "Riya's allowance,\nin AUSD.",
+      "sub": "A dollar stablecoin, held by the Tally contract under her rules.",
+      "visual": {
+        "kind": "phone",
+        "video": "rec/agora/riya-balance.mp4",
+        "chip": "AUSD · 6 decimals"
+      },
+      "vo": "Riya's allowance is held in A U S D, a dollar stablecoin, inside the Tally contract, and it can only be spent the way her rules allow."
+    },
+    {
+      "id": "send",
+      "start": 44,
+      "duration": 20,
+      "eyebrow": "03 · Send",
+      "title": "Mom sends $20.\nWith a purpose.",
+      "sub": "One link · fingerprint · “For lunches this week” · fee $0.00",
+      "visual": {
+        "kind": "phone",
+        "video": "rec/agora/mom-send.mp4",
+        "chip": "fund(id, amount, note)"
+      },
+      "vo": "Mom opens Riya's link. She sees exactly what the money can be spent on, picks twenty dollars, adds a note, for lunches this week, and confirms with her fingerprint."
+    },
+    {
+      "id": "receive",
+      "start": 64,
+      "duration": 14,
+      "eyebrow": "04 · Receive",
+      "title": "Arrived.\nIn about a second.",
+      "sub": "Riya's balance goes up, with Mom's note attached.",
+      "visual": {
+        "kind": "phone",
+        "video": "rec/agora/riya-receive.mp4"
+      },
+      "vo": "On Riya's phone the money is already there, with Mom's note attached. Settled on Monad in about a second, with no transfer fee."
+    },
+    {
+      "id": "proof-tx",
+      "start": 78,
+      "duration": 12,
+      "eyebrow": "Proof · on-chain",
+      "title": "The real transaction.",
+      "sub": "Funded(id, from, 20 AUSD, \"For lunches this week\")",
+      "visual": {
+        "kind": "evidence",
+        "shots": [
+          {
+            "file": "shots/agora-fund-tx.png",
+            "source": "testnet.monadvision.com"
+          }
+        ]
+      },
+      "vo": "Here is that exact transaction on the Monad explorer, with the amount and the note in its Funded event."
+    },
+    {
+      "id": "proof-cli",
+      "start": 90,
+      "duration": 14,
+      "eyebrow": "Proof · from the terminal",
+      "title": "Decoded and\nbalances checked.",
+      "sub": "cast receipt · decoded event · AUSD balance before and after",
+      "visual": {
+        "kind": "terminal",
+        "proof": "proof/agora-fund.txt"
+      },
+      "vo": "From the terminal: the receipt succeeded, the event decodes to twenty dollars with the note, and the allowance balance rose by exactly twenty."
+    },
+    {
+      "id": "mainnet",
+      "start": 104,
+      "duration": 8,
+      "eyebrow": "Honest note",
+      "title": "Mainnet-ready.",
+      "sub": "Testnet uses a 6-decimal AUSD stand-in; mainnet AUSD 0x00000000eFE3…012a is a constructor argument.",
+      "visual": {
+        "kind": "terminal",
+        "proof": "proof/code-fund.txt"
+      },
+      "vo": "On testnet we use a six decimal stand-in, because A U S D is deployed on mainnet only. Pointing Tally at real A U S D is one constructor argument."
+    },
+    {
+      "id": "outro",
+      "start": 112,
+      "duration": 7,
+      "eyebrow": "",
+      "title": "Tally controls the item.",
+      "sub": "tally-monad.vercel.app · Android APK on GitHub",
+      "visual": {
+        "kind": "outro"
+      },
+      "vo": "Tally. Send money home, with a purpose."
+    }
+  ]
+}

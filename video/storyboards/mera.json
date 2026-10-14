@@ -1,0 +1,117 @@
+{
+  "fps": 30,
+  "width": 1920,
+  "height": 1080,
+  "voice": "af_heart",
+  "music": "audio/mera/music.wav",
+  "vo": "audio/mera/vo.wav",
+  "captions": "captions-mera.json",
+  "scenes": [
+    {
+      "id": "intro",
+      "start": 0,
+      "duration": 6,
+      "eyebrow": "",
+      "title": "Tally × Mera",
+      "sub": "Mera-powered UX · One passkey, many keys",
+      "visual": {
+        "kind": "sponsor",
+        "logo": "logos/mera.svg",
+        "name": "Mera"
+      },
+      "vo": "Tally, built on Mera."
+    },
+    {
+      "id": "signup",
+      "start": 6,
+      "duration": 16,
+      "eyebrow": "01 · Sign up",
+      "title": "One button.\nFace ID.",
+      "sub": "createPasskeyWithPrfOutput → PRF → keys. No seed phrase, no extension, no gas.",
+      "visual": {
+        "kind": "phone",
+        "video": "rec/02-signup.mp4",
+        "chip": "createPasskeyWithPrfOutput"
+      },
+      "vo": "Sign-up is one button. Face ID creates a passkey, Mera returns its P R F output, and that becomes the account. No seed phrase, no extension, and the welcome credit means no gas either."
+    },
+    {
+      "id": "return",
+      "start": 22,
+      "duration": 13,
+      "eyebrow": "02 · Come back",
+      "title": "Same passkey.\nSame account.",
+      "sub": "getPasskeyPrfOutput re-derives the same keys on any device with the synced passkey.",
+      "visual": {
+        "kind": "phone",
+        "video": "rec/agora/riya-return.mp4",
+        "chip": "getPasskeyPrfOutput"
+      },
+      "vo": "Coming back is the same gesture. Mera re-derives exactly the same keys, on any device where the passkey syncs."
+    },
+    {
+      "id": "keys",
+      "start": 35,
+      "duration": 15,
+      "eyebrow": "03 · One passkey, many keys",
+      "title": "Owner. Agent.\nCafé.",
+      "sub": "m/44'/60'/0'/0/0 · /1 · /2 from one PRF output",
+      "visual": {
+        "kind": "phone",
+        "video": "rec/agora/riya-keys.mp4"
+      },
+      "vo": "One passkey, three keys. The owner key changes the rules. A capped agent key can only spend inside them. And a third key signs a café's menu."
+    },
+    {
+      "id": "secondlook",
+      "start": 50,
+      "duration": 15,
+      "eyebrow": "04 · Approval UX",
+      "title": "Pricier pick?\nA fresh Face ID.",
+      "sub": "The owner key signs the cosign only after a new passkey assertion.",
+      "visual": {
+        "kind": "phone",
+        "video": "rec/05-secondlook.mp4"
+      },
+      "vo": "When the agent picks something pricier than the cheapest match, Tally asks for a fresh Face ID before the owner key signs the approval."
+    },
+    {
+      "id": "merchant",
+      "start": 65,
+      "duration": 12,
+      "eyebrow": "05 · The non-wallet use",
+      "title": "Your Face ID\nsigns the menu.",
+      "sub": "Merchant mode: key /2 signs the EIP-712 menu every 20 s.",
+      "visual": {
+        "kind": "phone",
+        "video": "rec/09-merchant.mp4"
+      },
+      "vo": "And the non-wallet use: in merchant mode, the café owner's passkey signs the shop's menu every twenty seconds."
+    },
+    {
+      "id": "code",
+      "start": 77,
+      "duration": 12,
+      "eyebrow": "The code",
+      "title": "web/lib/mera.ts",
+      "sub": "",
+      "visual": {
+        "kind": "terminal",
+        "proof": "proof/code-mera.txt"
+      },
+      "vo": "All of it lives in one small file, built on Mera's passkey, signing session and viem account functions."
+    },
+    {
+      "id": "outro",
+      "start": 89,
+      "duration": 6,
+      "eyebrow": "",
+      "title": "Tally controls the item.",
+      "sub": "tally-monad.vercel.app",
+      "visual": {
+        "kind": "outro"
+      },
+      "vo": "Tally. Your Face ID is your wallet."
+    }
+  ]
+}
