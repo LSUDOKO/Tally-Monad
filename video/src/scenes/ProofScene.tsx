@@ -2,6 +2,7 @@ import React from "react";
 import { AbsoluteFill, Img, Sequence, interpolate, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
 import { Glass } from "../components/Glass";
 import { Eyebrow } from "../components/Header";
+import { TerminalFrame } from "../components/TerminalFrame";
 import { EASE, enter, pop } from "../lib/anim";
 import { ifStatic, useStaticText } from "../lib/assets";
 import type { ProofCard, SceneDef } from "../storyboard";
@@ -27,23 +28,7 @@ const Terminal: React.FC<{ name: string; text: string; height: number }> = ({ na
   const typed = interpolate(frame, [10, 80], [0, total], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   let budget = typed;
   return (
-    <div
-      style={{
-        width: "100%",
-        height,
-        borderRadius: 24,
-        background: C.terminal,
-        border: "1px solid rgba(194, 220, 255, 0.14)",
-        boxShadow: "0 40px 100px -30px rgba(0,0,0,0.8), 0 0 90px -40px rgba(46,118,255,0.6)",
-        overflow: "hidden",
-      }}
-    >
-      <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "16px 22px", borderBottom: "1px solid rgba(194,220,255,0.08)" }}>
-        {["#FF6B6B", "#FFB547", "#3DBD8C"].map((c) => (
-          <span key={c} style={{ width: 13, height: 13, borderRadius: 7, background: c, opacity: 0.85 }} />
-        ))}
-        <span style={{ fontFamily: FONT.mono, fontSize: 18, color: C.faint, marginLeft: 12 }}>{name}</span>
-      </div>
+    <TerminalFrame name={name} height={height}>
       <div style={{ padding: "18px 26px", fontFamily: FONT.mono, fontSize: 22, lineHeight: "34px", fontVariantLigatures: "none" }}>
         {lines.map((l, i) => {
           const n = Math.max(l.length, 1);
@@ -68,7 +53,7 @@ const Terminal: React.FC<{ name: string; text: string; height: number }> = ({ na
           );
         })}
       </div>
-    </div>
+    </TerminalFrame>
   );
 };
 
