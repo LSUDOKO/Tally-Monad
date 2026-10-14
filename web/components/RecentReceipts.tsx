@@ -56,8 +56,14 @@ export function RecentReceipts({ capsuleId, limit, owner, refreshKey }: { capsul
   const [rows, setRows] = useState<Receipt[]>([]);
   const [tops, setTops] = useState<Topup[]>([]);
   useEffect(() => {
-    getReceipts(capsuleId, limit).then(setRows);
-    getTopups(capsuleId, owner).then((t) => setTops(t.slice(0, 1)));
+    const load = () => {
+      getReceipts(capsuleId, limit).then(setRows);
+      getTopups(capsuleId, owner).then((t) => setTops(t.slice(0, 1)));
+    };
+    load();
+    // the indexer lands a few seconds after the chain, so keep checking while Home is open
+    const t = setInterval(load, 8000);
+    return () => clearInterval(t);
   }, [capsuleId, limit, owner, refreshKey]);
   if (rows.length === 0 && tops.length === 0) return null;
   return (
