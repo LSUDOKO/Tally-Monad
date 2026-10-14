@@ -4,15 +4,17 @@ import { Glass } from "../components/Glass";
 import { Header, LeftColumn } from "../components/Header";
 import { PHONE_H, PHONE_W, Phone } from "../components/Phone";
 import type { PhoneSide, SceneDef } from "../storyboard";
-import { C, FONT, H, PAD } from "../theme";
+import { C, FONT, PAD } from "../theme";
 
-const W1 = 370;
+const W1 = 340;
 const K = W1 / PHONE_W;
 const H1 = Math.round(PHONE_H * K);
-const GAP = 96;
+const GAP = 90;
 const LABEL_H = 52;
 const LABEL_GAP = 22;
-const CX = 1355;
+const CX = 1300;
+/** Top of the label pills: the group sits high so the phones clear the captions. */
+const TOP = 100;
 const TEXT_W = 600;
 
 const Side: React.FC<{ side: PhoneSide; x: number; delay: number; dir: number }> = ({ side, x, delay, dir }) => {
@@ -21,13 +23,12 @@ const Side: React.FC<{ side: PhoneSide; x: number; delay: number; dir: number }>
   const p = spring({ frame: frame - delay, fps, config: { damping: 18, stiffness: 90 } });
   const lab = spring({ frame: frame - delay - 14, fps, config: { damping: 14, stiffness: 120 } });
   const drift = interpolate(frame, [0, durationInFrames], [8, -8]) * dir;
-  const top = (H - (H1 + LABEL_H + LABEL_GAP)) / 2;
   return (
     <div
       style={{
         position: "absolute",
         left: x,
-        top,
+        top: TOP,
         width: W1,
         opacity: Math.min(1, p * 1.3),
         transform: `translateY(${(1 - p) * 120 + drift}px)`,
