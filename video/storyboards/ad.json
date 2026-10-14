@@ -28,7 +28,7 @@
       "sub": "",
       "visual": {
         "kind": "phone",
-        "video": "rec/06-family.mp4"
+        "video": "rec/ad/family.mp4"
       },
       "vo": "Family tops it up. In a second."
     },
@@ -41,7 +41,7 @@
       "sub": "",
       "visual": {
         "kind": "phone",
-        "video": "rec/04-pay.mp4"
+        "video": "rec/ad/pay.mp4"
       },
       "vo": "Your agent pays, only for what tallies."
     },
@@ -54,7 +54,7 @@
       "sub": "",
       "visual": {
         "kind": "phone",
-        "video": "rec/05-secondlook.mp4"
+        "video": "rec/ad/secondlook.mp4"
       },
       "vo": "Pricier? It waits for you."
     },
