@@ -1,7 +1,10 @@
 """Voice-over generator: Kokoro (af_heart) per-scene clips, vo.wav track and captions.json.
 
 Run with the Kokoro venv:
-  /home/arpit/video-tools/kokoro/.venv/bin/python video/scripts/voice.py
+  /home/arpit/video-tools/kokoro/.venv/bin/python video/scripts/voice.py [storyboard.json] [--reuse]
+
+With a storyboard path, clips, track and captions go to the board's "vo"/"captions"
+paths (relative to public/), clips start 0.3 s into each scene and EXTRA_RESPELL applies.
 """
 import json
 import re
@@ -25,6 +28,7 @@ SPEEDS = [0.95, 1.0, 1.05, 1.1, 1.15]
 CLIP_RMS_DB = -20.0
 PEAK_DB = -3.0
 MAX_LINE = 42
+MERGE_LEADIN = False   # boards: a short lead-in ("Tally,") joins the long phrase after it
 GAP = 0.25             # min silence between clips when a long clip spills into the next scene
 
 RESPELL = [
@@ -36,6 +40,31 @@ RESPELL = [
     (r"\bEIP-712\b", "E I P seven twelve"),
     (r"\bUW\b", "U W"),
 ]
+# extra respellings for the sponsor/ad boards (kept out of the main board for identical output)
+EXTRA_RESPELL = [
+    (r"\bHyperIndex\b", "Hyper Index"),
+    (r"\bHyperSync\b", "Hyper Sync"),
+    (r"\bGraphQL\b", "Graph Q L"),
+    (r"\bRPC\b", "R P C"),
+    (r"\bPRF\b", "P R F"),
+    (r"\beth_getLogs\b", "eth get logs"),
+]
+
+
+def configure(argv):
+    """Point the script at another storyboard; outputs come from its vo/captions fields."""
+    global STORYBOARD, OUT_VO, OUT_TRACK, OUT_CAPS, OFFSET, RESPELL, MERGE_LEADIN
+    paths = [a for a in argv[1:] if not a.startswith("--")]
+    if not paths:
+        return
+    STORYBOARD = Path(paths[0]).resolve()
+    sb = json.loads(STORYBOARD.read_text())
+    OUT_TRACK = ROOT / "public" / sb["vo"]
+    OUT_VO = OUT_TRACK.parent / "vo"
+    OUT_CAPS = ROOT / "public" / sb["captions"]
+    OFFSET = 0.3
+    MERGE_LEADIN = True
+    RESPELL = RESPELL + EXTRA_RESPELL
 
 
 def speakable(text):
@@ -102,12 +131,14 @@ def split_lines(text):
             if len(cand) <= MAX_LINE:
                 cur = cand
                 continue
-            if cur:
+            if cur and not (MERGE_LEADIN and len(p) > MAX_LINE):
                 lines.append(cur)
+                cur = ""
             if len(p) <= MAX_LINE:
                 cur = p
                 continue
-            # long phrase: split by words into balanced chunks
+            # long phrase: split by words into balanced chunks (boards: with its short lead-in)
+            p = (cur + " " + p).strip()
             words = p.split()
             k = -(-len(p) // MAX_LINE)
             while True:
@@ -132,6 +163,7 @@ def split_lines(text):
 
 
 def main():
+    configure(sys.argv)
     sb = json.loads(STORYBOARD.read_text())
     scenes = sb["scenes"]
     total = scenes[-1]["start"] + scenes[-1]["duration"]
@@ -201,6 +233,7 @@ def assemble(scenes, total, clips, g):
             caps.append({"start": round(float(edges[k]), 3), "end": round(float(edges[k + 1]), 3), "text": l})
 
     track = np.clip(track, -1, 1)
+    OUT_TRACK.parent.mkdir(parents=True, exist_ok=True)
     sf.write(OUT_TRACK, track.astype(np.float32), TRACK_SR, subtype="PCM_16")
     OUT_CAPS.write_text(json.dumps(caps, indent=2, ensure_ascii=False) + "\n")
     print(f"vo.wav {len(track)/TRACK_SR:.3f}s, peak {20*np.log10(np.abs(track).max()):.2f} dBFS, "
