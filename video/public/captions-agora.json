@@ -1,0 +1,207 @@
+[
+  {
+    "start": 0.3,
+    "end": 1.463,
+    "text": "Tally, for the Agora"
+  },
+  {
+    "start": 1.463,
+    "end": 3.15,
+    "text": "cross-border payments bounty."
+  },
+  {
+    "start": 6.3,
+    "end": 7.899,
+    "text": "Riya studies in Toronto."
+  },
+  {
+    "start": 7.899,
+    "end": 10.163,
+    "text": "Her parents in Pune send her lunch"
+  },
+  {
+    "start": 10.163,
+    "end": 12.561,
+    "text": "money, and today that takes days and"
+  },
+  {
+    "start": 12.561,
+    "end": 14.16,
+    "text": "loses about six percent."
+  },
+  {
+    "start": 15.3,
+    "end": 17.948,
+    "text": "Both of them onboard with a passkey."
+  },
+  {
+    "start": 17.948,
+    "end": 19.786,
+    "text": "Mom on her phone in Pune,"
+  },
+  {
+    "start": 19.786,
+    "end": 21.551,
+    "text": "Riya on hers in Toronto."
+  },
+  {
+    "start": 21.551,
+    "end": 24.493,
+    "text": "Mera turns each Face ID into an account."
+  },
+  {
+    "start": 24.493,
+    "end": 26.626,
+    "text": "No seed phrase, no extension,"
+  },
+  {
+    "start": 26.626,
+    "end": 27.95,
+    "text": "and no gas to buy."
+  },
+  {
+    "start": 31.3,
+    "end": 33.815,
+    "text": "Riya's allowance is held in A U S D,"
+  },
+  {
+    "start": 33.815,
+    "end": 35.211,
+    "text": "a dollar stablecoin,"
+  },
+  {
+    "start": 35.211,
+    "end": 38.145,
+    "text": "inside the Tally contract, and it can only"
+  },
+  {
+    "start": 38.145,
+    "end": 40.45,
+    "text": "be spent the way her rules allow."
+  },
+  {
+    "start": 44.3,
+    "end": 45.72,
+    "text": "Mom opens Riya's link."
+  },
+  {
+    "start": 45.72,
+    "end": 47.333,
+    "text": "She sees exactly what the"
+  },
+  {
+    "start": 47.333,
+    "end": 48.752,
+    "text": "money can be spent on,"
+  },
+  {
+    "start": 48.752,
+    "end": 50.946,
+    "text": "picks twenty dollars, adds a note,"
+  },
+  {
+    "start": 50.946,
+    "end": 52.366,
+    "text": "for lunches this week,"
+  },
+  {
+    "start": 52.366,
+    "end": 54.56,
+    "text": "and confirms with her fingerprint."
+  },
+  {
+    "start": 64.3,
+    "end": 65.954,
+    "text": "On Riya's phone the money"
+  },
+  {
+    "start": 65.954,
+    "end": 67.08,
+    "text": "is already there,"
+  },
+  {
+    "start": 67.08,
+    "end": 68.734,
+    "text": "with Mom's note attached."
+  },
+  {
+    "start": 68.734,
+    "end": 71.05,
+    "text": "Settled on Monad in about a second,"
+  },
+  {
+    "start": 71.05,
+    "end": 72.44,
+    "text": "with no transfer fee."
+  },
+  {
+    "start": 78.3,
+    "end": 80.094,
+    "text": "Here is that exact transaction"
+  },
+  {
+    "start": 80.094,
+    "end": 82.367,
+    "text": "on the Monad explorer, with the amount"
+  },
+  {
+    "start": 82.367,
+    "end": 84.34,
+    "text": "and the note in its Funded event."
+  },
+  {
+    "start": 90.3,
+    "end": 92.169,
+    "text": "From the terminal: the receipt"
+  },
+  {
+    "start": 92.169,
+    "end": 94.1,
+    "text": "succeeded, the event decodes to"
+  },
+  {
+    "start": 94.1,
+    "end": 96.406,
+    "text": "twenty dollars with the note, and the"
+  },
+  {
+    "start": 96.406,
+    "end": 98.96,
+    "text": "allowance balance rose by exactly twenty."
+  },
+  {
+    "start": 104.3,
+    "end": 106.376,
+    "text": "On testnet we use a six decimal"
+  },
+  {
+    "start": 106.376,
+    "end": 108.251,
+    "text": "stand-in, because A U S D is"
+  },
+  {
+    "start": 108.251,
+    "end": 109.926,
+    "text": "deployed on mainnet only."
+  },
+  {
+    "start": 109.926,
+    "end": 112.136,
+    "text": "Pointing Tally at real A U S D is"
+  },
+  {
+    "start": 112.136,
+    "end": 113.81,
+    "text": "one constructor argument."
+  },
+  {
+    "start": 114.06,
+    "end": 114.429,
+    "text": "Tally."
+  },
+  {
+    "start": 114.429,
+    "end": 116.4,
+    "text": "Send money home, with a purpose."
+  }
+]
