@@ -1,0 +1,20 @@
+$ sed -n '/event: "Paid"/,/^});/p' indexer/src/handlers/Tally.ts
+indexer.onEvent({ contract: "Tally", event: "Paid", fields: txFields }, async ({ event, context }) => {
+  const merchant = lower(event.params.merchant);
+  context.Payment.set({
+    id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
+    capsuleId: event.params.capsuleId,
+    merchant,
+    itemId: event.params.itemId,
+    category: Number(event.params.category),
+    price: event.params.price,
+    cosigned: event.params.cosigned,
+    receipt: event.params.receipt,
+    txHash: event.transaction.hash,
+    timestamp: Number(event.block.timestamp),
+  });
+  const m = await context.Merchant.get(merchant);
+  if (m) context.Merchant.set({ ...m, sales: m.sales + event.params.price, count: m.count + 1 });
+  const c = await context.Capsule.get(event.params.capsuleId.toString());
+  if (c) context.Capsule.set({ ...c, spent: c.spent + event.params.price, payments: c.payments + 1 });
+});

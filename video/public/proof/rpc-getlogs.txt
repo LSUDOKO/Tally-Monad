@@ -1,0 +1,7 @@
+# Tally's history needs every Paid/Funded log since the deploy block (70747699)
+$ cast logs --from-block 70885429 --to-block 70886429 --address $TALLY -r $MONAD_RPC
+Error: HTTP error 413 with body: {"jsonrpc":"2.0","id":0,"error":{"code":-32614,"message":"eth_getLogs is limited to a 100 range"}}
+
+$ cast logs --from-block 70886339 --to-block 70886429 --address $TALLY -r $MONAD_RPC | wc -l
+1
+# ~100 blocks (40 s) at a time is all the public RPC allows -> history comes from Envio

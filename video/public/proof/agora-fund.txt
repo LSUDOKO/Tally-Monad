@@ -1,0 +1,17 @@
+$ cast receipt 0x3ea3a097a3e8a6309fb04556a8da569fc95018149dbc3a2003f40093e94bc8ad -r $MONAD_RPC
+blockNumber          70885040
+from                 0x9f60c84928c7130aeef09d0EED68fc19A63aB579
+status               1 (success)
+transactionHash      0x3ea3a097a3e8a6309fb04556a8da569fc95018149dbc3a2003f40093e94bc8ad
+to                   0xe7d22F222a799218908997f837CF3e0Fd1c1e40a
+
+# Funded(uint256 indexed id, address indexed from, uint128 amount, string note)
+$ cast decode-abi --input 'f(uint128,string)' <event data>
+20000000 [2e7]
+"For lunches this week"
+
+$ cast call $TALLY 'capsuleOf(uint256)' 16 --block 70885039   # before
+balance  40000000  ($40.0 AUSD)
+$ cast call $TALLY 'capsuleOf(uint256)' 16 --block 70885040   # after
+balance  60000000  ($60.0 AUSD)
+# +20.0 AUSD, settled in block 70885040

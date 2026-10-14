@@ -105,15 +105,10 @@
       "duration": 10,
       "eyebrow": "Hosted on Envio Cloud",
       "title": "Deployed from\nour repo.",
-      "sub": "envio-cloud indexer get tally-monad",
+      "sub": "envio-cloud indexer get tally-monad · deployed from main",
       "visual": {
-        "kind": "evidence",
-        "shots": [
-          {
-            "file": "shots/envio-dashboard.png",
-            "source": "envio.dev"
-          }
-        ]
+        "kind": "terminal",
+        "proof": "proof/envio-indexer.txt"
       },
       "vo": "The indexer is deployed on Envio Cloud straight from our repository."
     },

@@ -1,0 +1,26 @@
+$ curl -s $ENVIO_GRAPHQL -d '{"query":"{ Payment(where:{capsuleId:{_eq:16}}){ price cosigned txHash } Topup(where:{capsuleId:{_eq:16}}){ amount note txHash } }"}'
+{
+  "data": {
+    "Payment": [
+      {
+        "price": "4500000",
+        "cosigned": false,
+        "txHash": "0x6a7a44f987267228717c100b04eb20e051e0e585c28b21a3d96f87f8862b6c6f",
+        "timestamp": 1791956291
+      }
+    ],
+    "Topup": [
+      {
+        "amount": "40000000",
+        "note": "",
+        "txHash": "0x18d527d3383af6c63f47c3290ece41ce7f786f250cb01b244b7f5e8856983cca"
+      },
+      {
+        "amount": "20000000",
+        "note": "For lunches this week",
+        "txHash": "0x3ea3a097a3e8a6309fb04556a8da569fc95018149dbc3a2003f40093e94bc8ad"
+      }
+    ]
+  }
+}
+# Payment.txHash == the tx Riya just paid in the app: 0x6a7a44f987267228…
